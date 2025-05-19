@@ -1,0 +1,191 @@
+import React, { useEffect, useState } from 'react';
+import qs from 'query-string';
+import { useDispatch } from 'react-redux';
+import {
+  addNotification,
+  clearNotifications,
+} from '@redhat-cloud-services/frontend-components-notifications/redux';
+import { downloadFile } from '@redhat-cloud-services/frontend-components-utilities/helpers';
+import { ColumnManagementModal } from '@patternfly/react-component-groups';
+
+// TODO: Consider moving some of these non-hook functions to constants.js or miscHelper.js
+
+export const useLocalStorage = (key) => {
+  const [sessionValue, setSessionValue] = useState(localStorage.getItem(key));
+
+  const setValue = (newValue) => {
+    setSessionValue(newValue);
+    localStorage.setItem(key, newValue);
+  };
+
+  return [sessionValue, setValue];
+};
+
+export function filterParams(urlParams, allowedParams) {
+  const paramsCopy = { ...urlParams };
+
+  Object.entries(paramsCopy)
+    .filter(([key, value]) => !allowedParams.includes(key) || value === '')
+    .forEach(([key]) => delete paramsCopy[key]);
+
+  return paramsCopy;
+}
+
+const transformUrlParamsBeforeFetching = (urlParams) => {
+  let newParams = { ...urlParams, total_items: undefined };
+
+  [].forEach((transformer) => {
+    newParams = transformer(newParams);
+  });
+
+  return newParams;
+};
+
+const NUMERICAL_URL_PARAMS = ['limit', 'offset'];
+
+export const useUrlParams = (allowedParams) => {
+  const getUrlParams = () => {
+    const url = new URL(window.location);
+    return filterParams(qs.parse(url.search), allowedParams);
+  };
+
+  const setUrlParams = (newParams) => {
+    const url = new URL(window.location);
+    const queryParams = qs.stringify(newParams);
+
+    window.history.replaceState(
+      null,
+      null,
+      `${url.origin}${url.pathname}?${queryParams}`
+    );
+  };
+
+  return [getUrlParams, setUrlParams];
+};
+
+export const useUrlBoundParams = ({
+  allowedParams,
+  initialParams,
+  additionalParam,
+  fetchAction,
+  changeParamsAction,
+}) => {
+  const dispatch = useDispatch();
+
+  const [getUrlParams, setUrlParams] = useUrlParams(allowedParams);
+  const [isFirstLoad, setFirstLoad] = useState(true);
+
+  // if a user clicks on the currently loaded page in the navbar,
+  // page would not refresh, but the URL would clear; this useEffect
+  // solves this inconsistent state
+  useEffect(() => {
+    if (!isFirstLoad && window.location.search === '') {
+      apply({ ...initialParams });
+    }
+  }, [window.location.search]);
+
+  useEffect(() => {
+    const initialUrlParams = getUrlParams();
+
+    apply({ ...initialParams, ...initialUrlParams, offset: 0 });
+    setFirstLoad(false);
+  }, []);
+
+  const apply = (newParams, isReset = false) => {
+    const previousUrlParams = getUrlParams();
+
+    let combinedParams = isReset
+      ? { ...newParams }
+      : { ...previousUrlParams, ...newParams };
+
+    // convert numerical params to numbers
+    for (const property in combinedParams) {
+      if (NUMERICAL_URL_PARAMS.includes(property)) {
+        combinedParams[property] = Number(combinedParams[property]);
+      }
+    }
+
+    dispatch(changeParamsAction(combinedParams));
+
+    const filteredParams = filterParams(combinedParams, allowedParams);
+
+    dispatch(
+      fetchAction(
+        transformUrlParamsBeforeFetching(filteredParams),
+        additionalParam
+      )
+    );
+
+    setUrlParams(filteredParams);
+  };
+
+  return apply;
+};
+
+export const useExport = ({
+  filenamePrefix,
+  fetchAction,
+  fetchActionParam,
+  allowedParams,
+}) => {
+  const dispatch = useDispatch();
+
+  const DEFAULT_PARAMS = {
+    report: true,
+  };
+
+  const onExport = async (format, params) => {
+    dispatch(
+      addNotification({
+        variant: 'info',
+        title:
+          'Preparing export. Once complete, your download will start automatically.',
+      })
+    );
+
+    const formattedDate =
+      new Date().toISOString().replace(/[T:]/g, '-').split('.')[0] + '-utc';
+
+    const filteredParams = filterParams(params, allowedParams);
+
+    const payload = await fetchAction(
+      {
+        ...transformUrlParamsBeforeFetching(filteredParams),
+        ...DEFAULT_PARAMS,
+        data_format: format,
+      },
+      fetchActionParam
+    );
+
+    let data =
+      format === 'json' ? JSON.stringify(payload.data.data) : payload.data.data;
+
+    downloadFile(data, filenamePrefix + formattedDate, format);
+
+    dispatch(clearNotifications());
+
+    dispatch(
+      addNotification({
+        variant: 'success',
+        title: 'Downloading export',
+      })
+    );
+  };
+
+  return onExport;
+};
+
+export const useColumnManagement = (columns, onApply) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  return [
+    <ColumnManagementModal
+      appliedColumns={columns}
+      applyColumns={(newColumns) => onApply(newColumns)}
+      isOpen={isModalOpen}
+      onClose={() => setModalOpen(false)}
+      key="column-mgmt-modal"
+    />,
+    setModalOpen,
+  ];
+};
