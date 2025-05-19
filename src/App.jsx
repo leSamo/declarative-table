@@ -43,6 +43,24 @@ const PROP_INFO = [
     defaultValue: 'false',
     description: 'If true adds a "Manage columns" button to the toolbar, the modal allows user to selectively hide and show columns; Requires setting up of <code>columns.isShown</code> and <code>columns.isShownByDefault</code>; optionally <code>columns.isUntoggleable</code> can be used.'
   },
+  {
+    name: 'emptyState',
+    type: 'React.ReactNode',
+    defaultValue: 'undefined',
+    description: 'Component to be shown instead of rows when the length of rows array is 0'
+  },
+  {
+    name: 'filterConfig',
+    type: 'array',
+    defaultValue: '[]',
+    description: 'Used to define filters displayed in the toolbar. Needs to be used with conjunction with setupFilters hook.'
+  },
+  {
+    name: 'activeFiltersConfig',
+    type: 'array',
+    defaultValue: '[]',
+    description: 'Used to display filter chips in the toolbar. Needs to be used with conjunction with setupFilters hook.'
+  }
 ]
 
 function App() {
