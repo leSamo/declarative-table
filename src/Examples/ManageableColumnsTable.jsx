@@ -5,21 +5,24 @@ const ManageableColumnsTable = () => {
     const TABLE_COLUMNS = [
         {
             title: 'Common Name',
+            key: 'common_name',
             isShown: true,
             isUntoggleable: true,
             isShownByDefault: true
         },
         {
             title: 'Scientific Name (Genus)',
+            key: 'scientific_name',
             isShown: true,
             isShownByDefault: true
         },
         {
             title: 'Primary Type',
-            isShown: true,
+            key: 'primary_type',
+            isShown: false,
             isShownByDefault: false
         }
-    ]
+    ];
 
     const [columnMgmtColumns, setColumnMgmtColumns] = useState(TABLE_COLUMNS);
 
@@ -46,11 +49,13 @@ const ManageableColumnsTable = () => {
             row["Common Name"],
             row["Scientific Name (Genus)"],
             row["Primary Type"]
-        ]
+        ],
+        key: row["Common Name"]
     });
 
     return (
         <BaseTable
+            areColumnsManageable
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={columnMgmtColumns}
             applyColumns={setColumnMgmtColumns}

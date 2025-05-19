@@ -1,6 +1,6 @@
 import BaseTable from "../DeclarativeTable/BaseTable";
 
-const PlainTable = () => {
+const ExpandableTable = () => {
 
     const TABLE_DATA = [
         {
@@ -46,6 +46,7 @@ const PlainTable = () => {
 
     return (
         <BaseTable
+            isExpandable
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}
             meta={{
@@ -57,4 +58,4 @@ const PlainTable = () => {
     )
 }
 
-export default PlainTable;
+export default ExpandableTable;

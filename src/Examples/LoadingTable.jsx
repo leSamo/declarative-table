@@ -23,15 +23,15 @@ const LoadingTable = () => {
     const TABLE_COLUMNS = [
         {
             title: 'Common Name',
-            isShown: true,
+            key: 'common_name'
         },
         {
             title: 'Scientific Name (Genus)',
-            isShown: true,
+            key: 'scientific_name'
         },
         {
             title: 'Primary Type',
-            isShown: true,
+            key: 'primary_type'
         }
     ];
 
@@ -40,7 +40,8 @@ const LoadingTable = () => {
             row["Common Name"],
             row["Scientific Name (Genus)"],
             row["Primary Type"]
-        ]
+        ],
+        key: row["Common Name"]
     });
 
     return (

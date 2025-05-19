@@ -1,19 +1,34 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
 import { Skeleton } from '@patternfly/react-core';
+import { uniq } from 'lodash';
 
 const BaseTableToolbar = ({
   isLoading,
+  isSelectable,
+  rows,
   page,
   perPage,
   itemCount,
   apply,
   filterConfig,
   activeFiltersConfig,
+  meta,
   onExport,
-  actionsConfig,
+  selectedRows,
+  setSelectedRows,
+  fetchBulk,
+  dedicatedAction,
+  actions,
 }) => {
+  const selectAll = () =>
+    fetchBulk().then((keys) =>
+      setSelectedRows((selectedRows) => uniq([...selectedRows, keys]))
+    );
+
+    console.log(">>>", filterConfig);
+
   return (
     <PrimaryToolbar
       pagination={
@@ -31,7 +46,7 @@ const BaseTableToolbar = ({
           }
         )
       }
-      filterConfig={filterConfig.length > 0 ? filterConfig : <Fragment />}
+      filterConfig={filterConfig.length > 0 ? filterConfig : <></>}
       activeFiltersConfig={activeFiltersConfig}
       exportConfig={
         onExport && {
@@ -39,13 +54,65 @@ const BaseTableToolbar = ({
           onSelect: (e, format) => onExport(format),
         }
       }
-      actionsConfig={actionsConfig}
+      dedicatedAction={dedicatedAction}
+      bulkSelect={
+        isSelectable && {
+          count: selectedRows.length,
+          items: [
+            {
+              title: 'Select none (0 items)',
+              onClick: () => setSelectedRows([]),
+            },
+            {
+              title: `Select page (${rows.length} ${
+                rows.length === 1 ? 'item' : 'items'
+              })`,
+              onClick: () =>
+                setSelectedRows((selectedRows) =>
+                  uniq([...selectedRows, ...rows.map((row) => row.key)])
+                ),
+            },
+            ...(fetchBulk
+              ? [
+                  {
+                    title: `Select all (${meta.total_items} ${
+                      meta.total_items === 1 ? 'item' : 'items'
+                    })`,
+                    onClick: selectAll,
+                  },
+                ]
+              : []),
+          ],
+          isDisabled: meta.total_items === 0 && selectedRows.length === 0,
+          checked: selectedRows.length > 0,
+          ouiaId: 'bulk-select',
+          onSelect: () =>
+            selectedRows === 0 ? selectAll() : setSelectedRows([]),
+        }
+      }
+      actionsConfig={{
+        actions: [
+          '',
+          ...(actions ?? []).map((action) => ({
+            ...action,
+            onClick: (e) => action.onClick(e, selectedRows),
+          })),
+        ],
+      }}
     />
   );
 };
 
 BaseTableToolbar.propTypes = {
   isLoading: propTypes.bool,
+  isSelectable: propTypes.bool,
+  rows: propTypes.arrayOf(
+    propTypes.shape({
+      key: propTypes.string.isRequired,
+      cells: propTypes.arrayOf(propTypes.node).isRequired,
+      expandableContent: propTypes.node,
+    })
+  ).isRequired,
   page: propTypes.number,
   perPage: propTypes.number,
   itemCount: propTypes.number,
@@ -56,8 +123,25 @@ BaseTableToolbar.propTypes = {
   activeFiltersConfig: propTypes.shape({
     filters: propTypes.array,
   }),
+  meta: propTypes.shape({
+    offset: propTypes.number,
+    limit: propTypes.number,
+    total_items: propTypes.number,
+    sort: propTypes.string,
+  }),
   onExport: propTypes.func,
   actionsConfig: propTypes.object,
+  selectedRows: propTypes.array,
+  setSelectedRows: propTypes.func,
+  fetchBulk: propTypes.func,
+  dedicatedAction: propTypes.node,
+  actions: propTypes.arrayOf(
+    propTypes.shape({
+      label: propTypes.string,
+      onClick: propTypes.func,
+      props: propTypes.object,
+    })
+  ),
 };
 
 export default BaseTableToolbar;

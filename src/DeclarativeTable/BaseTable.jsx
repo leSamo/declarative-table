@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import BaseTableBody from './BaseTableBody';
 import BaseTableToolbar from './BaseTableToolbar';
@@ -11,6 +11,8 @@ import { ColumnsIcon } from '@patternfly/react-icons';
 const BaseTable = ({
   isLoading,
   isExpandable,
+  isSelectable,
+  areColumnsManageable,
   rows,
   columns,
   filterConfig = [],
@@ -21,58 +23,67 @@ const BaseTable = ({
   apply,
   onExport,
   applyColumns,
+  fetchBulk,
+  actions,
+  rowActions,
 }) => {
   const { offset, limit, total_items, sort } = meta;
+
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const [ColumnManagementModal, setColumnModalOpen] = useColumnManagement(
     columns,
     (columns) => applyColumns(columns)
   );
 
-  const isColumnManagementEnabled = true;
-
   return (
     <ErrorHandler error={error}>
       {ColumnManagementModal}
       <BaseTableToolbar
         isLoading={isLoading}
+        isSelectable={isSelectable}
+        rows={rows}
         page={offset / limit + 1}
         perPage={limit}
         itemCount={total_items}
         apply={apply}
         filterConfig={filterConfig}
         activeFiltersConfig={activeFiltersConfig}
+        meta={meta}
         onExport={onExport}
-        actionsConfig={
-          isColumnManagementEnabled
-            ? {
-                actions: [
-                  <Button
-                    onClick={() => setColumnModalOpen(true)}
-                    variant={ButtonVariant.secondary}
-                    icon={<ColumnsIcon />}
-                    key="column-mgmt"
-                    ouiaId="column-management-modal-open-button"
-                  >
-                    Manage columns
-                  </Button>
-                ],
-              }
-            : undefined
-        }
+        dedicatedAction={[...areColumnsManageable ? [
+          <Button
+            onClick={() => setColumnModalOpen(true)}
+            variant={ButtonVariant.secondary}
+            icon={<ColumnsIcon />}
+            key="column-mgmt"
+            ouiaId="column-management-modal-open-button"
+          >
+            Manage columns
+          </Button>
+          ] : []
+        ]}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+        fetchBulk={fetchBulk}
+        actions={actions}
       />
       <BaseTableBody
         isLoading={isLoading}
-        columns={columns.filter((column) => column.isShown)}
+        columns={columns.filter((column) => !areColumnsManageable || column.isShown)}
         rows={rows.map((row) => ({
           ...row,
-          cells: row.cells.filter((_, i) => columns[i].isShown),
+          cells: row.cells.filter((_, i) => !areColumnsManageable || columns[i].isShown),
         }))}
         isExpandable={isExpandable}
+        isSelectable={isSelectable}
         emptyState={emptyState}
         sortParam={sort}
         perPage={limit}
         apply={apply}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+        rowActions={rowActions}
       />
       <BaseTableFooter
         isLoading={isLoading}
@@ -86,7 +97,7 @@ const BaseTable = ({
 };
 
 BaseTable.propTypes = {
-  isLoading: propTypes.bool.isRequired,
+  isLoading: propTypes.bool,
   columns: propTypes.arrayOf(
     propTypes.shape({
       title: propTypes.node.isRequired,
@@ -104,6 +115,8 @@ BaseTable.propTypes = {
     })
   ).isRequired,
   isExpandable: propTypes.bool,
+  isSelectable: propTypes.bool,
+  areColumnsManageable: propTypes.bool,
   emptyState: propTypes.node.isRequired,
   sortParam: propTypes.string,
   filterConfig: propTypes.object,
@@ -118,6 +131,21 @@ BaseTable.propTypes = {
   apply: propTypes.func,
   onExport: propTypes.func,
   applyColumns: propTypes.func,
+  fetchBulk: propTypes.func,
+  actions: propTypes.arrayOf(
+    propTypes.shape({
+      label: propTypes.string,
+      onClick: propTypes.func,
+      props: propTypes.object,
+    })
+  ),
+  rowActions: propTypes.arrayOf(
+    propTypes.shape({
+      label: propTypes.string,
+      onClick: propTypes.func,
+      props: propTypes.object,
+    })
+  ),
 };
 
 export default BaseTable;

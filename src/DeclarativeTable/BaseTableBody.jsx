@@ -9,20 +9,25 @@ import {
   Td,
   ExpandableRowContent,
   SortByDirection,
+  ActionsColumn,
 } from '@patternfly/react-table';
-import SkeletonTable from '@redhat-cloud-services/frontend-components/SkeletonTable/SkeletonTable';
 import { TableVariant } from '@patternfly/react-table';
 import { DEFAULT_LIMIT } from './constants';
+import { SkeletonTable } from '@patternfly/react-component-groups';
 
 const BaseTableBody = ({
   isLoading,
   columns,
   rows,
   isExpandable = false,
+  isSelectable = false,
   emptyState,
   sortParam,
   perPage,
   apply,
+  selectedRows,
+  setSelectedRows,
+  rowActions,
 }) => {
   const [expandedRows, setExpandedRows] = useState([]);
   const [areAllRowsExpanded, setAreAllRowsExpanded] = useState(false);
@@ -43,7 +48,14 @@ const BaseTableBody = ({
       return isExpanding ? [...otherExpandedRows, row] : otherExpandedRows;
     });
 
+  const onToggleSelectRow = (row, isTogglingOn) =>
+    setSelectedRows((prevExpanded) => {
+      const otherSelectedRows = prevExpanded.filter((r) => r !== row);
+      return isTogglingOn ? [...otherSelectedRows, row] : otherSelectedRows;
+    });
+
   const isRowExpanded = (row) => expandedRows.includes(row);
+  const isRowSelected = (row) => selectedRows.includes(row);
 
   const createSortBy = (columns, sortParam, columnIndex) => {
     if (rows.length === 0 || !sortParam) {
@@ -98,24 +110,30 @@ const BaseTableBody = ({
       columns={columnHeaders}
       sortBy={createSortBy(columns, sortParam)}
       isExpandable={isExpandable}
+      isSelectable={isSelectable}
     />
   ) : (
     <Table variant={TableVariant.compact}>
       <Thead>
         <Tr>
-          {isExpandable && rows.length > 0 && (
+          {isExpandable && (
             <Th
-              expand={{
-                onToggle: () =>
-                  setExpandedRows(
-                    areAllRowsExpanded ? [] : rows.map((row) => row.key)
-                  ),
-                // looks like Patternfly has this condition reversed
-                areAllExpanded: !areAllRowsExpanded,
-              }}
+              // makes sure the headers do not move on empty state
+              style={{ width: 72, minWidth: 72 }}
+              expand={
+                rows.length > 0 && {
+                  onToggle: () =>
+                    setExpandedRows(
+                      areAllRowsExpanded ? [] : rows.map((row) => row.key)
+                    ),
+                  // looks like Patternfly has this condition reversed
+                  areAllExpanded: !areAllRowsExpanded,
+                }
+              }
               ouiaId="expand-all"
             />
           )}
+          {isSelectable && <Th style={{ width: 29, minWidth: 29 }} />}
           {columnHeaders}
         </Tr>
       </Thead>
@@ -139,11 +157,27 @@ const BaseTableBody = ({
                   }}
                 />
               )}
+              {isSelectable && (
+                <Td
+                  select={{
+                    rowIndex,
+                    isSelected: isRowSelected(row.key),
+                    onSelect: (_event, isSelecting) =>
+                      onToggleSelectRow(row.key, isSelecting),
+                    isDisabled: row.isUnselectable,
+                  }}
+                />
+              )}
               {row.cells.map((cell, cellIndex) => (
                 <Td key={cellIndex} dataLabel={columns[cellIndex].title}>
                   {cell}
                 </Td>
               ))}
+              <Td isActionCell>
+                {rowActions ? (
+                  <ActionsColumn items={rowActions} isDisabled={false} />
+                ) : null}
+              </Td>
             </Tr>
             {isExpandable && (
               <Tr isExpanded={isRowExpanded(row.key)}>
@@ -162,7 +196,7 @@ const BaseTableBody = ({
 };
 
 BaseTableBody.propTypes = {
-  isLoading: propTypes.bool.isRequired,
+  isLoading: propTypes.bool,
   columns: propTypes.arrayOf(
     propTypes.shape({
       title: propTypes.node.isRequired,
@@ -178,10 +212,20 @@ BaseTableBody.propTypes = {
     })
   ).isRequired,
   isExpandable: propTypes.bool,
+  isSelectable: propTypes.bool,
   emptyState: propTypes.node.isRequired,
   sortParam: propTypes.string,
   perPage: propTypes.number,
   apply: propTypes.func,
+  selectedRows: propTypes.array,
+  setSelectedRows: propTypes.func,
+  rowActions: propTypes.arrayOf(
+    propTypes.shape({
+      label: propTypes.string,
+      onClick: propTypes.func,
+      props: propTypes.object,
+    })
+  ),
 };
 
 export default BaseTableBody;

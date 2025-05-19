@@ -7,7 +7,12 @@ import PlainTableRaw from './Examples/PlainTable.jsx?raw';
 
 import LoadingTable from './Examples/LoadingTable';
 import LoadingTableRaw from './Examples/LoadingTable.jsx?raw';
+
 import ManageableColumnsTable from './Examples/ManageableColumnsTable';
+import ManageableColumnsTableRaw from './Examples/ManageableColumnsTable.jsx?raw';
+
+import ExpandableTable from './Examples/ExpandableTable';
+import ExpandableTableRaw from './Examples/ExpandableTable.jsx?raw';
 
 function App() {
   return (
@@ -32,6 +37,11 @@ function App() {
             <div>
               <a href="#manageable-columns">
                 Manageable columns
+              </a>
+            </div>
+            <div>
+              <a href="#expandable-table">
+                Expandable table
               </a>
             </div>
           </TextContent>
@@ -111,9 +121,48 @@ function App() {
                 </TextContent>
               </StackItem>
               <StackItem>
-                <div style={{ width: 1000, border: "solid 2px gray" }}>
-                  <ManageableColumnsTable />
-                </div>
+                <Split hasGutter>
+                  <SplitItem>
+                    <div style={{ width: 800, border: "solid 2px gray" }}>
+                      <ManageableColumnsTable />
+                    </div>
+                  </SplitItem>
+                  <SplitItem>
+                    <CodeEditor
+                      code={ManageableColumnsTableRaw}
+                      language={'javascript'}
+                      height="620px"
+                      width="800px"
+                    />
+                  </SplitItem>
+                </Split>
+              </StackItem>
+              <StackItem>
+                <TextContent>
+                  <Text component="h2" id="manageable-columns">
+                    Expandable table
+                  </Text>
+                  <Text>
+                    Make sure your row mapper adds unique key to each row.
+                  </Text>
+                </TextContent>
+              </StackItem>
+              <StackItem>
+                <Split hasGutter>
+                  <SplitItem>
+                    <div style={{ width: 800, border: "solid 2px gray" }}>
+                      <ExpandableTable />
+                    </div>
+                  </SplitItem>
+                  <SplitItem>
+                    <CodeEditor
+                      code={ExpandableTableRaw}
+                      language={'javascript'}
+                      height="620px"
+                      width="800px"
+                    />
+                  </SplitItem>
+                </Split>
               </StackItem>
             </Stack>
           </Bullseye>
