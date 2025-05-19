@@ -1,5 +1,5 @@
 import '@patternfly/react-core/dist/styles/base.css';
-import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card } from '@patternfly/react-core'
+import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card, GridItem, Grid } from '@patternfly/react-core'
 import { CodeEditor } from '@patternfly/react-code-editor';
 import { Table, Td, Th, Tr } from '@patternfly/react-table';
 
@@ -101,213 +101,212 @@ function App() {
         </Card>
       </SplitItem>
       <SplitItem>
-        <Card style={{ height: '100%', padding: 16, marginTop: 16, marginRight: 16, marginBottom: 16, marginLeft: 200 }}>
+        <Card style={{ height: '100%', width: 'calc(100vw - 232px)', padding: 16, marginTop: 16, marginRight: 16, marginBottom: 16, marginLeft: 200 }}>
           <Bullseye>
-            <Stack hasGutter>
-              <StackItem>
-                <TextContent>
-                  <Text component="h1">
-                    Declarative Table Examples
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2">
-                    Available Props
-                  </Text>
-                  <Text>
-                    <Table variant="compact">
+          <Stack hasGutter style={{ maxWidth: 1800 }}>
+            <StackItem>
+              <TextContent>
+                <Text component="h1">
+                  Declarative Table Examples
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2">
+                  Available Props
+                </Text>
+                <Text>
+                  <Table variant="compact">
+                    <Tr>
+                      <Th>
+                        <b>Name</b>
+                      </Th>
+                      <Th>
+                        <b>Type</b>
+                      </Th>
+                      <Th>
+                        <b>Default value</b>
+                      </Th>
+                      <Th>
+                        <b>Description</b>
+                      </Th>
+                    </Tr>
+                    {PROP_INFO.map(prop => (
                       <Tr>
-                        <Th>
-                          <b>Name</b>
-                        </Th>
-                        <Th>
-                          <b>Type</b>
-                        </Th>
-                        <Th>
-                          <b>Default value</b>
-                        </Th>
-                        <Th>
-                          <b>Description</b>
-                        </Th>
+                        <Td>
+                          <b><code>{prop.name}</code></b>
+                        </Td>
+                        <Td>
+                          <code>{prop.type}</code>
+                        </Td>
+                        <Td>
+                          <code>{prop.defaultValue}</code>
+                        </Td>
+                        <Td>
+                          <span dangerouslySetInnerHTML={{ __html: prop.description }} />
+                        </Td>
                       </Tr>
-                      {PROP_INFO.map(prop => (
-                        <Tr>
-                          <Td>
-                            <b><code>{prop.name}</code></b>
-                          </Td>
-                          <Td>
-                            <code>{prop.type}</code>
-                          </Td>
-                          <Td>
-                            <code>{prop.defaultValue}</code>
-                          </Td>
-                          <Td>
-                            <span dangerouslySetInnerHTML={{ __html: prop.description }} />
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Table>
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2">
-                    Table Usage Assumptions
-                  </Text>
-                  <Text>
-                    The following points highlight the design decisions made to simplify the interface of the table:
-                    <ol>
-                      <li>Either none or all rows are expandable. You cannot selectively make only some columns expandable.</li>
-                      <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
-                      <li>Either none or all rows have actions. You cannot selectively make only some rows have visible actions by hiding or disabling the row action kebab.</li>
-                      <li>Rows can only have actions within the kebab menu on the right side. There can be no buttons outside of the kebab menu.</li>
-                      <li>TODO: Hierarchical filter (OS filter)</li>
-                      <li>TODO: Localstorage saving of column management</li>
-                    </ol>
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2" id="plain-table">
-                    Plain table
-                  </Text>
-                  <Text>
-                    To get the most basic table, only three props are required to be supplied:
-                    <ol>
-                      <li>
-                        rows
-                      </li>
-                      <li>
-                        columns
-                      </li>
-                      <li>
-                        meta -- pagination properties consisting of properties offset, limit and total_items; some backends use page and page_size and in that case limit = page_size and offset = (page - 1) * page_size
-                      </li>
-                    </ol>
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <Split hasGutter>
-                  <SplitItem>
-                    <div style={{ width: 800, border: "solid 2px gray" }}>
-                      <PlainTable />
-                    </div>
-                  </SplitItem>
-                  <SplitItem>
-                    <CodeEditor
-                      code={PlainTableRaw}
-                      language={'javascript'}
-                      height="620px"
-                      width="800px"
-                    />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2" id="loading-table">
-                    Loading table
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <Split hasGutter>
-                  <SplitItem>
-                    <div style={{ width: 800, border: "solid 2px gray" }}>
-                      <LoadingTable />
-                    </div>
-                  </SplitItem>
-                  <SplitItem>
-                    <CodeEditor
-                      code={LoadingTableRaw}
-                      language={'javascript'}
-                      height="620px"
-                      width="800px"
-                    />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2" id="manageable-columns">
-                    Manageable columns
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <Split hasGutter>
-                  <SplitItem>
-                    <div style={{ width: 800, border: "solid 2px gray" }}>
-                      <ManageableColumnsTable />
-                    </div>
-                  </SplitItem>
-                  <SplitItem>
-                    <CodeEditor
-                      code={ManageableColumnsTableRaw}
-                      language={'javascript'}
-                      height="620px"
-                      width="800px"
-                    />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2" id="expandable-table">
-                    Expandable table
-                  </Text>
-                  <Text>
-                    Make sure your row mapper adds unique key to each row.
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <Split hasGutter>
-                  <SplitItem>
-                    <div style={{ width: 800, border: "solid 2px gray" }}>
-                      <ExpandableTable />
-                    </div>
-                  </SplitItem>
-                  <SplitItem>
-                    <CodeEditor
-                      code={ExpandableTableRaw}
-                      language={'javascript'}
-                      height="620px"
-                      width="800px"
-                    />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-              <StackItem>
-                <TextContent>
-                  <Text component="h2" id="selectable-table">
-                    Selectable table
-                  </Text>
-                </TextContent>
-              </StackItem>
-              <StackItem>
-                <Split hasGutter>
-                  <SplitItem>
-                    <div style={{ width: 800, border: "solid 2px gray" }}>
-                      <SelectableTable />
-                    </div>
-                  </SplitItem>
-                  <SplitItem>
-                    <CodeEditor
-                      code={SelectableTableRaw}
-                      language={'javascript'}
-                      height="620px"
-                      width="800px"
-                    />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-            </Stack>
+                    ))}
+                  </Table>
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2">
+                  Table Usage Assumptions
+                </Text>
+                <Text>
+                  The following points highlight the design decisions made to simplify the interface of the table:
+                  <ol>
+                    <li>Either none or all rows are expandable. You cannot selectively make only some columns expandable.</li>
+                    <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
+                    <li>Either none or all rows have actions. You cannot selectively make only some rows have visible actions by hiding or disabling the row action kebab.</li>
+                    <li>Rows can only have actions within the kebab menu on the right side. There can be no buttons outside of the kebab menu.</li>
+                    <li>TODO: Hierarchical filter (OS filter)</li>
+                    <li>TODO: Localstorage saving of column management</li>
+                  </ol>
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2" id="plain-table">
+                  Plain table
+                </Text>
+                <Text>
+                  To get the most basic table, only three props are required to be supplied:
+                  <ol>
+                    <li>
+                      rows
+                    </li>
+                    <li>
+                      columns
+                    </li>
+                    <li>
+                      meta -- pagination properties consisting of properties offset, limit and total_items; some backends use page and page_size and in that case limit = page_size and offset = (page - 1) * page_size
+                    </li>
+                  </ol>
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <Grid hasGutter span={12}>
+                <GridItem xl={6} lg={12}>
+                  <div style={{ border: "solid 2px gray" }}>
+                    <PlainTable />
+                  </div>
+                </GridItem>
+                <GridItem xl={6} lg={12}>
+                  <CodeEditor
+                    code={PlainTableRaw}
+                    language={'javascript'}
+                    height="620px"
+                  />
+                </GridItem>
+              </Grid>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2" id="loading-table">
+                  Loading table
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <Grid hasGutter span={12}>
+                <GridItem xl={6} lg={12}>
+                  <div style={{ border: "solid 2px gray" }}>
+                    <LoadingTable />
+                  </div>
+                </GridItem>
+                <GridItem xl={6} lg={12}>
+                  <CodeEditor
+                    code={LoadingTableRaw}
+                    language={'javascript'}
+                    height="620px"
+                    width="800px"
+                  />
+                </GridItem>
+              </Grid>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2" id="manageable-columns">
+                  Manageable columns
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <Grid hasGutter span={12}>
+                <GridItem xl={6} lg={12}>
+                  <div style={{ border: "solid 2px gray" }}>
+                    <ManageableColumnsTable />
+                  </div>
+                </GridItem>
+                <GridItem xl={6} lg={12}>
+                  <CodeEditor
+                    code={ManageableColumnsTableRaw}
+                    language={'javascript'}
+                    height="620px"
+                    width="800px"
+                  />
+                </GridItem>
+              </Grid>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2" id="expandable-table">
+                  Expandable table
+                </Text>
+                <Text>
+                  Make sure your row mapper adds unique key to each row.
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <Grid hasGutter span={12}>
+                <GridItem xl={6} lg={12}>
+                  <div style={{ border: "solid 2px gray" }}>
+                    <ExpandableTable />
+                  </div>
+                </GridItem>
+                <GridItem xl={6} lg={12}>
+                  <CodeEditor
+                    code={ExpandableTableRaw}
+                    language={'javascript'}
+                    height="620px"
+                    width="800px"
+                  />
+                </GridItem>
+              </Grid>
+            </StackItem>
+            <StackItem>
+              <TextContent>
+                <Text component="h2" id="selectable-table">
+                  Selectable table
+                </Text>
+              </TextContent>
+            </StackItem>
+            <StackItem>
+              <Grid hasGutter span={12}>
+                <GridItem xl={6} lg={12}>
+                  <div style={{ border: "solid 2px gray" }}>
+                    <SelectableTable />
+                  </div>
+                </GridItem>
+                <GridItem xl={6} lg={12}>
+                  <CodeEditor
+                    code={SelectableTableRaw}
+                    language={'javascript'}
+                    height="620px"
+                    width="800px"
+                  />
+                </GridItem>
+              </Grid>
+            </StackItem>
+          </Stack>
           </Bullseye>
         </Card>
       </SplitItem>
