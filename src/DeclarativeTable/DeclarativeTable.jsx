@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
-import BaseTableBody from './BaseTableBody';
-import BaseTableToolbar from './BaseTableToolbar';
-import BaseTableFooter from './BaseTableFooter';
+import DeclarativeTableBody from './DeclarativeTableBody';
+import DeclarativeTableToolbar from './DeclarativeTableToolbar';
+import DeclarativeTableFooter from './DeclarativeTableFooter';
 import ErrorHandler from './ErrorHandler';
 import { useColumnManagement } from './hooks';
 import { Button, ButtonVariant } from '@patternfly/react-core';
 import { ColumnsIcon } from '@patternfly/react-icons';
 
-const BaseTable = ({
+const DeclarativeTable = ({
   isLoading,
   isExpandable,
   isSelectable,
@@ -39,7 +39,7 @@ const BaseTable = ({
   return (
     <ErrorHandler error={error}>
       {ColumnManagementModal}
-      <BaseTableToolbar
+      <DeclarativeTableToolbar
         isLoading={isLoading}
         isSelectable={isSelectable}
         rows={rows}
@@ -68,7 +68,7 @@ const BaseTable = ({
         fetchBulk={fetchBulk}
         actions={actions}
       />
-      <BaseTableBody
+      <DeclarativeTableBody
         isLoading={isLoading}
         columns={columns.filter((column) => !areColumnsManageable || column.isShown)}
         rows={rows.map((row) => ({
@@ -85,7 +85,7 @@ const BaseTable = ({
         setSelectedRows={setSelectedRows}
         rowActions={rowActions}
       />
-      <BaseTableFooter
+      <DeclarativeTableFooter
         isLoading={isLoading}
         page={offset / limit + 1}
         perPage={limit}
@@ -96,7 +96,7 @@ const BaseTable = ({
   );
 };
 
-BaseTable.propTypes = {
+DeclarativeTable.propTypes = {
   isLoading: propTypes.bool,
   columns: propTypes.arrayOf(
     propTypes.shape({
@@ -148,4 +148,4 @@ BaseTable.propTypes = {
   ),
 };
 
-export default BaseTable;
+export default DeclarativeTable;

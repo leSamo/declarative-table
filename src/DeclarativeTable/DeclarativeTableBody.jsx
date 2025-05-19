@@ -15,7 +15,7 @@ import { TableVariant } from '@patternfly/react-table';
 import { DEFAULT_LIMIT } from './constants';
 import { SkeletonTable } from '@patternfly/react-component-groups';
 
-const BaseTableBody = ({
+const DeclarativeTableBody = ({
   isLoading,
   columns,
   rows,
@@ -195,7 +195,7 @@ const BaseTableBody = ({
   );
 };
 
-BaseTableBody.propTypes = {
+DeclarativeTableBody.propTypes = {
   isLoading: propTypes.bool,
   columns: propTypes.arrayOf(
     propTypes.shape({
@@ -228,4 +228,4 @@ BaseTableBody.propTypes = {
   ),
 };
 
-export default BaseTableBody;
+export default DeclarativeTableBody;

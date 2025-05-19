@@ -1,4 +1,4 @@
-import BaseTable from "../DeclarativeTable/BaseTable";
+import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
 const LoadingTable = () => {
 
@@ -45,7 +45,7 @@ const LoadingTable = () => {
     });
 
     return (
-        <BaseTable
+        <DeclarativeTable
             isLoading
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BaseTable from "../DeclarativeTable/BaseTable";
+import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
 const ManageableColumnsTable = () => {
     const TABLE_COLUMNS = [
@@ -54,7 +54,7 @@ const ManageableColumnsTable = () => {
     });
 
     return (
-        <BaseTable
+        <DeclarativeTable
             areColumnsManageable
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={columnMgmtColumns}

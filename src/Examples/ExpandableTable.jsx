@@ -1,4 +1,4 @@
-import BaseTable from "../DeclarativeTable/BaseTable";
+import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
 const ExpandableTable = () => {
 
@@ -7,16 +7,19 @@ const ExpandableTable = () => {
             "Common Name": "Oak",
             "Scientific Name (Genus)": "Quercus",
             "Primary Type": "Deciduous",
+            "Key Characteristics / Examples": "Produces acorns, strong hardwood, many species (Red Oak, White Oak)"
         },
         {
             "Common Name": "Maple",
             "Scientific Name (Genus)": "Acer",
             "Primary Type": "Deciduous",
+            "Key Characteristics / Examples": "Often have vibrant fall colors, winged seeds (samaras), some produce sap for syrup (Sugar Maple)"
         },
         {
             "Common Name": "Pine",
             "Scientific Name (Genus)": "Pinus",
             "Primary Type": "Coniferous",
+            "Key Characteristics / Examples": "Evergreen, cone-bearing, important for timber (Scots Pine, White Pine)"
         },
     ];
 
@@ -41,11 +44,12 @@ const ExpandableTable = () => {
             row["Scientific Name (Genus)"],
             row["Primary Type"]
         ],
-        key: row["Common Name"]
+        key: row["Common Name"],
+        expandableContent: row["Key Characteristics / Examples"]
     });
 
     return (
-        <BaseTable
+        <DeclarativeTable
             isExpandable
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}

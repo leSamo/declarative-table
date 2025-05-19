@@ -4,7 +4,7 @@ import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/Prima
 import { Skeleton } from '@patternfly/react-core';
 import { uniq } from 'lodash';
 
-const BaseTableToolbar = ({
+const DeclarativeTableToolbar = ({
   isLoading,
   isSelectable,
   rows,
@@ -103,7 +103,7 @@ const BaseTableToolbar = ({
   );
 };
 
-BaseTableToolbar.propTypes = {
+DeclarativeTableToolbar.propTypes = {
   isLoading: propTypes.bool,
   isSelectable: propTypes.bool,
   rows: propTypes.arrayOf(
@@ -144,4 +144,4 @@ BaseTableToolbar.propTypes = {
   ),
 };
 
-export default BaseTableToolbar;
+export default DeclarativeTableToolbar;

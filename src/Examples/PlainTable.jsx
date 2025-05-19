@@ -1,4 +1,4 @@
-import BaseTable from "../DeclarativeTable/BaseTable";
+import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
 const PlainTable = () => {
 
@@ -45,7 +45,7 @@ const PlainTable = () => {
     });
 
     return (
-        <BaseTable
+        <DeclarativeTable
             rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}
             meta={{
