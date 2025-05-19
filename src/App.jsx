@@ -1,6 +1,7 @@
-import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card } from '@patternfly/react-core'
 import '@patternfly/react-core/dist/styles/base.css';
+import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card } from '@patternfly/react-core'
 import { CodeEditor } from '@patternfly/react-code-editor';
+import { Table, Td, Th, Tr } from '@patternfly/react-table';
 
 import PlainTable from './Examples/PlainTable';
 import PlainTableRaw from './Examples/PlainTable.jsx?raw';
@@ -16,6 +17,33 @@ import ExpandableTableRaw from './Examples/ExpandableTable.jsx?raw';
 
 import SelectableTable from './Examples/SelectableTable';
 import SelectableTableRaw from './Examples/SelectableTable.jsx?raw';
+
+const PROP_INFO = [
+  {
+    name: 'isLoading',
+    type: 'boolean',
+    defaultValue: 'false',
+    description: 'If true substitutes the table with skeleton table; columns and meta.limit props are important since they influence the look of the skeleton table.'
+  },
+  {
+    name: 'isExpandable',
+    type: 'boolean',
+    defaultValue: 'false',
+    description: 'If true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> prop in the row mapper.'
+  },
+  {
+    name: 'isSelectable',
+    type: 'boolean',
+    defaultValue: 'false',
+    description: 'If true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action.'
+  },
+  {
+    name: 'areColumnsManageable',
+    type: 'boolean',
+    defaultValue: 'false',
+    description: 'If true adds a "Manage columns" button to the toolbar, the modal allows user to selectively hide and show columns; Requires setting up of <code>columns.isShown</code> and <code>columns.isShownByDefault</code>; optionally <code>columns.isUntoggleable</code> can be used.'
+  },
+]
 
 function App() {
   return (
@@ -71,11 +99,38 @@ function App() {
                     Available Props
                   </Text>
                   <Text>
-                    <ul>
-                      <li><code><b>isLoading</b> : boolean</code> -- if true substitutes the table with skeleton table; columns and meta.limit props are important since they influence the look of the skeleton table</li>
-                      <li><code><b>isExpandable</b> : boolean</code> -- if true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> prop in the row mapper.</li>
-                      <li><code><b>isSelectable</b> : boolean</code> -- if true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action.</li>
-                    </ul>
+                    <Table variant="compact">
+                      <Tr>
+                        <Th>
+                          <b>Name</b>
+                        </Th>
+                        <Th>
+                          <b>Type</b>
+                        </Th>
+                        <Th>
+                          <b>Default value</b>
+                        </Th>
+                        <Th>
+                          <b>Description</b>
+                        </Th>
+                      </Tr>
+                      {PROP_INFO.map(prop => (
+                        <Tr>
+                          <Td>
+                            <b><code>{prop.name}</code></b>
+                          </Td>
+                          <Td>
+                            <code>{prop.type}</code>
+                          </Td>
+                          <Td>
+                            <code>{prop.defaultValue}</code>
+                          </Td>
+                          <Td>
+                            <span dangerouslySetInnerHTML={{ __html: prop.description }} />
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Table>
                   </Text>
                 </TextContent>
               </StackItem>
@@ -91,6 +146,8 @@ function App() {
                       <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
                       <li>Either none or all rows have actions. You cannot selectively make only some rows have visible actions by hiding or disabling the row action kebab.</li>
                       <li>Rows can only have actions within the kebab menu on the right side. There can be no buttons outside of the kebab menu.</li>
+                      <li>TODO: Hierarchical filter (OS filter)</li>
+                      <li>TODO: Localstorage saving of column management</li>
                     </ol>
                   </Text>
                 </TextContent>
