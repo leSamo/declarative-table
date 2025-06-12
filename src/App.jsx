@@ -1,4 +1,6 @@
 import '@patternfly/react-core/dist/styles/base.css';
+import './style.css';
+
 import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card, GridItem, Grid } from '@patternfly/react-core'
 import { CodeEditor } from '@patternfly/react-code-editor';
 import { Table, Td, Th, Tr } from '@patternfly/react-table';
@@ -28,43 +30,43 @@ const PROP_INFO = [
     name: 'isLoading',
     type: 'boolean',
     defaultValue: 'false',
-    description: 'If true substitutes the table with skeleton table; columns and meta.limit props are important since they influence the look of the skeleton table.'
+    description: <p>If true substitutes the table with skeleton table; <code>columns</code> and <code>meta.limit</code> props are important since they influence the look of the skeleton table.</p>
   },
   {
     name: 'isExpandable',
     type: 'boolean',
     defaultValue: 'false',
-    description: 'If true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> prop in the row mapper.'
+    description: <p>If true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> prop in the row mapper.</p>
   },
   {
     name: 'isSelectable',
     type: 'boolean',
     defaultValue: 'false',
-    description: 'If true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action.'
+    description: <p>If true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action.</p>
   },
   {
     name: 'areColumnsManageable',
     type: 'boolean',
     defaultValue: 'false',
-    description: 'If true adds a "Manage columns" button to the toolbar, the modal allows user to selectively hide and show columns; Requires setting up of <code>columns.isShown</code> and <code>columns.isShownByDefault</code>; optionally <code>columns.isUntoggleable</code> can be used.'
+    description: <p>If true adds a "Manage columns" button to the toolbar, the modal allows user to selectively hide and show columns; Requires setting up of <code>columns.isShown</code> and <code>columns.isShownByDefault</code>; optionally <code>columns.isUntoggleable</code> can be used.</p>
   },
   {
     name: 'emptyState',
     type: 'React.ReactNode',
     defaultValue: 'undefined',
-    description: 'Component to be shown instead of rows when the length of rows array is 0'
+    description: <p>Component to be shown instead of rows when the length of <code>rows</code> array is 0</p>
   },
   {
     name: 'filterConfig',
     type: 'array',
     defaultValue: '[]',
-    description: 'Used to define filters displayed in the toolbar. Needs to be used with conjunction with setupFilters hook.'
+    description: <p>Used to define filters displayed in the toolbar. Needs to be used with conjunction with <code>setupFilters</code> hook.</p>
   },
   {
     name: 'activeFiltersConfig',
     type: 'array',
     defaultValue: '[]',
-    description: 'Used to display filter chips in the toolbar. Needs to be used with conjunction with setupFilters hook.'
+    description: <p>Used to display filter chips in the toolbar. Needs to be used with conjunction with <code>setupFilters</code> hook.</p>
   }
 ]
 
@@ -215,7 +217,7 @@ function App() {
                               <code>{prop.defaultValue}</code>
                             </Td>
                             <Td>
-                              <span dangerouslySetInnerHTML={{ __html: prop.description }} />
+                              {prop.description}
                             </Td>
                           </Tr>
                         ))}
