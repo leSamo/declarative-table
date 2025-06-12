@@ -21,6 +21,7 @@ import SelectableTableRaw from './Examples/SelectableTable.jsx?raw';
 import FilteringTable from './Examples/FilteringTable';
 import FilteringTableRaw from './Examples/FilteringTable.jsx?raw';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Fragment } from 'react';
 
 const PROP_INFO = [
   {
@@ -67,6 +68,80 @@ const PROP_INFO = [
   }
 ]
 
+const EXAMPLES = [
+  {
+    name: 'Plain Table',
+    description: (
+      <Text>
+        To get the most basic table, only three props are required to be supplied:
+        <ol>
+          <li>
+            rows
+          </li>
+          <li>
+            columns
+          </li>
+          <li>
+            meta -- pagination properties consisting of properties offset, limit and total_items; some backends use page and page_size and in that case limit = page_size and offset = (page - 1) * page_size
+          </li>
+        </ol>
+      </Text>
+    ),
+    component: PlainTable,
+    code: PlainTableRaw,
+  },
+  {
+    name: 'Loading Table',
+    description: (
+      <Text>
+        Shows a skeleton table while data is loading. Set <code>isLoading</code> to <code>true</code> to enable this state.
+      </Text>
+    ),
+    component: LoadingTable,
+    code: LoadingTableRaw,
+  },
+  {
+    name: 'Manageable Columns Table',
+    description: (
+      <Text>
+        Allows users to show or hide columns using the "Manage columns" button. Requires <code>areColumnsManageable</code> and column visibility props.
+      </Text>
+    ),
+    component: ManageableColumnsTable,
+    code: ManageableColumnsTableRaw,
+  },
+  {
+    name: 'Expandable Table',
+    description: (
+      <Text>
+        Adds expand toggles to each row. Ensure your row mapper adds a unique key to each row and provides <code>expandableContent</code>.
+      </Text>
+    ),
+    component: ExpandableTable,
+    code: ExpandableTableRaw,
+  },
+  {
+    name: 'Selectable Table',
+    description: (
+      <Text>
+        Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>.
+      </Text>
+    ),
+    component: SelectableTable,
+    code: SelectableTableRaw,
+  },
+  {
+    name: 'Filtering Table',
+    description: (
+      <Text>
+        Adds filter controls to the toolbar. Use <code>filterConfig</code> and <code>activeFiltersConfig</code> with <code>setupFilters</code> hook.
+      </Text>
+    ),
+    component: FilteringTable,
+    code: FilteringTableRaw,
+  },
+];
+
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -86,36 +161,13 @@ function App() {
               <Text component="h2">
                 Table of contents
               </Text>
-              <div>
-                <a href="#plain-table">
-                  Plain table
-                </a>
-              </div>
-              <div>
-                <a href="#loading-table">
-                  Loading table
-                </a>
-              </div>
-              <div>
-                <a href="#manageable-columns">
-                  Manageable columns
-                </a>
-              </div>
-              <div>
-                <a href="#expandable-table">
-                  Expandable table
-                </a>
-              </div>
-              <div>
-                <a href="#selectable-table">
-                  Selectable table
-                </a>
-              </div>
-              <div>
-                <a href="#filtering-table">
-                  Filtering table
-                </a>
-              </div>
+              {EXAMPLES.map(example => (
+                <div key={example.name}>
+                  <a href={`#${example.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    {example.name}
+                  </a>
+                </div>
+              ))}
             </TextContent>
           </Card>
         </SplitItem>
@@ -152,7 +204,7 @@ function App() {
                           </Th>
                         </Tr>
                         {PROP_INFO.map(prop => (
-                          <Tr>
+                          <Tr key={prop.name}>
                             <Td>
                               <b><code>{prop.name}</code></b>
                             </Td>
@@ -189,166 +241,38 @@ function App() {
                     </Text>
                   </TextContent>
                 </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="plain-table">
-                      Plain table
-                    </Text>
-                    <Text>
-                      To get the most basic table, only three props are required to be supplied:
-                      <ol>
-                        <li>
-                          rows
-                        </li>
-                        <li>
-                          columns
-                        </li>
-                        <li>
-                          meta -- pagination properties consisting of properties offset, limit and total_items; some backends use page and page_size and in that case limit = page_size and offset = (page - 1) * page_size
-                        </li>
-                      </ol>
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <PlainTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={PlainTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="loading-table">
-                      Loading table
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <LoadingTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={LoadingTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                        width="800px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="manageable-columns">
-                      Manageable columns
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <ManageableColumnsTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={ManageableColumnsTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                        width="800px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="expandable-table">
-                      Expandable table
-                    </Text>
-                    <Text>
-                      Make sure your row mapper adds unique key to each row.
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <ExpandableTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={ExpandableTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                        width="800px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="selectable-table">
-                      Selectable table
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <SelectableTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={SelectableTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                        width="800px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
-                <StackItem>
-                  <TextContent>
-                    <Text component="h2" id="filtering-table">
-                      Filtering table
-                    </Text>
-                  </TextContent>
-                </StackItem>
-                <StackItem>
-                  <Grid hasGutter span={12}>
-                    <GridItem xl={6} lg={12}>
-                      <div style={{ border: "solid 2px gray" }}>
-                        <FilteringTable />
-                      </div>
-                    </GridItem>
-                    <GridItem xl={6} lg={12}>
-                      <CodeEditor
-                        code={FilteringTableRaw}
-                        language={'javascript'}
-                        height="620px"
-                        width="800px"
-                      />
-                    </GridItem>
-                  </Grid>
-                </StackItem>
+                {EXAMPLES.map(example => (
+                  <Fragment key={example.name}>
+                    <StackItem>
+                      <TextContent>
+                        <Text
+                          component="h2"
+                          id={example.name.toLowerCase().replace(/\s+/g, '-')}
+                        >
+                          {example.name}
+                        </Text>
+                        {example.description}
+                      </TextContent>
+                    </StackItem>
+                    <StackItem>
+                      <Grid hasGutter span={12}>
+                        <GridItem xl={6} lg={12}>
+                          <div style={{ border: "solid 2px gray" }}>
+                            <example.component />
+                          </div>
+                        </GridItem>
+                        <GridItem xl={6} lg={12}>
+                          <CodeEditor
+                            code={example.code}
+                            language={'javascript'}
+                            height="620px"
+                            width="800px"
+                          />
+                        </GridItem>
+                      </Grid>
+                    </StackItem>
+                  </Fragment>
+                ))}
               </Stack>
             </Bullseye>
           </Card>
