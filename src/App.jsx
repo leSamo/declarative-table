@@ -68,7 +68,14 @@ const PROP_INFO = [
 ]
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: 0
+      }
+    }
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

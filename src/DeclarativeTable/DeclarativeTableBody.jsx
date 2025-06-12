@@ -106,7 +106,7 @@ const DeclarativeTableBody = ({
   return isLoading ? (
     <SkeletonTable
       variant={TableVariant.compact}
-      rows={perPage || DEFAULT_LIMIT}
+      rowsCount={perPage || DEFAULT_LIMIT}
       columns={columnHeaders}
       sortBy={createSortBy(columns, sortParam)}
       isExpandable={isExpandable}

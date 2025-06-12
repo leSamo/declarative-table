@@ -9,6 +9,7 @@ const ExpandableTable = () => {
         limit: 10,
         offset: 0
     };
+
     const [params, setParams] = useState(defaultParams);
 
     const queryClient = useQueryClient();
@@ -21,23 +22,11 @@ const ExpandableTable = () => {
 
     const { data: queryData, isFetching } = useQuery({
         queryKey: ['test', params],
-        queryFn: async () => {
-            const result = await fetchData(params);
-            return result;
-        },
-        initialData: {
-            data: [],
-            meta: defaultParams
-        },
-        staleTime: 0,
-        refetchOnWindowFocus: false,
+        queryFn: () => fetchData(params),
+        initialData: { data: [], meta: defaultParams }
     });
 
-    console.log("queryData:", queryData);
-
     const { data, meta } = queryData || { data: [], meta: defaultParams};
-
-    console.log("Table State:", params);
 
     const TABLE_COLUMNS = [
         {

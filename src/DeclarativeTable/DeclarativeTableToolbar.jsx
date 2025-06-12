@@ -27,8 +27,6 @@ const DeclarativeTableToolbar = ({
       setSelectedRows((selectedRows) => uniq([...selectedRows, keys]))
     );
 
-    console.log(">>>", filterConfig);
-
   return (
     <PrimaryToolbar
       pagination={
