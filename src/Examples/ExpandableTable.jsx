@@ -2,31 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import fetchData from "../MockBackend/MockBackend";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 
 const ExpandableTable = () => {
-    const defaultParams = {
+    const DEFAULT_PARAMS = {
         limit: 10,
         offset: 0
     };
 
-    const [params, setParams] = useState(defaultParams);
+    const [params, apply] = useState(DEFAULT_PARAMS);
 
-    const queryClient = useQueryClient();
-
-    const apply = (newState) => {
-        console.log("Applying new state:", newState);
-        setParams(newState);
-        queryClient.invalidateQueries(['test']);
-    };
-
-    const { data: queryData, isFetching } = useQuery({
-        queryKey: ['test', params],
+    const { data: { data, meta }, isFetching } = useQuery({
+        queryKey: ['ExpandableTable', params],
         queryFn: () => fetchData(params),
-        initialData: { data: [], meta: defaultParams }
+        initialData: { data: [], meta: params }
     });
-
-    const { data, meta } = queryData || { data: [], meta: defaultParams};
 
     const TABLE_COLUMNS = [
         {
