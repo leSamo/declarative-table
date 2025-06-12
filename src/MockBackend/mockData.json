@@ -1,0 +1,134 @@
+[
+    {
+        "common_name": "Oak",
+        "scientific_genus": "Quercus",
+        "primary_type": "Deciduous",
+        "description": "A strong hardwood tree known for its lobed leaves and acorns."
+    },
+    {
+        "common_name": "Maple",
+        "scientific_genus": "Acer",
+        "primary_type": "Deciduous",
+        "description": "Famous for its distinctive leaves and sweet sap used for syrup."
+    },
+    {
+        "common_name": "Pine",
+        "scientific_genus": "Pinus",
+        "primary_type": "Coniferous",
+        "description": "Evergreen conifer with needle-like leaves and woody cones."
+    },
+    {
+        "common_name": "Birch",
+        "scientific_genus": "Betula",
+        "primary_type": "Deciduous",
+        "description": "Tree with distinctive white bark and serrated leaves."
+    },
+    {
+        "common_name": "Spruce",
+        "scientific_genus": "Picea",
+        "primary_type": "Coniferous",
+        "description": "Coniferous tree with sharp, square needles and hanging cones."
+    },
+    {
+        "common_name": "Fir",
+        "scientific_genus": "Abies",
+        "primary_type": "Coniferous",
+        "description": "Evergreen tree with flat needles and upright cones."
+    },
+    {
+        "common_name": "Beech",
+        "scientific_genus": "Fagus",
+        "primary_type": "Deciduous",
+        "description": "Smooth gray bark and simple, oval leaves characterize this tree."
+    },
+    {
+        "common_name": "Larch",
+        "scientific_genus": "Larix",
+        "primary_type": "Deciduous Conifer",
+        "description": "A rare conifer that sheds its needles in autumn."
+    },
+    {
+        "common_name": "Redwood",
+        "scientific_genus": "Sequoia",
+        "primary_type": "Coniferous",
+        "description": "World's tallest trees, with thick, reddish bark."
+    },
+    {
+        "common_name": "Willow",
+        "scientific_genus": "Salix",
+        "primary_type": "Deciduous",
+        "description": "Known for slender, flexible branches and elongated leaves."
+    },
+    {
+        "common_name": "Cherry",
+        "scientific_genus": "Prunus",
+        "primary_type": "Deciduous",
+        "description": "Flowering tree producing edible fruit and beautiful blossoms."
+    },
+    {
+        "common_name": "Cypress",
+        "scientific_genus": "Cupressus",
+        "primary_type": "Coniferous",
+        "description": "Conifer with scale-like leaves and small, round cones."
+    },
+    {
+        "common_name": "Ash",
+        "scientific_genus": "Fraxinus",
+        "primary_type": "Deciduous",
+        "description": "Tree with compound leaves and winged seeds called samaras."
+    },
+    {
+        "common_name": "Elm",
+        "scientific_genus": "Ulmus",
+        "primary_type": "Deciduous",
+        "description": "Large shade tree with serrated leaves and vase-shaped form."
+    },
+    {
+        "common_name": "Poplar",
+        "scientific_genus": "Populus",
+        "primary_type": "Deciduous",
+        "description": "Fast-growing tree with triangular leaves and cottony seeds."
+    },
+    {
+        "common_name": "Walnut",
+        "scientific_genus": "Juglans",
+        "primary_type": "Deciduous",
+        "description": "Tree valued for its edible nuts and high-quality wood."
+    },
+    {
+        "common_name": "Hickory",
+        "scientific_genus": "Carya",
+        "primary_type": "Deciduous",
+        "description": "Hardwood tree with compound leaves and edible nuts."
+    },
+    {
+        "common_name": "Sycamore",
+        "scientific_genus": "Platanus",
+        "primary_type": "Deciduous",
+        "description": "Large tree with mottled bark and broad, lobed leaves."
+    },
+    {
+        "common_name": "Hemlock",
+        "scientific_genus": "Tsuga",
+        "primary_type": "Coniferous",
+        "description": "Shade-tolerant conifer with short, flat needles."
+    },
+    {
+        "common_name": "Dogwood",
+        "scientific_genus": "Cornus",
+        "primary_type": "Deciduous",
+        "description": "Small tree or shrub with showy flowers and distinctive bark."
+    },
+    {
+        "common_name": "Cedar",
+        "scientific_genus": "Cedrus",
+        "primary_type": "Coniferous",
+        "description": "Aromatic evergreen with needle clusters and large cones."
+    },
+    {
+        "common_name": "Juniper",
+        "scientific_genus": "Juniperus",
+        "primary_type": "Coniferous",
+        "description": "Coniferous shrub or tree with scale-like leaves and berry-like cones."
+    }
+]

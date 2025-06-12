@@ -1,27 +1,43 @@
+import { useQuery } from "@tanstack/react-query";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
+import fetchData from "../MockBackend/MockBackend";
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ExpandableTable = () => {
+    const defaultParams = {
+        limit: 10,
+        offset: 0
+    };
+    const [params, setParams] = useState(defaultParams);
 
-    const TABLE_DATA = [
-        {
-            "Common Name": "Oak",
-            "Scientific Name (Genus)": "Quercus",
-            "Primary Type": "Deciduous",
-            "Key Characteristics / Examples": "Produces acorns, strong hardwood, many species (Red Oak, White Oak)"
+    const queryClient = useQueryClient();
+
+    const apply = (newState) => {
+        console.log("Applying new state:", newState);
+        setParams(newState);
+        queryClient.invalidateQueries(['test']);
+    };
+
+    const { data: queryData, isFetching } = useQuery({
+        queryKey: ['test', params],
+        queryFn: async () => {
+            const result = await fetchData(params);
+            return result;
         },
-        {
-            "Common Name": "Maple",
-            "Scientific Name (Genus)": "Acer",
-            "Primary Type": "Deciduous",
-            "Key Characteristics / Examples": "Often have vibrant fall colors, winged seeds (samaras), some produce sap for syrup (Sugar Maple)"
+        initialData: {
+            data: [],
+            meta: defaultParams
         },
-        {
-            "Common Name": "Pine",
-            "Scientific Name (Genus)": "Pinus",
-            "Primary Type": "Coniferous",
-            "Key Characteristics / Examples": "Evergreen, cone-bearing, important for timber (Scots Pine, White Pine)"
-        },
-    ];
+        staleTime: 0,
+        refetchOnWindowFocus: false,
+    });
+
+    console.log("queryData:", queryData);
+
+    const { data, meta } = queryData || { data: [], meta: defaultParams};
+
+    console.log("Table State:", params);
 
     const TABLE_COLUMNS = [
         {
@@ -40,24 +56,26 @@ const ExpandableTable = () => {
 
     const TABLE_DATA_MAPPER = (row) => ({
         cells: [
-            row["Common Name"],
-            row["Scientific Name (Genus)"],
-            row["Primary Type"]
+            row.common_name,
+            row.scientific_genus,
+            row.primary_type
         ],
-        key: row["Common Name"],
-        expandableContent: row["Key Characteristics / Examples"]
+        key: row.common_name,
+        expandableContent: row.description
     });
 
     return (
         <DeclarativeTable
+            isLoading={isFetching}
             isExpandable
-            rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
+            rows={data.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}
             meta={{
-                offset: 0,
-                limit: TABLE_DATA.length,
-                total_items: TABLE_DATA.length
+                offset: meta.offset,
+                limit: meta.limit,
+                total_items: meta.total_items
             }}
+            apply={apply}
         />
     )
 }

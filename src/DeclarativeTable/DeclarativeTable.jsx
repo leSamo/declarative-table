@@ -36,6 +36,8 @@ const DeclarativeTable = ({
     (columns) => applyColumns(columns)
   );
 
+  console.log(">>>>>>>>>>>>>>>>>>>", isLoading);
+
   return (
     <ErrorHandler error={error}>
       {ColumnManagementModal}
