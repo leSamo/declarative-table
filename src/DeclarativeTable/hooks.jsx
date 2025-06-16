@@ -8,8 +8,6 @@ import {
 import { downloadFile } from '@redhat-cloud-services/frontend-components-utilities/helpers';
 import { ColumnManagementModal } from '@patternfly/react-component-groups';
 
-// TODO: Consider moving some of these non-hook functions to constants.js or miscHelper.js
-
 export const useLocalStorage = (key) => {
   const [sessionValue, setSessionValue] = useState(localStorage.getItem(key));
 
