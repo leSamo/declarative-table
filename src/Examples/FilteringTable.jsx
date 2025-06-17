@@ -27,7 +27,7 @@ const FilteringTable = () => {
     }
 
     const { data: { data, meta }, isFetching } = useQuery({
-        queryKey: ['ExpandableTable', params],
+        queryKey: ['FilteringTable', params],
         queryFn: () => fetchData(params),
         initialData: { data: [], meta: params }
     });
@@ -58,8 +58,7 @@ const FilteringTable = () => {
             row.primary_type,
             row.count,
         ],
-        key: row.common_name,
-        expandableContent: row.description
+        key: row.common_name
     });
 
     const COUNT_FILTER_OPTIONS = [

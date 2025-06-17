@@ -1,7 +1,6 @@
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
 const PlainTable = () => {
-
     const TABLE_DATA = [
         {
             "Common Name": "Oak",

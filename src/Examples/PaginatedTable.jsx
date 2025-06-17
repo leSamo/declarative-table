@@ -1,13 +1,13 @@
 import { useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import fetchData from "../MockBackend/MockBackend";
 
-const SortingTable = () => {
+
+const PaginatedTable = () => {
     const [params, setParams] = useState({
         limit: 10,
         offset: 0,
-        sort: '-count'
     });
 
     const apply = (newParams) => {
@@ -19,7 +19,7 @@ const SortingTable = () => {
     }
 
     const { data: { data, meta }, isFetching } = useQuery({
-        queryKey: ['SortingTable', params],
+        queryKey: ['FilteringTable', params],
         queryFn: () => fetchData(params),
         initialData: { data: [], meta: params }
     });
@@ -27,26 +27,15 @@ const SortingTable = () => {
     const TABLE_COLUMNS = [
         {
             title: 'Common Name',
-            sortParam: 'common_name',
-            sortDefaultDirection: 'asc',
-            key: 'common_name',
+            key: 'common_name'
         },
         {
             title: 'Scientific Name (Genus)',
-            sortParam: 'scientific_name',
-            sortDefaultDirection: 'asc',
-            key: 'scientific_name',
+            key: 'scientific_name'
         },
         {
             title: 'Primary Type',
-            sortParam: 'primary_type',
-            sortDefaultDirection: 'asc',
-            key: 'primary_type',
-        },
-        {
-            title: 'Count',
-            sortParam: 'count',
-            key: 'count'
+            key: 'primary_type'
         }
     ];
 
@@ -54,12 +43,10 @@ const SortingTable = () => {
         cells: [
             row.common_name,
             row.scientific_name,
-            row.primary_type,
-            row.count,
+            row.primary_type
         ],
         key: row.common_name
     });
-
 
     return (
         <DeclarativeTable
@@ -70,11 +57,10 @@ const SortingTable = () => {
                 offset: meta.offset,
                 limit: meta.limit,
                 total_items: meta.total_items,
-                sort: meta.sort,
             }}
             apply={apply}
         />
     )
 }
 
-export default SortingTable;
+export default PaginatedTable;

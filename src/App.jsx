@@ -10,8 +10,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PlainTable from './Examples/PlainTable';
 import PlainTableRaw from './Examples/PlainTable.jsx?raw';
 
-import LoadingTable from './Examples/LoadingTable';
-import LoadingTableRaw from './Examples/LoadingTable.jsx?raw';
+import PaginatedTable from './Examples/PaginatedTable';
+import PaginatedTableRaw from './Examples/PaginatedTable.jsx?raw';
 
 import ManageableColumnsTable from './Examples/ManageableColumnsTable';
 import ManageableColumnsTableRaw from './Examples/ManageableColumnsTable.jsx?raw';
@@ -78,7 +78,7 @@ const EXAMPLES = [
     name: 'Plain Table',
     description: (
       <Text>
-        To get the most basic table, only three props are required to be supplied:
+        To get the most basic table with static items and no pagination, only three props are required to be supplied:
         <ol>
           <li>
             rows
@@ -96,20 +96,20 @@ const EXAMPLES = [
     code: PlainTableRaw,
   },
   {
-    name: 'Loading Table',
+    name: 'Paginated Table',
     description: (
       <Text>
-        Shows a skeleton table while data is loading. Set <code>isLoading</code> to <code>true</code> to enable this state.
+        Shows a skeleton table while data is loading by reading <code>isLoading</code> prop. Prop <code>apply</code> needs to be provided through which the table sets page and per page parameters.
       </Text>
     ),
-    component: LoadingTable,
-    code: LoadingTableRaw,
+    component: PaginatedTable,
+    code: PaginatedTableRaw,
   },
   {
     name: 'Manageable Columns Table',
     description: (
       <Text>
-        Allows users to show or hide columns using the "Manage columns" button. Requires <code>areColumnsManageable</code> and column visibility props.
+        Allows users to show or hide columns using the "Manage columns" button. Requires <code>areColumnsManageable</code> and column visibility props (<code>isShown</code>, <code>isShownByDefault</code>, <code>isUntoggleable</code>).
       </Text>
     ),
     component: ManageableColumnsTable,
