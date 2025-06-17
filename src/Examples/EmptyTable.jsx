@@ -25,7 +25,7 @@ const EmptyTable = () => {
             meta={{
                 offset: 0,
                 limit: 10,
-                total_items: 3
+                total_items: 0
             }}
             emptyState={
                 <EmptyState variant="lg">
