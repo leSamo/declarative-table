@@ -5,12 +5,12 @@ import { Unavailable } from '@redhat-cloud-services/frontend-components/Unavaila
 import { ErrorState } from '@redhat-cloud-services/frontend-components/ErrorState';
 import { NotAuthorized } from '@redhat-cloud-services/frontend-components/NotAuthorized';
 
-const ErrorHandler = ({ error, children }) => {
-  if (!error) {
+const ErrorHandler = ({ errorStatus, children }) => {
+  if (!errorStatus) {
     return children;
   }
 
-  const parsedCode = parseInt(error?.status);
+  const parsedCode = parseInt(errorStatus);
 
   switch (parsedCode) {
     case 403:
@@ -30,9 +30,7 @@ const ErrorHandler = ({ error, children }) => {
 };
 
 ErrorHandler.propTypes = {
-  error: propTypes.shape({
-    status: propTypes.oneOfType([propTypes.number, propTypes.string]),
-  }),
+  errorStatus: propTypes.oneOfType([propTypes.number, propTypes.string]),
   children: propTypes.node,
 };
 

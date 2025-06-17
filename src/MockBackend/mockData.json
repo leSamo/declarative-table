@@ -3,8 +3,7 @@
         "common_name": "Oak",
         "scientific_name": "Quercus",
         "primary_type": "Deciduous",
-        "count": 0,
-        "description": "A strong hardwood tree known for its lobed leaves and acorns."
+        "count": 0
     },
     {
         "common_name": "Maple",
@@ -38,8 +37,7 @@
         "common_name": "Fir",
         "scientific_name": "Abies",
         "primary_type": "Coniferous",
-        "count": 11,
-        "description": "Evergreen tree with flat needles and upright cones."
+        "count": 11
     },
     {
         "common_name": "Beech",
@@ -59,8 +57,7 @@
         "common_name": "Redwood",
         "scientific_name": "Sequoia",
         "primary_type": "Coniferous",
-        "count": 8,
-        "description": "World's tallest trees, with thick, reddish bark."
+        "count": 8
     },
     {
         "common_name": "Willow",
@@ -101,8 +98,7 @@
         "common_name": "Poplar",
         "scientific_name": "Populus",
         "primary_type": "Deciduous",
-        "count": 5,
-        "description": "Fast-growing tree with triangular leaves and cottony seeds."
+        "count": 5
     },
     {
         "common_name": "Walnut",
@@ -129,8 +125,7 @@
         "common_name": "Hemlock",
         "scientific_name": "Tsuga",
         "primary_type": "Coniferous",
-        "count": 6,
-        "description": "Shade-tolerant conifer with short, flat needles."
+        "count": 6
     },
     {
         "common_name": "Dogwood",

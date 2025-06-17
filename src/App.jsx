@@ -39,13 +39,13 @@ const PROP_INFO = [
     name: 'isExpandable',
     type: 'boolean',
     defaultValue: 'false',
-    description: <p>If true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> prop in the row mapper.</p>
+    description: <p>If true adds a expand toggle to each row of the table and a bulk expand toggle to the header. The content of the expandable section is controlled by <code>expandableContent</code> property in the row mapper. If <code>expandableContent</code> is not present for a row then that correspoding table row won't be expandable.</p>
   },
   {
     name: 'isSelectable',
     type: 'boolean',
     defaultValue: 'false',
-    description: <p>If true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action.</p>
+    description: <p>If true adds a select checkbox to each row of the table and a bulk select page and bulk select none action to the toolbar. Does not add bulk select all action unless <code>fetchBulk</code> prop is also defined.</p>
   },
   {
     name: 'areColumnsManageable',
@@ -99,19 +99,43 @@ const PROP_INFO = [
     name: 'columns',
     type: 'array',
     defaultValue: '[]',
-    description: <p>TODO</p>
+    description: <p>Array of column information, each column is an object with following mandatory properties <code>title</code>, <code>key</code>. Properties <code>sortParam</code> and <code>sortDefaultDirection</code> configure sorting and properties <code>isShown</code>, <code>isShownByDefault</code> and <code>isUntoggleable</code> configure column management.</p>
   },
   {
     name: 'meta',
     type: 'object',
     defaultValue: 'undefined',
-    description: <p>TODO</p>
+    description: <p>Object with pagination and sorting information. Has to contain properties <code>offset</code>, <code>limit</code>, <code>total_items</code> and optionally <code>sort</code>.</p>
   },
   {
     name: 'apply',
     type: 'function',
     defaultValue: 'undefined',
-    description: <p>TODO</p>
+    description: <p>This function should have a single parameter of type object. The values of properties of this object should replace values of current parameters. Table calls this functions upon user interaction with the table.</p>
+  },
+  {
+    name: 'errorStatus',
+    type: 'number | string',
+    defaultValue: 'undefined',
+    description: <p>If value of this prop is nullish then table is displayed as normal. When the value is a number or a string then there is an error state displayed corresponding to the HTTP status code.</p>
+  },
+  {
+    name: 'applyColumns',
+    type: 'function',
+    defaultValue: 'undefined',
+    description: <p>Callback called when user changes columns using column management modal. This function should mutate the value passed into <code>columns</code> prop.</p>
+  },
+  {
+    name: 'onExport',
+    type: 'function',
+    defaultValue: 'undefined',
+    description: <p>Used to add CSV/JSON export button to the table. The return value of <code>useExport</code> hook should be passed here.</p>
+  },
+  {
+    name: 'fetchBulk',
+    type: 'function',
+    defaultValue: 'undefined',
+    description: <p>Callback when user clicks select all items in the bulk select dropdown. If this function is not defined, then the option to select all is not present.</p>
   },
 ]
 
@@ -288,7 +312,6 @@ function App() {
                     <Text>
                       The following points highlight the design decisions made to simplify the interface of the table:
                       <ol>
-                        <li>Either none or all rows are expandable. You cannot selectively make only some columns expandable.</li>
                         <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
                         <li>Either none or all rows have actions. You cannot selectively make only some rows have visible actions by hiding or disabling the row action kebab.</li>
                         <li>Rows can only have actions within the kebab menu on the right side. There can be no buttons outside of the kebab menu.</li>

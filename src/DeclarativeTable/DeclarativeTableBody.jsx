@@ -34,12 +34,12 @@ const DeclarativeTableBody = ({
 
   useEffect(() => {
     setAreAllRowsExpanded(
-      rows.length > 0 && rows.length === expandedRows.length
+      rows.length > 0 && rows.filter(row => row.expandableContent).length === expandedRows.length
     );
   }, [expandedRows]);
 
   useEffect(() => {
-    areAllRowsExpanded && setExpandedRows(rows.map((row) => row.key));
+    areAllRowsExpanded && setExpandedRows(rows.filter(row => row.expandableContent).map((row) => row.key));
   }, [rows]);
 
   const onExpandRow = (row, isExpanding) =>
@@ -124,7 +124,7 @@ const DeclarativeTableBody = ({
                 rows.length > 0 && {
                   onToggle: () =>
                     setExpandedRows(
-                      areAllRowsExpanded ? [] : rows.map((row) => row.key)
+                      areAllRowsExpanded ? [] : rows.filter(row => row.expandableContent).map((row) => row.key)
                     ),
                   // looks like Patternfly has this condition reversed
                   areAllExpanded: !areAllRowsExpanded,
@@ -147,7 +147,7 @@ const DeclarativeTableBody = ({
         rows.map((row, rowIndex) => (
           <Tbody key={rowIndex} isExpanded={isRowExpanded(row.key)}>
             <Tr>
-              {isExpandable && (
+              {isExpandable && (row.expandableContent ? (
                 <Td
                   expand={{
                     rowIndex,
@@ -156,7 +156,7 @@ const DeclarativeTableBody = ({
                       onExpandRow(row.key, !isRowExpanded(row.key)),
                   }}
                 />
-              )}
+              ) : <Td />)}
               {isSelectable && (
                 <Td
                   select={{
@@ -179,7 +179,7 @@ const DeclarativeTableBody = ({
                 ) : null}
               </Td>
             </Tr>
-            {isExpandable && (
+            {isExpandable && row.expandableContent && (
               <Tr isExpanded={isRowExpanded(row.key)}>
                 <Td colSpan={100}>
                   <ExpandableRowContent>

@@ -18,7 +18,7 @@ const DeclarativeTable = ({
   filterConfig = {},
   activeFiltersConfig = {},
   meta,
-  error,
+  errorStatus,
   emptyState,
   apply,
   onExport,
@@ -37,7 +37,7 @@ const DeclarativeTable = ({
   );
 
   return (
-    <ErrorHandler error={error}>
+    <ErrorHandler errorStatus={errorStatus}>
       {ColumnManagementModal}
       <DeclarativeTableToolbar
         isLoading={isLoading}
@@ -118,7 +118,6 @@ DeclarativeTable.propTypes = {
   isSelectable: propTypes.bool,
   areColumnsManageable: propTypes.bool,
   emptyState: propTypes.node.isRequired,
-  sortParam: propTypes.string,
   filterConfig: propTypes.object,
   activeFiltersConfig: propTypes.object,
   meta: propTypes.shape({
@@ -127,7 +126,7 @@ DeclarativeTable.propTypes = {
     total_items: propTypes.number,
     sort: propTypes.string,
   }),
-  error: propTypes.object,
+  errorStatus: propTypes.oneOfType([propTypes.number, propTypes.string]),
   apply: propTypes.func,
   onExport: propTypes.func,
   applyColumns: propTypes.func,
