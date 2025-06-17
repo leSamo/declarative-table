@@ -1,9 +1,11 @@
 import '@patternfly/react-core/dist/styles/base.css';
 import './style.css';
 
+import { Fragment } from 'react';
 import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card, GridItem, Grid } from '@patternfly/react-core'
 import { CodeEditor } from '@patternfly/react-code-editor';
 import { Table, Td, Th, Tr } from '@patternfly/react-table';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import PlainTable from './Examples/PlainTable';
 import PlainTableRaw from './Examples/PlainTable.jsx?raw';
@@ -20,10 +22,11 @@ import ExpandableTableRaw from './Examples/ExpandableTable.jsx?raw';
 import SelectableTable from './Examples/SelectableTable';
 import SelectableTableRaw from './Examples/SelectableTable.jsx?raw';
 
+import SortingTable from './Examples/SortingTable';
+import SortingTableRaw from './Examples/SortingTable.jsx?raw';
+
 import FilteringTable from './Examples/FilteringTable';
 import FilteringTableRaw from './Examples/FilteringTable.jsx?raw';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Fragment } from 'react';
 
 const PROP_INFO = [
   {
@@ -131,6 +134,16 @@ const EXAMPLES = [
     ),
     component: SelectableTable,
     code: SelectableTableRaw,
+  },
+    {
+    name: 'Sorting Table',
+    description: (
+      <Text>
+        Adds sorting indicators to the table header. Sorting is defined using <code>sortParam</code> and <code>sortDefaultDirection</code> properties of each <code>columns</code> prop item.
+      </Text>
+    ),
+    component: SortingTable,
+    code: SortingTableRaw,
   },
   {
     name: 'Filtering Table',

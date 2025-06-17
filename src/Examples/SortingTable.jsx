@@ -2,34 +2,12 @@ import { useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from '@tanstack/react-query';
 import fetchData from "../MockBackend/MockBackend";
-import { setupFilters } from "../DeclarativeTable/hooks";
-import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
-import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
 
-const COUNT_FILTER_OPTIONS = [
-    {
-        value: 'all',
-        label: 'All',
-    },
-    {
-        value: 'zero',
-        label: 'Zero',
-    },
-    {
-        value: 'non-zero',
-        label: 'Non-zero',
-    }
-];
-
-const FilteringTable = () => {
-    const DEFAULT_FILTERS = {
-        count: 'non-zero',
-    };
-
+const SortingTable = () => {
     const [params, setParams] = useState({
         limit: 10,
         offset: 0,
-        ...DEFAULT_FILTERS
+        sort: '-count'
     });
 
     const apply = (newParams) => {
@@ -49,18 +27,25 @@ const FilteringTable = () => {
     const TABLE_COLUMNS = [
         {
             title: 'Common Name',
+            sortParam: 'common_name',
+            sortDefaultDirection: 'asc',
             key: 'common_name',
         },
         {
             title: 'Scientific Name (Genus)',
+            sortParam: 'scientific_name',
+            sortDefaultDirection: 'asc',
             key: 'scientific_name',
         },
         {
             title: 'Primary Type',
+            sortParam: 'primary_type',
+            sortDefaultDirection: 'asc',
             key: 'primary_type',
         },
         {
             title: 'Count',
+            sortParam: 'count',
             key: 'count'
         }
     ];
@@ -76,32 +61,6 @@ const FilteringTable = () => {
         expandableContent: row.description
     });
 
-    const filters = [
-        useTextFilter({
-            urlParam: 'commonName',
-            label: 'Common name',
-            placeholder: 'Search common name',
-            value: params.commonName,
-            chipLabel: 'Common name',
-            apply
-        }),
-        radioFilter({
-            urlParam: 'count',
-            label: 'Count',
-            value: params.count,
-            items: COUNT_FILTER_OPTIONS,
-            placeholder: 'Count',
-            chipLabel: 'Count',
-            apply
-        })
-    ];
-
-    const [filterConfig, activeFiltersConfig] = setupFilters(
-        filters,
-        meta,
-        DEFAULT_FILTERS,
-        apply
-    );
 
     return (
         <DeclarativeTable
@@ -112,12 +71,11 @@ const FilteringTable = () => {
                 offset: meta.offset,
                 limit: meta.limit,
                 total_items: meta.total_items,
+                sort: meta.sort,
             }}
             apply={apply}
-            filterConfig={filterConfig}
-            activeFiltersConfig={activeFiltersConfig}
         />
     )
 }
 
-export default FilteringTable;
+export default SortingTable;
