@@ -30,8 +30,15 @@ const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) =>
                     else if (count === 'non-zero') {
                         return item.count > 0;
                     }
-                    else {
+                    else if (count === 'all') {
                         return true;
+                    }
+                    else {
+                        resolve({
+                            error: { status: 400, message: `Invalid count filter: ${count}` },
+                            data: [],
+                            meta: {}
+                        });
                     }
                 });
             }
@@ -52,6 +59,13 @@ const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) =>
                         if (a[field] < b[field]) return -1 * direction;
                         if (a[field] > b[field]) return 1 * direction;
                         return 0;
+                    });
+                }
+                else {
+                    resolve({
+                        error: { status: 400, message: `Invalid sort field: ${field}` },
+                        data: [],
+                        meta: {}
                     });
                 }
             }

@@ -31,6 +31,9 @@ import SortingTableRaw from './Examples/SortingTable.jsx?raw';
 import FilteringTable from './Examples/FilteringTable';
 import FilteringTableRaw from './Examples/FilteringTable.jsx?raw';
 
+import ErrorTable from './Examples/ErrorTable';
+import ErrorTableRaw from './Examples/ErrorTable.jsx?raw';
+
 const PROP_INFO = [
   {
     name: 'isLoading',
@@ -233,6 +236,16 @@ const EXAMPLES = [
     ),
     component: FilteringTable,
     code: FilteringTableRaw,
+  },
+    {
+    name: 'Error Table',
+    description: (
+      <Text>
+        Error returned when fetching data can be passed using the <code>errorStatus</code> prop. Table will display an error state with the corresponding HTTP status code. If the value of <code>errorStatus</code> is nullish then the table is displayed as normal.
+      </Text>
+    ),
+    component: ErrorTable,
+    code: ErrorTableRaw,
   },
 ];
 

@@ -2,7 +2,7 @@ import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon } from "@p
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { CubesIcon } from "@patternfly/react-icons";
 
-const PlainTable = () => {
+const EmptyTable = () => {
     const TABLE_COLUMNS = [
         {
             title: 'Common Name',
@@ -43,4 +43,4 @@ const PlainTable = () => {
     )
 }
 
-export default PlainTable;
+export default EmptyTable;
