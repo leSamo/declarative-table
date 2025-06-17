@@ -93,6 +93,7 @@ const DeclarativeTableToolbar = ({
           '',
           ...(actions ?? []).map((action) => ({
             ...action,
+            props: typeof(action.props) === 'function' ? action.props(selectedRows) : action.props,
             onClick: (e) => action.onClick(e, selectedRows),
           })),
         ],

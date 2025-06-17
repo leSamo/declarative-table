@@ -126,10 +126,10 @@ const EXAMPLES = [
     code: ExpandableTableRaw,
   },
   {
-    name: 'Selectable Table',
+    name: 'Selectable Table With Actions',
     description: (
       <Text>
-        Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>.
+        Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>. Bulk actions can be configured using <code>actions</code> prop, and row actions using <code>rowActions</code> prop. Row actions are displayed in a kebab menu on the right side of each row.
       </Text>
     ),
     component: SelectableTable,
@@ -187,7 +187,7 @@ function App() {
           </Card>
         </SplitItem>
         <SplitItem>
-          <Card style={{ height: '100%', width: 'calc(100vw - 232px)', padding: 16, marginTop: 16, marginRight: 16, marginBottom: 16, marginLeft: 200 }}>
+          <Card style={{ height: '100%', width: 'calc(100vw - 232px)', padding: 16, marginTop: 16, marginRight: 16, marginBottom: 16, marginLeft: 252 }}>
             <Bullseye>
               <Stack hasGutter style={{ maxWidth: 1800 }}>
                 <StackItem>
@@ -281,7 +281,7 @@ function App() {
                             code={example.code}
                             language={'javascript'}
                             height="620px"
-                            width="800px"
+
                           />
                         </GridItem>
                       </Grid>

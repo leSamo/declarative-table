@@ -1,24 +1,27 @@
+import { useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
+import { useQuery } from "@tanstack/react-query";
+import fetchData from "../MockBackend/MockBackend";
 
 const SelectableTable = () => {
+    const [params, setParams] = useState({
+        limit: 10,
+        offset: 0,
+    });
 
-    const TABLE_DATA = [
-        {
-            "Common Name": "Oak",
-            "Scientific Name (Genus)": "Quercus",
-            "Primary Type": "Deciduous",
-        },
-        {
-            "Common Name": "Maple",
-            "Scientific Name (Genus)": "Acer",
-            "Primary Type": "Deciduous",
-        },
-        {
-            "Common Name": "Pine",
-            "Scientific Name (Genus)": "Pinus",
-            "Primary Type": "Coniferous",
-        },
-    ];
+    const apply = (newParams) => {
+        setParams(prevParams => ({
+            offset: 0,
+            ...prevParams,
+            ...newParams
+        }));
+    }
+
+    const { data: { data, meta }, isFetching } = useQuery({
+        queryKey: ['FilteringTable', params],
+        queryFn: () => fetchData(params),
+        initialData: { data: [], meta: params }
+    });
 
     const TABLE_COLUMNS = [
         {
@@ -37,23 +40,42 @@ const SelectableTable = () => {
 
     const TABLE_DATA_MAPPER = (row) => ({
         cells: [
-            row["Common Name"],
-            row["Scientific Name (Genus)"],
-            row["Primary Type"]
+            row.common_name,
+            row.scientific_name,
+            row.primary_type
         ],
-        key: row["Common Name"]
+        key: row.common_name
     });
+
+    const TABLE_BULK_ACTIONS = [{
+        label: 'View details',
+        onClick: (e, selectedItems) => {
+            console.log("View details of", selectedItems.join(', '));
+        },
+        props: (selectedItems) => ({ isDisabled: selectedItems.length === 0  })
+    }];
+
+    const TABLE_ROW_ACTIONS = [{
+        title: 'View details',
+        onClick: (e, rowIndex, rowData) => {
+            console.log("View details of", rowData.cells[0]);
+        }
+    }];
 
     return (
         <DeclarativeTable
             isSelectable
-            rows={TABLE_DATA.map(row => TABLE_DATA_MAPPER(row))}
+            isLoading={isFetching}
+            rows={data.map(row => TABLE_DATA_MAPPER(row))}
             columns={TABLE_COLUMNS}
             meta={{
-                offset: 0,
-                limit: TABLE_DATA.length,
-                total_items: TABLE_DATA.length
+                offset: meta.offset,
+                limit: meta.limit,
+                total_items: meta.total_items,
             }}
+            apply={apply}
+            actions={TABLE_BULK_ACTIONS}
+            rowActions={TABLE_ROW_ACTIONS}
         />
     )
 }

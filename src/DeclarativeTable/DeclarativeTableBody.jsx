@@ -175,7 +175,7 @@ const DeclarativeTableBody = ({
               ))}
               <Td isActionCell>
                 {rowActions ? (
-                  <ActionsColumn items={rowActions} isDisabled={false} />
+                  <ActionsColumn rowData={row} items={rowActions} isDisabled={false} />
                 ) : null}
               </Td>
             </Tr>
