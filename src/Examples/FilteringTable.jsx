@@ -4,22 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import fetchData from "../MockBackend/MockBackend";
 import { setupFilters } from "../DeclarativeTable/hooks";
 import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
+import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
-
-const COUNT_FILTER_OPTIONS = [
-    {
-        value: 'all',
-        label: 'All',
-    },
-    {
-        value: 'zero',
-        label: 'Zero',
-    },
-    {
-        value: 'non-zero',
-        label: 'Non-zero',
-    }
-];
 
 const FilteringTable = () => {
     const DEFAULT_FILTERS = {
@@ -76,13 +62,48 @@ const FilteringTable = () => {
         expandableContent: row.description
     });
 
+    const COUNT_FILTER_OPTIONS = [
+        {
+            value: 'all',
+            label: 'All',
+        },
+        {
+            value: 'zero',
+            label: 'Zero',
+        },
+        {
+            value: 'non-zero',
+            label: 'Non-zero',
+        }
+    ];
+
+    const PRIMARY_TYPE_FILTER_OPTIONS = [
+        {
+            value: 'coniferous',
+            label: 'Coniferous',
+        },
+        {
+            value: 'deciduous',
+            label: 'Deciduous',
+        }
+    ];
+
     const filters = [
         useTextFilter({
-            urlParam: 'commonName',
+            urlParam: 'common_name',
             label: 'Common name',
             placeholder: 'Search common name',
-            value: params.commonName,
+            value: params.common_name,
             chipLabel: 'Common name',
+            apply
+        }),
+        checkboxFilter({
+            urlParam: 'primary_type',
+            label: 'Primary type',
+            value: params.primary_type,
+            items: PRIMARY_TYPE_FILTER_OPTIONS,
+            placeholder: 'Filter by primary type',
+            chipLabel: 'Primary type',
             apply
         }),
         radioFilter({
@@ -90,7 +111,6 @@ const FilteringTable = () => {
             label: 'Count',
             value: params.count,
             items: COUNT_FILTER_OPTIONS,
-            placeholder: 'Count',
             chipLabel: 'Count',
             apply
         })

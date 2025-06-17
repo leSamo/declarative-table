@@ -149,7 +149,7 @@ const EXAMPLES = [
     name: 'Filtering Table',
     description: (
       <Text>
-        Adds filter controls to the toolbar. Use <code>filterConfig</code> and <code>activeFiltersConfig</code> with <code>setupFilters</code> hook.
+        Adds filter controls to the toolbar. Use <code>filterConfig</code> and <code>activeFiltersConfig</code> with <code>setupFilters</code> hook. There are four types of filters available: text filter, checkbox filter, radio filter, and range filter.
       </Text>
     ),
     component: FilteringTable,

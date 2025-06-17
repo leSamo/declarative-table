@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, commonName, count }) => {
+const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -8,10 +8,17 @@ const fetchData = ({ limit, offset, sort, commonName, count }) => {
 
             let filteredData = [...data];
 
-            if (commonName) {
+            if (common_name) {
                 filteredData = filteredData.filter(item =>
-                    item.common_name &&
-                    item.common_name.toLowerCase().includes(commonName.trim().toLowerCase())
+                    item.common_name.toLowerCase().includes(common_name.trim().toLowerCase())
+                );
+            }
+
+            if (primary_type) {
+                const selected = primary_type.split(',');
+
+                filteredData = filteredData.filter(item =>
+                    selected.includes(item.primary_type.toLowerCase())
                 );
             }
 
@@ -55,7 +62,8 @@ const fetchData = ({ limit, offset, sort, commonName, count }) => {
                     limit,
                     offset,
                     sort,
-                    commonName,
+                    common_name,
+                    primary_type,
                     count,
                     total_items: filteredData.length
                 }
