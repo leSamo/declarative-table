@@ -14,7 +14,7 @@ const ErrorHandler = ({ errorStatus, children }) => {
 
   switch (parsedCode) {
     case 403:
-      return <NotAuthorized serviceName="Vulnerability for OpenShift" />;
+      return <NotAuthorized />;
 
     case 404:
       return <InvalidObject />;

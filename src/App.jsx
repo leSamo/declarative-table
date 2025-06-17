@@ -10,6 +10,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PlainTable from './Examples/PlainTable';
 import PlainTableRaw from './Examples/PlainTable.jsx?raw';
 
+import EmptyTable from './Examples/EmptyTable';
+import EmptyTableRaw from './Examples/EmptyTable.jsx?raw';
+
 import PaginatedTable from './Examples/PaginatedTable';
 import PaginatedTableRaw from './Examples/PaginatedTable.jsx?raw';
 
@@ -160,6 +163,16 @@ const EXAMPLES = [
     ),
     component: PlainTable,
     code: PlainTableRaw,
+  },
+    {
+    name: 'Empty Table',
+    description: (
+      <Text>
+        Use <code>emptyState</code> prop to display a custom empty state when the table has no rows.
+      </Text>
+    ),
+    component: EmptyTable,
+    code: EmptyTableRaw,
   },
   {
     name: 'Paginated Table',
