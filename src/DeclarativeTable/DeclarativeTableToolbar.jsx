@@ -44,7 +44,7 @@ const DeclarativeTableToolbar = ({
           }
         )
       }
-      filterConfig={filterConfig.length > 0 ? filterConfig : <></>}
+      filterConfig={filterConfig?.items?.length > 0 ? filterConfig : <></>}
       activeFiltersConfig={activeFiltersConfig}
       exportConfig={
         onExport && {

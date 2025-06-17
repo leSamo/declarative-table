@@ -7,6 +7,7 @@ import {
 } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { downloadFile } from '@redhat-cloud-services/frontend-components-utilities/helpers';
 import { ColumnManagementModal } from '@patternfly/react-component-groups';
+import { isEqual } from 'lodash';
 
 export const useLocalStorage = (key) => {
   const [sessionValue, setSessionValue] = useState(localStorage.getItem(key));
@@ -186,4 +187,54 @@ export const useColumnManagement = (columns, onApply) => {
     />,
     setModalOpen,
   ];
+};
+
+export const areAnyFiltersApplied = ({
+  currentParams,
+  defaultParams,
+  filterParams,
+}) => {
+  // filter out params which have nothing to do with filtering, like page, sort, etc.
+  const reducedParams = filterParams.reduce(
+    (acc, param) => ({
+      ...acc,
+      ...(currentParams[param] && { [param]: currentParams[param] }),
+    }),
+    {}
+  );
+
+  return !isEqual(reducedParams, defaultParams);
+};
+
+export const setupFilters = (filters, meta, defaultFilters, apply) => {
+  if (filters.length === 0) {
+    return [undefined, undefined];
+  }
+
+  const filterKeys = filters.map((item) => item.filterConfig.key);
+  const showDeleteButton = areAnyFiltersApplied({
+    currentParams: meta,
+    defaultParams: defaultFilters,
+    filterParams: filterKeys,
+  });
+
+  let filterConfig = { items: [] };
+  let activeFiltersConfig = {
+    filters: [],
+    onDelete: (_, categories, isReset) =>
+      isReset
+        ? apply({ ...defaultFilters, offset: 0, limit: meta.limit }, true)
+        : categories.forEach((category) => category.onDelete(category.chips)),
+    deleteTitle: 'Reset filter',
+    showDeleteButton,
+  };
+
+  filters.forEach((filter) => {
+    filterConfig.items.push(filter.filterConfig);
+
+    filter.activeFiltersConfig?.isShown &&
+      activeFiltersConfig.filters.push(filter.activeFiltersConfig);
+  });
+
+  return [filterConfig, activeFiltersConfig, showDeleteButton];
 };

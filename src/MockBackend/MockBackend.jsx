@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, filter }) => {
+const fetchData = ({ limit, offset, sort, commonName, count }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -8,11 +8,25 @@ const fetchData = ({ limit, offset, sort, filter }) => {
 
             let filteredData = [...data];
 
-            if (filter) {
+            if (commonName) {
                 filteredData = filteredData.filter(item =>
                     item.common_name &&
-                    item.common_name.toLowerCase().includes(filter.toLowerCase())
+                    item.common_name.toLowerCase().includes(commonName.trim().toLowerCase())
                 );
+            }
+
+            if (count) {
+                filteredData = filteredData.filter(item => {
+                    if (count === 'zero') {
+                        return item.count === 0;
+                    }
+                    else if (count === 'non-zero') {
+                        return item.count > 0;
+                    }
+                    else {
+                        return true;
+                    }
+                });
             }
 
             if (sort) {
@@ -24,7 +38,8 @@ const fetchData = ({ limit, offset, sort, filter }) => {
                     field = sort.slice(1);
                 }
 
-                const validFields = ["common_name", "scientific_genus", "primary_type"];
+                const validFields = ["common_name", "scientific_name", "primary_type", "count"];
+
                 if (validFields.includes(field)) {
                     filteredData.sort((a, b) => {
                         if (a[field] < b[field]) return -1 * direction;
@@ -40,7 +55,8 @@ const fetchData = ({ limit, offset, sort, filter }) => {
                     limit,
                     offset,
                     sort,
-                    filter,
+                    commonName,
+                    count,
                     total_items: filteredData.length
                 }
             });

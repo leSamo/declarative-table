@@ -4,12 +4,10 @@ import fetchData from "../MockBackend/MockBackend";
 import { useState } from "react";
 
 const ExpandableTable = () => {
-    const DEFAULT_PARAMS = {
+    const [params, apply] = useState({
         limit: 10,
         offset: 0
-    };
-
-    const [params, apply] = useState(DEFAULT_PARAMS);
+    });
 
     const { data: { data, meta }, isFetching } = useQuery({
         queryKey: ['ExpandableTable', params],
@@ -35,7 +33,7 @@ const ExpandableTable = () => {
     const TABLE_DATA_MAPPER = (row) => ({
         cells: [
             row.common_name,
-            row.scientific_genus,
+            row.scientific_name,
             row.primary_type
         ],
         key: row.common_name,
