@@ -167,7 +167,7 @@ const EXAMPLES = [
     component: PlainTable,
     code: PlainTableRaw,
   },
-    {
+  {
     name: 'Empty Table',
     description: (
       <Text>
@@ -237,7 +237,7 @@ const EXAMPLES = [
     component: FilteringTable,
     code: FilteringTableRaw,
   },
-    {
+  {
     name: 'Error Table',
     description: (
       <Text>
@@ -268,6 +268,12 @@ function App() {
               <Text component="h2">
                 Table of contents
               </Text>
+              <div key="available-props">
+                <a href="#available-props">
+                  Available Props
+                </a>
+              </div>
+              <hr />
               {EXAMPLES.map(example => (
                 <div key={example.name}>
                   <a href={`#${example.name.toLowerCase().replace(/\s+/g, '-')}`}>
@@ -291,7 +297,7 @@ function App() {
                 </StackItem>
                 <StackItem>
                   <TextContent>
-                    <Text component="h2">
+                    <Text component="h2" id="available-props">
                       Available Props
                     </Text>
                     <Text>
