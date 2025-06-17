@@ -57,20 +57,62 @@ const PROP_INFO = [
     name: 'emptyState',
     type: 'React.ReactNode',
     defaultValue: 'undefined',
-    description: <p>Component to be shown instead of rows when the length of <code>rows</code> array is 0</p>
+    description: <p>Component to be shown instead of rows when the length of <code>rows</code> array is 0.</p>
   },
   {
     name: 'filterConfig',
     type: 'array',
-    defaultValue: '[]',
+    defaultValue: '{}',
     description: <p>Used to define filters displayed in the toolbar. Needs to be used with conjunction with <code>setupFilters</code> hook.</p>
   },
   {
     name: 'activeFiltersConfig',
     type: 'array',
-    defaultValue: '[]',
+    defaultValue: '{}',
     description: <p>Used to display filter chips in the toolbar. Needs to be used with conjunction with <code>setupFilters</code> hook.</p>
-  }
+  },
+  {
+    name: 'emptyState',
+    type: 'React.ReactNode',
+    defaultValue: 'undefined',
+    description: <p>Element to be shown instead of table body when table has no rows.</p>
+  },
+  {
+    name: 'actions',
+    type: 'array',
+    defaultValue: '[]',
+    description: <p>Bulk actions to be shown within a kebab menu in the toolbar. Each array item should have <code>label</code> and <code>onClick</code> properties; and optionally <code>props</code> prop which can be used to disable the action under certain conditions.</p>
+  },
+  {
+    name: 'rowActions',
+    type: 'array',
+    defaultValue: '[]',
+    description: <p>Actions to be shown on the right side of each table row. Each array item should have <code>title</code> and <code>onClick</code> properties.</p>
+  },
+  {
+    name: 'rows',
+    type: 'array',
+    defaultValue: '[]',
+    description: <p>Rows to be displayed within the table. Each row should have <code>cells</code> and <code>key</code> property. Property <code>cells</code> is an array where each element corresponds to one table cell. Rows have optional <code>expandableContent</code> property that defines what to show when the row is expanded. Expandable content can only be visible when table has <code>isExpandable</code> prop set to <code>true</code>.</p>
+  },
+  {
+    name: 'columns',
+    type: 'array',
+    defaultValue: '[]',
+    description: <p>TODO</p>
+  },
+  {
+    name: 'meta',
+    type: 'object',
+    defaultValue: 'undefined',
+    description: <p>TODO</p>
+  },
+  {
+    name: 'apply',
+    type: 'function',
+    defaultValue: 'undefined',
+    description: <p>TODO</p>
+  },
 ]
 
 const EXAMPLES = [
@@ -135,7 +177,7 @@ const EXAMPLES = [
     component: SelectableTable,
     code: SelectableTableRaw,
   },
-    {
+  {
     name: 'Sorting Table',
     description: (
       <Text>
