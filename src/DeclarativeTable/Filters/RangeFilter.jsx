@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
-import RangeFilterComponent from '../../PresentationalComponents/RangeFilterComponent';
+import RangeFilterComponent from './RangeFilterComponent';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
