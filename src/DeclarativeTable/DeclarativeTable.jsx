@@ -4,7 +4,7 @@ import DeclarativeTableBody from './DeclarativeTableBody';
 import DeclarativeTableToolbar from './DeclarativeTableToolbar';
 import DeclarativeTableFooter from './DeclarativeTableFooter';
 import ErrorHandler from './ErrorHandler';
-import { useColumnManagement } from './hooks';
+import { useColumnManagement } from './helpers';
 import { Button, ButtonVariant } from '@patternfly/react-core';
 import { ColumnsIcon } from '@patternfly/react-icons';
 

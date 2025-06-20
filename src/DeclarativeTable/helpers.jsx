@@ -238,3 +238,16 @@ export const setupFilters = (filters, meta, defaultFilters, apply) => {
 
   return [filterConfig, activeFiltersConfig, showDeleteButton];
 };
+
+export const decodeRangeFilter = (range) => {
+  if (!range?.includes(',')) {
+    range = ',';
+  }
+
+  const [urlMin, urlMax] = range.split(',');
+
+  const min = +urlMin || 0;
+  const max = +urlMax || 10;
+
+  return [min, max];
+};

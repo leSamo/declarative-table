@@ -1,15 +1,15 @@
 import DeclarativeTable from './DeclarativeTable/DeclarativeTable';
-import CheckboxFilter from './DeclarativeTable/Filters/CheckboxFilter';
-import RadioFilter from './DeclarativeTable/Filters/RadioFilter';
-import RangeFilter from './DeclarativeTable/Filters/RangeFilter';
-import TextFilter from './DeclarativeTable/Filters/TextFilter';
+import checkboxFilter from './DeclarativeTable/Filters/CheckboxFilter';
+import radioFilter from './DeclarativeTable/Filters/RadioFilter';
+import rangeFilter from './DeclarativeTable/Filters/RangeFilter';
+import textFilter from './DeclarativeTable/Filters/TextFilter';
 
-export * from './DeclarativeTable/hooks';
+export * from './DeclarativeTable/helpers';
 
 export {
     DeclarativeTable,
-    CheckboxFilter,
-    RadioFilter,
-    RangeFilter,
-    TextFilter
+    checkboxFilter,
+    radioFilter,
+    rangeFilter,
+    textFilter
 };

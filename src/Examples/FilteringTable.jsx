@@ -2,7 +2,7 @@ import { useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from '@tanstack/react-query';
 import fetchData from "../MockBackend/MockBackend";
-import { setupFilters } from "../DeclarativeTable/hooks";
+import { setupFilters } from "../DeclarativeTable/helpers";
 import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
 import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
