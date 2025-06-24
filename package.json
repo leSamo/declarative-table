@@ -1,6 +1,6 @@
 {
   "name": "declarative-table",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "type": "module",
   "files": [
     "dist"
@@ -12,6 +12,10 @@
       "import": "./dist/declarativeTable.es.js",
       "require": "./dist/declarativeTable.umd.js"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leSamo/declarative-table.git"
   },
   "types": "./dist/index.d.ts",
   "scripts": {
