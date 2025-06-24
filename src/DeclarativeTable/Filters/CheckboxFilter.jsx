@@ -4,7 +4,7 @@ const checkboxFilter =
   ({ urlParam, label, value, placeholder, items, chipLabel, apply }) => {
     const onValuesChanged = (values) => {
       apply({
-        [urlParam]: values.join(','),
+        [urlParam]: values.length === 0 ? undefined : values.join(','),
         offset: 0,
       });
     };
