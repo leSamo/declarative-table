@@ -60,12 +60,6 @@ const PROP_INFO = [
     description: <p>If true adds a "Manage columns" button to the toolbar, the modal allows user to selectively hide and show columns; Requires setting up of <code>columns.isShown</code> and <code>columns.isShownByDefault</code>; optionally <code>columns.isUntoggleable</code> can be used.</p>
   },
   {
-    name: 'emptyState',
-    type: 'React.ReactNode',
-    defaultValue: 'undefined',
-    description: <p>Component to be shown instead of rows when the length of <code>rows</code> array is 0.</p>
-  },
-  {
     name: 'filterConfig',
     type: 'array',
     defaultValue: '{}',
