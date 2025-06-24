@@ -135,6 +135,7 @@ const DeclarativeTableBody = ({
           )}
           {isSelectable && <Th style={{ width: 29, minWidth: 29 }} />}
           {columnHeaders}
+          {rowActions && <Th />}
         </Tr>
       </Thead>
       {rows.length === 0 ? (
@@ -173,11 +174,11 @@ const DeclarativeTableBody = ({
                   {cell}
                 </Td>
               ))}
-              <Td isActionCell>
-                {rowActions ? (
+              {rowActions && (
+                <Td isActionCell>
                   <ActionsColumn rowData={row} items={rowActions} isDisabled={false} />
-                ) : null}
-              </Td>
+                </Td>
+              )}
             </Tr>
             {isExpandable && row.expandableContent && (
               <Tr isExpanded={isRowExpanded(row.key)}>
