@@ -10,10 +10,10 @@ const ErrorTable = () => {
         sort: 'invalid_field', // Intentionally set to an invalid field to trigger an error
     });
 
-    const apply = (newParams) => {
+    const apply = (newParams, replaceState) => {
         setParams(prevParams => ({
             offset: 0,
-            ...prevParams,
+            ...replaceState ? { limit: prevParams.limit } : prevParams,
             ...newParams
         }));
     }

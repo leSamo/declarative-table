@@ -117,7 +117,7 @@ const PROP_INFO = [
     name: 'apply',
     type: 'function',
     defaultValue: 'undefined',
-    description: <p>This function should have a single parameter of type object. The values of properties of this object should replace values of current parameters. Table calls this functions upon user interaction with the table.</p>
+    description: <p>This function should have a first parameter of type object. The values of properties of this object should replace values of current parameters. Second argument is a boolean which determined whether the new state should completely replace the old one. Table calls this functions upon user interaction with the table.</p>
   },
   {
     name: 'errorStatus',

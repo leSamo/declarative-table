@@ -10,10 +10,10 @@ const PaginatedTable = () => {
         offset: 0,
     });
 
-    const apply = (newParams) => {
+    const apply = (newParams, replaceState) => {
         setParams(prevParams => ({
             offset: 0,
-            ...prevParams,
+            ...replaceState ? { limit: prevParams.limit } : prevParams,
             ...newParams
         }));
     }
