@@ -117,7 +117,7 @@ DeclarativeTable.propTypes = {
   isExpandable: propTypes.bool,
   isSelectable: propTypes.bool,
   areColumnsManageable: propTypes.bool,
-  emptyState: propTypes.node.isRequired,
+  emptyState: propTypes.node,
   filterConfig: propTypes.object,
   activeFiltersConfig: propTypes.object,
   meta: propTypes.shape({

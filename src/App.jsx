@@ -4,7 +4,7 @@ import './style.css';
 import { Fragment } from 'react';
 import { Bullseye, Stack, StackItem, TextContent, Text, Split, SplitItem, Card, GridItem, Grid } from '@patternfly/react-core'
 import { CodeEditor } from '@patternfly/react-code-editor';
-import { Table, Td, Th, Tr } from '@patternfly/react-table';
+import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import PlainTable from './Examples/PlainTable';
@@ -296,36 +296,40 @@ function App() {
                     </Text>
                     <Text>
                       <Table variant="compact">
-                        <Tr>
-                          <Th>
-                            <b>Name</b>
-                          </Th>
-                          <Th>
-                            <b>Type</b>
-                          </Th>
-                          <Th>
-                            <b>Default value</b>
-                          </Th>
-                          <Th>
-                            <b>Description</b>
-                          </Th>
-                        </Tr>
-                        {PROP_INFO.map(prop => (
-                          <Tr key={prop.name}>
-                            <Td>
-                              <b><code>{prop.name}</code></b>
-                            </Td>
-                            <Td>
-                              <code>{prop.type}</code>
-                            </Td>
-                            <Td>
-                              <code>{prop.defaultValue}</code>
-                            </Td>
-                            <Td>
-                              {prop.description}
-                            </Td>
+                        <Thead>
+                          <Tr>
+                            <Th>
+                              <b>Name</b>
+                            </Th>
+                            <Th>
+                              <b>Type</b>
+                            </Th>
+                            <Th>
+                              <b>Default value</b>
+                            </Th>
+                            <Th>
+                              <b>Description</b>
+                            </Th>
                           </Tr>
-                        ))}
+                        </Thead>
+                        <Tbody>
+                          {PROP_INFO.map(prop => (
+                            <Tr key={prop.name}>
+                              <Td>
+                                <b><code>{prop.name}</code></b>
+                              </Td>
+                              <Td>
+                                <code>{prop.type}</code>
+                              </Td>
+                              <Td>
+                                <code>{prop.defaultValue}</code>
+                              </Td>
+                              <Td>
+                                {prop.description}
+                              </Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
                       </Table>
                     </Text>
                   </TextContent>

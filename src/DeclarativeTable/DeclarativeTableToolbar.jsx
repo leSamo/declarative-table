@@ -138,7 +138,7 @@ DeclarativeTableToolbar.propTypes = {
     propTypes.shape({
       label: propTypes.string,
       onClick: propTypes.func,
-      props: propTypes.object,
+      props: propTypes.oneOfType([propTypes.object, propTypes.func]),
     })
   ),
 };
