@@ -1,11 +1,12 @@
 import { useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from '@tanstack/react-query';
-import fetchData from "../MockBackend/MockBackend";
+import fetchData, { fetchScientificNames } from "../MockBackend/MockBackend";
 import { setupFilters } from "../DeclarativeTable/helpers";
 import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
 import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
+import typeaheadFilter from "../DeclarativeTable/Filters/TypeaheadFilter";
 
 const FilteringTable = () => {
     const DEFAULT_FILTERS = {
@@ -94,6 +95,15 @@ const FilteringTable = () => {
             placeholder: 'Search common name',
             value: params.common_name,
             chipLabel: 'Common name',
+            apply
+        }),
+        typeaheadFilter({
+            urlParam: 'scientific_name',
+            label: 'Scientific name',
+            value: params.scientific_name,
+            placeholder: 'Filter by scientific name',
+            chipLabel: 'Scientific name',
+            fetchItems: fetchScientificNames,
             apply
         }),
         checkboxFilter({

@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) => {
+const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, count }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -11,6 +11,14 @@ const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) =>
             if (common_name) {
                 filteredData = filteredData.filter(item =>
                     item.common_name.toLowerCase().includes(common_name.trim().toLowerCase())
+                );
+            }
+
+            if (scientific_name) {
+                const selected = scientific_name.split(',').map(item => item.toLowerCase());
+
+                filteredData = filteredData.filter(item =>
+                    selected.includes(item.scientific_name.toLowerCase())
                 );
             }
 
@@ -77,11 +85,24 @@ const fetchData = ({ limit, offset, sort, common_name, primary_type, count }) =>
                     offset,
                     sort,
                     common_name,
+                    scientific_name,
                     primary_type,
                     count,
                     total_items: filteredData.length
                 }
             });
+        }, 200);
+    });
+};
+
+export const fetchScientificNames = (filter = "") => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(
+                data
+                    .map(item => item.scientific_name)
+                    .filter(name => name.toLowerCase().includes(filter.trim().toLowerCase()))
+            )
         }, 200);
     });
 };
