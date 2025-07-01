@@ -9,6 +9,12 @@ const checkboxFilter =
       });
     };
 
+    const itemsWithFixedIcon = items.map(item => ({
+      ...item,
+      label: item.icon ? <span>{item.icon} {item.label}</span> : item.label,
+      icon: undefined
+    }));
+
     const filterConfig = {
       label,
       type: conditionalFilterType.checkbox,
@@ -18,7 +24,7 @@ const checkboxFilter =
         onChange: (event, value) => {
           onValuesChanged(value);
         },
-        items,
+        items: itemsWithFixedIcon,
         value: value ? value.split(',') : [],
         placeholder,
       },

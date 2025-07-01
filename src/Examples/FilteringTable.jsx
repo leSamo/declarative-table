@@ -7,6 +7,7 @@ import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
 import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
 import typeaheadFilter from "../DeclarativeTable/Filters/TypeaheadFilter";
+import { StarIcon } from "@patternfly/react-icons";
 
 const FilteringTable = () => {
     const DEFAULT_FILTERS = {
@@ -66,6 +67,7 @@ const FilteringTable = () => {
         {
             value: 'all',
             label: 'All',
+            icon: <StarIcon />
         },
         {
             value: 'zero',
@@ -81,6 +83,7 @@ const FilteringTable = () => {
         {
             value: 'coniferous',
             label: 'Coniferous',
+            icon: <StarIcon />
         },
         {
             value: 'deciduous',

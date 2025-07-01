@@ -9,6 +9,13 @@ const radioFilter =
       });
     };
 
+    const itemsWithFixedIcon = items.map(item => ({
+      ...item,
+      label: item.icon ? <span>{item.icon} {item.label}</span> : item.label,
+      icon: undefined
+    }));
+
+
     const filterConfig = {
       label,
       type: conditionalFilterType.radio,
@@ -18,7 +25,7 @@ const radioFilter =
         onChange: (event, value) => {
           onValueChanged(value);
         },
-        items,
+        items: itemsWithFixedIcon,
         value: value || items[0].value,
       },
     };
