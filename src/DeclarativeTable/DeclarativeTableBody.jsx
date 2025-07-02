@@ -170,7 +170,7 @@ const DeclarativeTableBody = ({
                 />
               )}
               {row.cells.map((cell, cellIndex) => (
-                <Td key={cellIndex} dataLabel={columns[cellIndex].title}>
+                <Td key={cellIndex} dataLabel={columns[cellIndex].dataLabel ?? columns[cellIndex].title}>
                   {cell}
                 </Td>
               ))}
