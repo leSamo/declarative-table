@@ -57,6 +57,7 @@ const DeclarativeTableBody = ({
   const isRowExpanded = (row) => expandedRows.includes(row);
   const isRowSelected = (row) => selectedRows.includes(row);
 
+  // TODO: Fix SkeletonTable sort indicator
   const createSortBy = (columns, sortParam, columnIndex) => {
     if (rows.length === 0 || !sortParam) {
       return {};
@@ -108,7 +109,6 @@ const DeclarativeTableBody = ({
       variant={TableVariant.compact}
       rowsCount={perPage || DEFAULT_LIMIT}
       columns={columnHeaders}
-      sortBy={createSortBy(columns, sortParam)}
       isExpandable={isExpandable}
       isSelectable={isSelectable}
     />
@@ -214,7 +214,7 @@ DeclarativeTableBody.propTypes = {
   ).isRequired,
   isExpandable: propTypes.bool,
   isSelectable: propTypes.bool,
-  emptyState: propTypes.node.isRequired,
+  emptyState: propTypes.node,
   sortParam: propTypes.string,
   perPage: propTypes.number,
   apply: propTypes.func,
