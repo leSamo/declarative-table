@@ -3,7 +3,7 @@ import { conditionalFilterType } from '@redhat-cloud-services/frontend-component
 import TypeaheadFilterComponent from './TypeaheadFilterComponent';
 
 const useTypeaheadFilter =
-  ({ urlParam, label, value, placeholder, chipLabel, apply, fetchItems }) => {
+  ({ urlParam, label, value, placeholder, chipLabel, noItemsLabel = "No items", apply, fetchItems }) => {
     const [items, setItems] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
@@ -30,6 +30,7 @@ const useTypeaheadFilter =
             onValuesChanged={onValuesChanged}
             value={value}
             placeholder={placeholder}
+            noItemsLabel={noItemsLabel}
           />
       },
     };
@@ -47,7 +48,7 @@ const useTypeaheadFilter =
       },
       key: urlParam,
       category: chipLabel,
-      chips: items
+      chips: items // TODO: Entered text filters out chips
         .filter((item) => value?.split(',').includes(item.value))
         .map((item) => ({ name: item.label, value: item.value })),
     };
