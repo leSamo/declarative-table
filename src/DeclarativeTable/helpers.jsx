@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'query-string';
 import { useDispatch } from 'react-redux';
-import {
-  addNotification,
-  clearNotifications,
-} from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { downloadFile } from '@redhat-cloud-services/frontend-components-utilities/helpers';
 import { ColumnManagementModal } from '@patternfly/react-component-groups';
 import { isEqual } from 'lodash';
@@ -127,13 +123,14 @@ export const useExport = ({
   fetchActionParam,
   allowedParams,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const DEFAULT_PARAMS = {
     report: true,
   };
 
   const onExport = async (format, params) => {
+    /*
     dispatch(
       addNotification({
         variant: 'info',
@@ -141,6 +138,7 @@ export const useExport = ({
           'Preparing export. Once complete, your download will start automatically.',
       })
     );
+    */
 
     const formattedDate =
       new Date().toISOString().replace(/[T:]/g, '-').split('.')[0] + '-utc';
@@ -161,6 +159,7 @@ export const useExport = ({
 
     downloadFile(data, filenamePrefix + formattedDate, format);
 
+    /*
     dispatch(clearNotifications());
 
     dispatch(
@@ -169,6 +168,7 @@ export const useExport = ({
         title: 'Downloading export',
       })
     );
+    */
   };
 
   return onExport;
