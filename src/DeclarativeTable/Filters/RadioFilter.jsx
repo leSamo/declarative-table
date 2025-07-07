@@ -26,7 +26,7 @@ const radioFilter =
           onValueChanged(value);
         },
         items: itemsWithFixedIcon,
-        value: value || items[0].value,
+        value: value,
       },
     };
 
