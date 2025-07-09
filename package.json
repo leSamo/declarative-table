@@ -1,6 +1,6 @@
 {
   "name": "declarative-table",
-  "version": "5.0.7",
+  "version": "5.0.10",
   "type": "module",
   "files": [
     "dist"
@@ -34,7 +34,6 @@
     "@tanstack/react-query": "^5.80.7",
     "lodash": "^4.17.21",
     "query-string": "^9.1.2",
-    "react-redux": "^9.2.0",
     "use-deep-compare-effect": "^1.8.1"
   },
   "peerDependencies": {
