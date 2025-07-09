@@ -3,149 +3,193 @@
         "common_name": "Oak",
         "scientific_name": "Quercus",
         "primary_type": "Deciduous",
-        "count": 0
+        "count": 0,
+        "most_prevalent_country": "Mexico",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Maple",
         "scientific_name": "Acer",
         "primary_type": "Deciduous",
         "count": 13,
-        "description": "Famous for its distinctive leaves and sweet sap used for syrup."
+        "description": "Famous for its distinctive leaves and sweet sap used for syrup.",
+        "most_prevalent_country": "Canada",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Pine",
         "scientific_name": "Pinus",
         "primary_type": "Coniferous",
         "count": 7,
-        "description": "Evergreen conifer with needle-like leaves and woody cones."
+        "description": "Evergreen conifer with needle-like leaves and woody cones.",
+        "most_prevalent_country": "Mexico",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Birch",
         "scientific_name": "Betula",
         "primary_type": "Deciduous",
         "count": 0,
-        "description": "Tree with distinctive white bark and serrated leaves."
+        "description": "Tree with distinctive white bark and serrated leaves.",
+        "most_prevalent_country": "Canada",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Spruce",
         "scientific_name": "Picea",
         "primary_type": "Coniferous",
         "count": 16,
-        "description": "Coniferous tree with sharp, square needles and hanging cones."
+        "description": "Coniferous tree with sharp, square needles and hanging cones.",
+        "most_prevalent_country": "Canada",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Fir",
         "scientific_name": "Abies",
         "primary_type": "Coniferous",
-        "count": 11
+        "count": 11,
+        "most_prevalent_country": "Canada",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Beech",
         "scientific_name": "Fagus",
         "primary_type": "Deciduous",
         "count": 0,
-        "description": "Smooth gray bark and simple, oval leaves characterize this tree."
+        "description": "Smooth gray bark and simple, oval leaves characterize this tree.",
+        "most_prevalent_country": "Germany",
+        "most_prevalent_continent": "Europe"
     },
     {
         "common_name": "Larch",
         "scientific_name": "Larix",
         "primary_type": "Deciduous",
         "count": 19,
-        "description": "A rare conifer that sheds its needles in autumn."
+        "description": "A rare conifer that sheds its needles in autumn.",
+        "most_prevalent_country": "France",
+        "most_prevalent_continent": "Europe"
     },
     {
         "common_name": "Redwood",
         "scientific_name": "Sequoia",
         "primary_type": "Coniferous",
-        "count": 8
+        "count": 8,
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Willow",
         "scientific_name": "Salix",
         "primary_type": "Deciduous",
         "count": 0,
-        "description": "Known for slender, flexible branches and elongated leaves."
+        "description": "Known for slender, flexible branches and elongated leaves.",
+        "most_prevalent_country": "China",
+        "most_prevalent_continent": "Asia"
     },
     {
         "common_name": "Cherry",
         "scientific_name": "Prunus",
         "primary_type": "Deciduous",
         "count": 14,
-        "description": "Flowering tree producing edible fruit and beautiful blossoms."
+        "description": "Flowering tree producing edible fruit and beautiful blossoms.",
+        "most_prevalent_country": "Turkey",
+        "most_prevalent_continent": "Asia"
     },
     {
         "common_name": "Cypress",
         "scientific_name": "Cupressus",
         "primary_type": "Coniferous",
         "count": 2,
-        "description": "Conifer with scale-like leaves and small, round cones."
+        "description": "Conifer with scale-like leaves and small, round cones.",
+        "most_prevalent_country": "Mexico",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Ash",
         "scientific_name": "Fraxinus",
         "primary_type": "Deciduous",
         "count": 17,
-        "description": "Tree with compound leaves and winged seeds called samaras."
+        "description": "Tree with compound leaves and winged seeds called samaras.",
+        "most_prevalent_country": "United Kingdom",
+        "most_prevalent_continent": "Europe"
     },
     {
         "common_name": "Elm",
         "scientific_name": "Ulmus",
         "primary_type": "Deciduous",
         "count": 0,
-        "description": "Large shade tree with serrated leaves and vase-shaped form."
+        "description": "Large shade tree with serrated leaves and vase-shaped form.",
+        "most_prevalent_country": "China",
+        "most_prevalent_continent": "Asia"
     },
     {
         "common_name": "Poplar",
         "scientific_name": "Populus",
         "primary_type": "Deciduous",
-        "count": 5
+        "count": 5,
+        "most_prevalent_country": "Canada",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Walnut",
         "scientific_name": "Juglans",
         "primary_type": "Deciduous",
         "count": 18,
-        "description": "Tree valued for its edible nuts and high-quality wood."
+        "description": "Tree valued for its edible nuts and high-quality wood.",
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Hickory",
         "scientific_name": "Carya",
         "primary_type": "Deciduous",
         "count": 3,
-        "description": "Hardwood tree with compound leaves and edible nuts."
+        "description": "Hardwood tree with compound leaves and edible nuts.",
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Sycamore",
         "scientific_name": "Platanus",
         "primary_type": "Deciduous",
         "count": 12,
-        "description": "Large tree with mottled bark and broad, lobed leaves."
+        "description": "Large tree with mottled bark and broad, lobed leaves.",
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Hemlock",
         "scientific_name": "Tsuga",
         "primary_type": "Coniferous",
-        "count": 6
+        "count": 6,
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Dogwood",
         "scientific_name": "Cornus",
         "primary_type": "Deciduous",
         "count": 10,
-        "description": "Small tree or shrub with showy flowers and distinctive bark."
+        "description": "Small tree or shrub with showy flowers and distinctive bark.",
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     },
     {
         "common_name": "Cedar",
         "scientific_name": "Cedrus",
         "primary_type": "Coniferous",
         "count": 0,
-        "description": "Aromatic evergreen with needle clusters and large cones."
+        "description": "Aromatic evergreen with needle clusters and large cones.",
+        "most_prevalent_country": "Lebanon",
+        "most_prevalent_continent": "Asia"
     },
     {
         "common_name": "Juniper",
         "scientific_name": "Juniperus",
         "primary_type": "Coniferous",
         "count": 15,
-        "description": "Coniferous shrub or tree with scale-like leaves and berry-like cones."
+        "description": "Coniferous shrub or tree with scale-like leaves and berry-like cones.",
+        "most_prevalent_country": "United States",
+        "most_prevalent_continent": "North America"
     }
 ]

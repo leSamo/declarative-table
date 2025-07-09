@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, count }) => {
+const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevelant, count }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -27,6 +27,14 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
 
                 filteredData = filteredData.filter(item =>
                     selected.includes(item.primary_type.toLowerCase())
+                );
+            }
+
+            if (most_prevelant) {
+                const selected = most_prevelant.split(',');
+
+                filteredData = filteredData.filter(item =>
+                    selected.includes(item.most_prevalent_country.toLowerCase().replace(' ', '_'))
                 );
             }
 
@@ -102,6 +110,48 @@ export const fetchScientificNames = (filter = "") => {
                 data
                     .map(item => item.scientific_name)
                     .filter(name => name.toLowerCase().includes(filter.trim().toLowerCase()))
+            )
+        }, 200);
+    });
+};
+
+export const fetchMostPrevelant = () => {
+    const grouped = {};
+
+    data.forEach(item => {
+        const continent = item.most_prevalent_continent;
+        const country = item.most_prevalent_country;
+
+        const continentId = continent.toLowerCase().replace(' ', '_');
+        const countryId = country.toLowerCase().replace(' ', '_');
+
+        if (!grouped[continentId]) {
+            grouped[continentId] = {
+                id: continentId,
+                value: continentId,
+                name: continent,
+                type: 'treeView',
+                groupSelectable: true,
+                children: []
+            };
+        }
+
+        const continentGroup = grouped[continentId];
+
+        if (!continentGroup.children.some(child => child.id === countryId)) {
+            continentGroup.children.push({
+                id: countryId,
+                value: countryId,
+                name: country,
+                type: 'treeView'
+            });
+        }
+    });
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(
+                Object.values(grouped)
             )
         }, 200);
     });
