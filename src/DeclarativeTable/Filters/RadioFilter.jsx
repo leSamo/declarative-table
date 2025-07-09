@@ -1,7 +1,7 @@
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 
 const radioFilter =
-  ({ urlParam, label, value, items, chipLabel, apply }) => {
+  ({ urlParam, label, value, placeholder, items, chipLabel, apply }) => {
     const onValueChanged = (value) => {
       apply({
         [urlParam]: value,
@@ -27,6 +27,7 @@ const radioFilter =
         },
         items: itemsWithFixedIcon,
         value: value,
+        placeholder
       },
     };
 
