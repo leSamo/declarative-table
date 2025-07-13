@@ -131,11 +131,12 @@ const DeclarativeTableBody = ({
                 }
               }
               ouiaId="expand-all"
+              aria-label="Expand or collapse all button"
             />
           )}
-          {isSelectable && <Th style={{ width: 29, minWidth: 29 }} />}
+          {isSelectable && <Th style={{ width: 29, minWidth: 29 }} screenReaderText="Column with row select checkboxes"  />}
           {columnHeaders}
-          {rowActions && <Th />}
+          {rowActions && <Th screenReaderText="Column with row actions" />}
         </Tr>
       </Thead>
       {rows.length === 0 ? (
