@@ -15,7 +15,6 @@ const radioFilter =
       icon: undefined
     }));
 
-
     const filterConfig = {
       label,
       type: conditionalFilterType.radio,

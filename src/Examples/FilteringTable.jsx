@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from '@tanstack/react-query';
-import fetchData, { fetchScientificNames } from "../MockBackend/MockBackend";
+import fetchData, { fetchMostPrevalent, fetchScientificNames } from "../MockBackend/MockBackend";
 import { setupFilters } from "../DeclarativeTable/helpers";
 import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
 import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
 import typeaheadFilter from "../DeclarativeTable/Filters/TypeaheadFilter";
 import { StarIcon } from "@patternfly/react-icons";
+import hierarchyFilter from "../DeclarativeTable/Filters/HierarchyFilter";
 
 const FilteringTable = () => {
     const DEFAULT_FILTERS = {
@@ -19,6 +20,12 @@ const FilteringTable = () => {
         offset: 0,
         ...DEFAULT_FILTERS
     });
+
+    const [mostPrevalentFilterGroups, setHierarchyFilterGroups] = useState([]);
+
+    useEffect(() => {
+        fetchMostPrevalent().then(result => setHierarchyFilterGroups(result));
+    }, []);
 
     const apply = (newParams, replaceState) => {
         setParams(prevParams => ({
@@ -48,6 +55,10 @@ const FilteringTable = () => {
             key: 'primary_type',
         },
         {
+            title: 'Most prevalent country',
+            key: 'most_prevalent_country',
+        },
+        {
             title: 'Count',
             key: 'count'
         }
@@ -58,6 +69,7 @@ const FilteringTable = () => {
             row.common_name,
             row.scientific_name,
             row.primary_type,
+            row.most_prevalent_country,
             row.count,
         ],
         key: row.common_name
@@ -118,11 +130,21 @@ const FilteringTable = () => {
             chipLabel: 'Primary type',
             apply
         }),
+        hierarchyFilter({
+            urlParam: 'most_prevalent_country',
+            label: 'Most prevalent',
+            value: params.most_prevalent_country,
+            placeholder: 'Filter by most prevalent',
+            groups: mostPrevalentFilterGroups,
+            chipLabel: 'Most prevalent',
+            apply
+        }),
         radioFilter({
             urlParam: 'count',
             label: 'Count',
             value: params.count,
             items: COUNT_FILTER_OPTIONS,
+            placeholder: 'Filter by count',
             chipLabel: 'Count',
             apply
         })

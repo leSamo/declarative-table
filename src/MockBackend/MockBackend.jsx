@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevelant, count }) => {
+const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -30,8 +30,8 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                 );
             }
 
-            if (most_prevelant) {
-                const selected = most_prevelant.split(',');
+            if (most_prevalent_country) {
+                const selected = most_prevalent_country.split(',');
 
                 filteredData = filteredData.filter(item =>
                     selected.includes(item.most_prevalent_country.toLowerCase().replace(' ', '_'))
@@ -68,7 +68,7 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     field = sort.slice(1);
                 }
 
-                const validFields = ["common_name", "scientific_name", "primary_type", "count"];
+                const validFields = ["common_name", "scientific_name", "primary_type", "most_prevalent_county", "count"];
 
                 if (validFields.includes(field)) {
                     filteredData.sort((a, b) => {
@@ -95,6 +95,7 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     common_name,
                     scientific_name,
                     primary_type,
+                    most_prevalent_country,
                     count,
                     total_items: filteredData.length
                 }
@@ -115,7 +116,7 @@ export const fetchScientificNames = (filter = "") => {
     });
 };
 
-export const fetchMostPrevelant = () => {
+export const fetchMostPrevalent = () => {
     const grouped = {};
 
     data.forEach(item => {

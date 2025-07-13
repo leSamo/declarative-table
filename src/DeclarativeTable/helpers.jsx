@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import qs from 'query-string';
-import { useDispatch } from 'react-redux';
 import { downloadFile } from '@redhat-cloud-services/frontend-components-utilities/helpers';
 import { ColumnManagementModal } from '@patternfly/react-component-groups';
 import { isEqual } from 'lodash';
@@ -56,65 +55,6 @@ export const useUrlParams = (allowedParams) => {
   };
 
   return [getUrlParams, setUrlParams];
-};
-
-export const useUrlBoundParams = ({
-  allowedParams,
-  initialParams,
-  additionalParam,
-  fetchAction,
-  changeParamsAction,
-}) => {
-  const dispatch = useDispatch();
-
-  const [getUrlParams, setUrlParams] = useUrlParams(allowedParams);
-  const [isFirstLoad, setFirstLoad] = useState(true);
-
-  // if a user clicks on the currently loaded page in the navbar,
-  // page would not refresh, but the URL would clear; this useEffect
-  // solves this inconsistent state
-  useEffect(() => {
-    if (!isFirstLoad && window.location.search === '') {
-      apply({ ...initialParams });
-    }
-  }, [window.location.search]);
-
-  useEffect(() => {
-    const initialUrlParams = getUrlParams();
-
-    apply({ ...initialParams, ...initialUrlParams, offset: 0 });
-    setFirstLoad(false);
-  }, []);
-
-  const apply = (newParams, isReset = false) => {
-    const previousUrlParams = getUrlParams();
-
-    let combinedParams = isReset
-      ? { ...newParams }
-      : { ...previousUrlParams, ...newParams };
-
-    // convert numerical params to numbers
-    for (const property in combinedParams) {
-      if (NUMERICAL_URL_PARAMS.includes(property)) {
-        combinedParams[property] = Number(combinedParams[property]);
-      }
-    }
-
-    dispatch(changeParamsAction(combinedParams));
-
-    const filteredParams = filterParams(combinedParams, allowedParams);
-
-    dispatch(
-      fetchAction(
-        transformUrlParamsBeforeFetching(filteredParams),
-        additionalParam
-      )
-    );
-
-    setUrlParams(filteredParams);
-  };
-
-  return apply;
 };
 
 export const useExport = ({
@@ -212,6 +152,7 @@ export const setupFilters = (filters, meta, defaultFilters, apply) => {
   }
 
   const filterKeys = filters.map((item) => item.filterConfig.key);
+
   const showDeleteButton = areAnyFiltersApplied({
     currentParams: meta,
     defaultParams: defaultFilters,

@@ -4,6 +4,7 @@ import radioFilter from './DeclarativeTable/Filters/RadioFilter';
 import rangeFilter from './DeclarativeTable/Filters/RangeFilter';
 import textFilter from './DeclarativeTable/Filters/TextFilter';
 import typeaheadFilter from './DeclarativeTable/Filters/TypeaheadFilter';
+import hierarchyFilter from './DeclarativeTable/Filters/HierarchyFilter';
 
 export * from './DeclarativeTable/helpers';
 
@@ -13,5 +14,6 @@ export {
     radioFilter,
     rangeFilter,
     textFilter,
-    typeaheadFilter
+    typeaheadFilter,
+    hierarchyFilter
 };
