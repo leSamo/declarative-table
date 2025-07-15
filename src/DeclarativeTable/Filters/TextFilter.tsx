@@ -1,10 +1,19 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 
+interface TextFilterProps {
+  urlParam: string;
+  label: string;
+  placeholder: string;
+  value?: string;
+  chipLabel: string;
+  apply: (params: object, replaceState?: boolean ) => void;
+}
+
 const useTextFilter =
-  ({ urlParam, label, placeholder, value, chipLabel, apply }) => {
-    const [searchValue, setSearchValue] = useState();
+  ({ urlParam, label, placeholder, value, chipLabel, apply }: TextFilterProps) => {
+    const [searchValue, setSearchValue] = useState<string>();
     const [handleSearch] = useState(() =>
       debounce((newValue) => {
         apply({ [urlParam]: newValue, offset: 0 });
@@ -20,7 +29,7 @@ const useTextFilter =
       filterValues: {
         'aria-label': 'search-field',
         id: `text-filter-${urlParam}`,
-        onChange: (event, value) => {
+        onChange: (event: FormEvent<HTMLInputElement>, value: string) => {
           setSearchValue(value);
           handleSearch(value);
         },
