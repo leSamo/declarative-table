@@ -20,7 +20,7 @@ const DeclarativeTableToolbar = ({
   setSelectedRows,
   fetchBulk,
   dedicatedAction,
-  actions,
+  actions = [],
 }) => {
   const selectAll = () =>
     fetchBulk().then((keys) =>
@@ -44,7 +44,7 @@ const DeclarativeTableToolbar = ({
           }
         )
       }
-      filterConfig={filterConfig?.items?.length > 0 ? filterConfig : <></>}
+      filterConfig={filterConfig?.items?.length > 0 ? filterConfig : undefined}
       activeFiltersConfig={activeFiltersConfig}
       exportConfig={
         onExport && {
@@ -85,13 +85,13 @@ const DeclarativeTableToolbar = ({
           checked: selectedRows.length > 0,
           ouiaId: 'bulk-select',
           onSelect: () =>
-            selectedRows === 0 ? selectAll() : setSelectedRows([]),
+            selectedRows.length === 0 ? selectAll() : setSelectedRows([]),
         }
       }
       actionsConfig={{
         actions: [
           '',
-          ...(actions ?? []).map((action) => ({
+          ...(actions).map((action) => ({
             ...action,
             props: typeof(action.props) === 'function' ? action.props(selectedRows) : action.props,
             onClick: (e) => action.onClick(e, selectedRows),
