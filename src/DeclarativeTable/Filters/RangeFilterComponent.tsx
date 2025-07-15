@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import propTypes from 'prop-types';
 import { Split, SplitItem, TextInput } from '@patternfly/react-core';
 import { Select, SelectVariant } from '@patternfly/react-core/deprecated';
+
+interface RangeFilterComponentProps {
+  setValues: (values: { min: number; max: number }) => void;
+  range: { min: number; max: number };
+  minMaxLabels: { min: React.ReactNode; max: React.ReactNode };
+  selectProps?: Record<string, any>;
+  inputValue?: { min?: string; max?: string };
+  setInputValue: (value: { min?: string; max?: string } | undefined) => void;
+}
 
 const RangeFilterComponent = ({
   setValues,
@@ -10,10 +18,10 @@ const RangeFilterComponent = ({
   selectProps,
   inputValue,
   setInputValue,
-}) => {
-  const [isOpen, setOpen] = useState(false);
+}: RangeFilterComponentProps) => {
+  const [isOpen, setOpen] = useState<boolean>(false);
 
-  const areValuesValid = (currentValues = {}, inputName) => {
+  const areValuesValid = (currentValues : { min?: string, max?: string } = {}, inputName: 'min' | 'max') => {
     const numberValue = {
       min: Number(currentValues.min),
       max: Number(currentValues.max),
@@ -27,7 +35,7 @@ const RangeFilterComponent = ({
     );
   };
 
-  const handleInputChange = (newValue, inputName) => {
+  const handleInputChange = (newValue: string, inputName: string) => {
     const newRange = { ...inputValue, [inputName]: newValue };
 
     if (areValuesValid(newRange, 'min') && areValuesValid(newRange, 'max')) {
@@ -88,15 +96,6 @@ const RangeFilterComponent = ({
       {...selectProps}
     />
   );
-};
-
-RangeFilterComponent.propTypes = {
-  setValues: propTypes.func,
-  range: propTypes.shape({ min: propTypes.number, max: propTypes.number }),
-  minMaxLabels: propTypes.shape({ min: propTypes.node, max: propTypes.node }),
-  selectProps: propTypes.object,
-  inputValue: propTypes.shape({ min: propTypes.string, max: propTypes.string }),
-  setInputValue: propTypes.func,
 };
 
 export default RangeFilterComponent;

@@ -4,6 +4,18 @@ import RangeFilterComponent from './RangeFilterComponent';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
+interface RangeFilterProps {
+  urlParam: string;
+  label: string;
+  minMaxLabels?: { min: string, max: string },
+  range: { min: number, max: number },
+  value: { min: number, max: number };
+  placeholder: string;
+  chipLabel: string;
+  chipDecimalPlaces?: number,
+  apply: (params: object, replaceState?: boolean ) => void;
+}
+
 const useRangeFilter =
   ({
     urlParam,
@@ -15,7 +27,7 @@ const useRangeFilter =
     chipLabel,
     chipDecimalPlaces = 1,
     apply,
-  }) => {
+  }: RangeFilterProps) => {
     const [handleSearch] = useState(() =>
       debounce((newValue = {}) => {
         if (
@@ -31,7 +43,7 @@ const useRangeFilter =
       }, 600)
     );
 
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState<{ min?: string, max?: string } | undefined>();
 
     useDeepCompareEffect(() => {
       setInputValue({
