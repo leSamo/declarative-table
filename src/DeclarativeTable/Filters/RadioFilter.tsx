@@ -1,8 +1,25 @@
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
+import { FormEvent } from 'react';
+
+export type RadioFilterItem = {
+  label: React.ReactNode;
+  value: string;
+  icon?: React.ReactNode;
+}
+
+interface RadioFilterProps {
+  urlParam: string;
+  label: string;
+  value?: string;
+  placeholder: string;
+  items: RadioFilterItem[];
+  chipLabel: string;
+  apply: (params: object, replaceState?: boolean ) => void;
+}
 
 const radioFilter =
-  ({ urlParam, label, value, placeholder, items, chipLabel, apply }) => {
-    const onValueChanged = (value) => {
+  ({ urlParam, label, value, placeholder, items, chipLabel, apply }: RadioFilterProps) => {
+    const onValueChanged = (value?: string) => {
       apply({
         [urlParam]: value,
         offset: 0,
@@ -21,7 +38,7 @@ const radioFilter =
       urlParam,
       key: urlParam,
       filterValues: {
-        onChange: (event, value) => {
+        onChange: (event: FormEvent<HTMLInputElement>, value: string) => {
           onValueChanged(value);
         },
         items: itemsWithFixedIcon,
