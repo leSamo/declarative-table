@@ -34,13 +34,13 @@ const DeclarativeTableToolbar = ({
           <Skeleton fontSize="xl" width="200px" />
         ) : (
           {
-            isDisabled: itemCount === 0,
+            isDisabled: apply === undefined || itemCount === 0,
             itemCount,
             page,
             perPage,
             ouiaId: 'pagination-top',
-            onSetPage: (event, page, limit, offset) => apply({ limit, offset }),
-            onPerPageSelect: (event, limit) => apply({ limit, offset: 0 }),
+            onSetPage: (event, page, limit, offset) => apply?.({ limit, offset }),
+            onPerPageSelect: (event, limit) => apply?.({ limit, offset: 0 }),
           }
         )
       }
