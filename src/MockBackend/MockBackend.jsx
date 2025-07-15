@@ -1,6 +1,6 @@
 import data from './mockData.json';
 
-const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count }) => {
+const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count, average_lifespan }) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -59,6 +59,12 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                 });
             }
 
+            if (average_lifespan) {
+                const [min, max] = average_lifespan.split(',').map(Number);
+
+                filteredData = filteredData.filter(item => item.average_lifespan_years >= min && item.average_lifespan_years <= max);
+            }
+
             if (sort) {
                 let direction = 1;
                 let field = sort;
@@ -97,6 +103,7 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     primary_type,
                     most_prevalent_country,
                     count,
+                    average_lifespan,
                     total_items: filteredData.length
                 }
             });

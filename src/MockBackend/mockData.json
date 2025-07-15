@@ -5,7 +5,8 @@
         "primary_type": "Deciduous",
         "count": 0,
         "most_prevalent_country": "Mexico",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 300
     },
     {
         "common_name": "Maple",
@@ -14,7 +15,8 @@
         "count": 13,
         "description": "Famous for its distinctive leaves and sweet sap used for syrup.",
         "most_prevalent_country": "Canada",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 150
     },
     {
         "common_name": "Pine",
@@ -23,7 +25,8 @@
         "count": 7,
         "description": "Evergreen conifer with needle-like leaves and woody cones.",
         "most_prevalent_country": "Mexico",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 400
     },
     {
         "common_name": "Birch",
@@ -32,7 +35,8 @@
         "count": 0,
         "description": "Tree with distinctive white bark and serrated leaves.",
         "most_prevalent_country": "Canada",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 70
     },
     {
         "common_name": "Spruce",
@@ -41,7 +45,8 @@
         "count": 16,
         "description": "Coniferous tree with sharp, square needles and hanging cones.",
         "most_prevalent_country": "Canada",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 300
     },
     {
         "common_name": "Fir",
@@ -49,7 +54,8 @@
         "primary_type": "Coniferous",
         "count": 11,
         "most_prevalent_country": "Canada",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 200
     },
     {
         "common_name": "Beech",
@@ -58,7 +64,8 @@
         "count": 0,
         "description": "Smooth gray bark and simple, oval leaves characterize this tree.",
         "most_prevalent_country": "Germany",
-        "most_prevalent_continent": "Europe"
+        "most_prevalent_continent": "Europe",
+        "average_lifespan_years": 250
     },
     {
         "common_name": "Larch",
@@ -67,7 +74,8 @@
         "count": 19,
         "description": "A rare conifer that sheds its needles in autumn.",
         "most_prevalent_country": "France",
-        "most_prevalent_continent": "Europe"
+        "most_prevalent_continent": "Europe",
+        "average_lifespan_years": 200
     },
     {
         "common_name": "Redwood",
@@ -75,7 +83,8 @@
         "primary_type": "Coniferous",
         "count": 8,
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 1200
     },
     {
         "common_name": "Willow",
@@ -84,7 +93,8 @@
         "count": 0,
         "description": "Known for slender, flexible branches and elongated leaves.",
         "most_prevalent_country": "China",
-        "most_prevalent_continent": "Asia"
+        "most_prevalent_continent": "Asia",
+        "average_lifespan_years": 40
     },
     {
         "common_name": "Cherry",
@@ -93,7 +103,8 @@
         "count": 14,
         "description": "Flowering tree producing edible fruit and beautiful blossoms.",
         "most_prevalent_country": "Turkey",
-        "most_prevalent_continent": "Asia"
+        "most_prevalent_continent": "Asia",
+        "average_lifespan_years": 30
     },
     {
         "common_name": "Cypress",
@@ -102,7 +113,8 @@
         "count": 2,
         "description": "Conifer with scale-like leaves and small, round cones.",
         "most_prevalent_country": "Mexico",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 300
     },
     {
         "common_name": "Ash",
@@ -111,7 +123,8 @@
         "count": 17,
         "description": "Tree with compound leaves and winged seeds called samaras.",
         "most_prevalent_country": "United Kingdom",
-        "most_prevalent_continent": "Europe"
+        "most_prevalent_continent": "Europe",
+        "average_lifespan_years": 100
     },
     {
         "common_name": "Elm",
@@ -120,7 +133,8 @@
         "count": 0,
         "description": "Large shade tree with serrated leaves and vase-shaped form.",
         "most_prevalent_country": "China",
-        "most_prevalent_continent": "Asia"
+        "most_prevalent_continent": "Asia",
+        "average_lifespan_years": 100
     },
     {
         "common_name": "Poplar",
@@ -128,7 +142,8 @@
         "primary_type": "Deciduous",
         "count": 5,
         "most_prevalent_country": "Canada",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 70
     },
     {
         "common_name": "Walnut",
@@ -137,7 +152,8 @@
         "count": 18,
         "description": "Tree valued for its edible nuts and high-quality wood.",
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 150
     },
     {
         "common_name": "Hickory",
@@ -146,7 +162,8 @@
         "count": 3,
         "description": "Hardwood tree with compound leaves and edible nuts.",
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 200
     },
     {
         "common_name": "Sycamore",
@@ -155,7 +172,8 @@
         "count": 12,
         "description": "Large tree with mottled bark and broad, lobed leaves.",
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 250
     },
     {
         "common_name": "Hemlock",
@@ -163,7 +181,8 @@
         "primary_type": "Coniferous",
         "count": 6,
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 400
     },
     {
         "common_name": "Dogwood",
@@ -172,7 +191,8 @@
         "count": 10,
         "description": "Small tree or shrub with showy flowers and distinctive bark.",
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 50
     },
     {
         "common_name": "Cedar",
@@ -181,7 +201,8 @@
         "count": 0,
         "description": "Aromatic evergreen with needle clusters and large cones.",
         "most_prevalent_country": "Lebanon",
-        "most_prevalent_continent": "Asia"
+        "most_prevalent_continent": "Asia",
+        "average_lifespan_years": 500
     },
     {
         "common_name": "Juniper",
@@ -190,6 +211,7 @@
         "count": 15,
         "description": "Coniferous shrub or tree with scale-like leaves and berry-like cones.",
         "most_prevalent_country": "United States",
-        "most_prevalent_continent": "North America"
+        "most_prevalent_continent": "North America",
+        "average_lifespan_years": 100
     }
 ]
