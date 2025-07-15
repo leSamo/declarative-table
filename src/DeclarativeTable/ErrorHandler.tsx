@@ -1,16 +1,20 @@
-import React from 'react';
-import propTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import { InvalidObject } from '@redhat-cloud-services/frontend-components/InvalidObject';
 import { Unavailable } from '@redhat-cloud-services/frontend-components/Unavailable';
 import { ErrorState } from '@redhat-cloud-services/frontend-components/ErrorState';
 import { NotAuthorized } from '@redhat-cloud-services/frontend-components/NotAuthorized';
 
-const ErrorHandler = ({ errorStatus, children }) => {
+interface ErrorHandlerProps {
+  errorStatus: number | string,
+  children: ReactNode
+}
+
+const ErrorHandler = ({ errorStatus, children }: ErrorHandlerProps) => {
   if (!errorStatus) {
     return children;
   }
 
-  const parsedCode = parseInt(errorStatus);
+  const parsedCode = Number(errorStatus);
 
   switch (parsedCode) {
     case 403:
@@ -27,11 +31,6 @@ const ErrorHandler = ({ errorStatus, children }) => {
     default:
       return <ErrorState />;
   }
-};
-
-ErrorHandler.propTypes = {
-  errorStatus: propTypes.oneOfType([propTypes.number, propTypes.string]),
-  children: propTypes.node,
 };
 
 export default ErrorHandler;
