@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import { Split, SplitItem, TextInput } from '@patternfly/react-core';
-import { Select } from '@patternfly/react-core/deprecated';
+import { Select, SelectVariant } from '@patternfly/react-core/deprecated';
 
 const RangeFilterComponent = ({
   setValues,
@@ -41,7 +41,7 @@ const RangeFilterComponent = ({
   };
 
   const filterContent = (
-    <Split className="pf-v5-u-m-md">
+    <Split style={{ margin: 16 }}>
       <SplitItem>
         <span style={{ fontSize: 'var(--pf-v5-global--FontSize--sm)' }}>
           {minMaxLabels.min}
@@ -58,7 +58,7 @@ const RangeFilterComponent = ({
       </SplitItem>
       <SplitItem>
         <br />
-        <span className="pf-v5-u-m-sm">-</span>
+        <span style={{ margin: 8 }}>-</span>
       </SplitItem>
       <SplitItem>
         <span style={{ fontSize: 'var(--pf-v5-global--FontSize--sm)' }}>
@@ -79,7 +79,7 @@ const RangeFilterComponent = ({
 
   return (
     <Select
-      variant="panel"
+      variant={SelectVariant.single}
       aria-label="Select Input"
       customContent={filterContent}
       onToggle={() => setOpen(!isOpen)}

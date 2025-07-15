@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from '@tanstack/react-query';
 import fetchData, { fetchMostPrevalent, fetchScientificNames } from "../MockBackend/MockBackend";
-import { setupFilters } from "../DeclarativeTable/helpers";
+import { decodeRangeFilter, setupFilters } from "../DeclarativeTable/helpers";
 import useTextFilter from "../DeclarativeTable/Filters/TextFilter";
 import checkboxFilter from "../DeclarativeTable/Filters/CheckboxFilter";
 import radioFilter from "../DeclarativeTable/Filters/RadioFilter";
 import typeaheadFilter from "../DeclarativeTable/Filters/TypeaheadFilter";
-import { StarIcon } from "@patternfly/react-icons";
+import rangeFilter from "../DeclarativeTable/Filters/RangeFilter";
 import hierarchyFilter from "../DeclarativeTable/Filters/HierarchyFilter";
+import { StarIcon } from "@patternfly/react-icons";
+
+const AVERAGE_LIFESPAN_RANGE = { min: 0, max: 1000};
 
 const FilteringTable = () => {
     const DEFAULT_FILTERS = {
@@ -61,6 +64,10 @@ const FilteringTable = () => {
         {
             title: 'Count',
             key: 'count'
+        },
+        {
+            title: 'Average lifespan',
+            key: 'average_lifespan_years'
         }
     ];
 
@@ -71,6 +78,7 @@ const FilteringTable = () => {
             row.primary_type,
             row.most_prevalent_country,
             row.count,
+            `${row.average_lifespan_years} years`,
         ],
         key: row.common_name
     });
@@ -102,6 +110,8 @@ const FilteringTable = () => {
             label: 'Deciduous',
         }
     ];
+
+    const [average_lifespan_min, average_lifespan_max] = decodeRangeFilter(params.average_lifespan, AVERAGE_LIFESPAN_RANGE);
 
     const filters = [
         useTextFilter({
@@ -147,6 +157,16 @@ const FilteringTable = () => {
             placeholder: 'Filter by count',
             chipLabel: 'Count',
             apply
+        }),
+        rangeFilter({
+            urlParam: 'average_lifespan',
+            label: 'Average lifespan',
+            range: AVERAGE_LIFESPAN_RANGE,
+            value: { min: average_lifespan_min, max: average_lifespan_max },
+            placeholder: 'Filter by average lifespan',
+            chipLabel: 'Average lifespan',
+            chipDecimalPlaces: 0,
+            apply,
         })
     ];
 

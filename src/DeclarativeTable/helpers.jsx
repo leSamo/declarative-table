@@ -180,15 +180,15 @@ export const setupFilters = (filters, meta, defaultFilters, apply) => {
   return [filterConfig, activeFiltersConfig, showDeleteButton];
 };
 
-export const decodeRangeFilter = (range) => {
+export const decodeRangeFilter = (range, defaultRange = { min: 0, max: 10 }) => {
   if (!range?.includes(',')) {
     range = ',';
   }
 
   const [urlMin, urlMax] = range.split(',');
 
-  const min = +urlMin || 0;
-  const max = +urlMax || 10;
+  const min = +urlMin || defaultRange.min;
+  const max = +urlMax || defaultRange.max;
 
   return [min, max];
 };

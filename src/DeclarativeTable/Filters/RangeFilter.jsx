@@ -8,7 +8,7 @@ const useRangeFilter =
   ({
     urlParam,
     label,
-    minMaxLabels,
+    minMaxLabels = { min: 'Min', max: 'Max' },
     range,
     value,
     placeholder,
@@ -60,6 +60,7 @@ const useRangeFilter =
     };
 
     const activeFiltersConfig = {
+      // TODO: Fix chips not shown but Reset button shown with default value
       isShown: value.min !== range.min || value.max !== range.max,
       onDelete: () => {
         apply({
