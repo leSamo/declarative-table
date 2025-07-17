@@ -1,4 +1,5 @@
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
+import './HierarchyFilter.scss';
 
 const hierarchyFilter = ({ label, value, urlParam, placeholder, chipLabel, groups, apply }) => {
     const minorItems = groups.map(group => group.children).flat();
