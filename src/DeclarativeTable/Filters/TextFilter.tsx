@@ -34,7 +34,7 @@ const useTextFilter =
           handleSearch(value);
         },
         placeholder,
-        value: searchValue,
+        value: searchValue ?? '',
       },
     };
 

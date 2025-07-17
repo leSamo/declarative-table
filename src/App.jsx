@@ -143,7 +143,7 @@ const EXAMPLES = [
   {
     name: 'Plain Table',
     description: (
-      <Text>
+      <div>
         To get the most basic table with static items and no pagination, only three props are required to be supplied:
         <ol>
           <li>
@@ -156,7 +156,7 @@ const EXAMPLES = [
             meta -- pagination properties consisting of properties offset, limit and total_items; some backends use page and page_size and in that case limit = page_size and offset = (page - 1) * page_size
           </li>
         </ol>
-      </Text>
+      </div>
     ),
     component: PlainTable,
     code: PlainTableRaw,
@@ -164,9 +164,9 @@ const EXAMPLES = [
   {
     name: 'Empty Table',
     description: (
-      <Text>
+      <div>
         Use <code>emptyState</code> prop to display a custom empty state when the table has no rows.
-      </Text>
+      </div>
     ),
     component: EmptyTable,
     code: EmptyTableRaw,
@@ -174,9 +174,9 @@ const EXAMPLES = [
   {
     name: 'Paginated Table',
     description: (
-      <Text>
+      <div>
         Shows a skeleton table while data is loading by reading <code>isLoading</code> prop. Prop <code>apply</code> needs to be provided through which the table sets page and per page parameters.
-      </Text>
+      </div>
     ),
     component: PaginatedTable,
     code: PaginatedTableRaw,
@@ -184,9 +184,9 @@ const EXAMPLES = [
   {
     name: 'Manageable Columns Table',
     description: (
-      <Text>
+      <div>
         Allows users to show or hide columns using the "Manage columns" button. Requires <code>areColumnsManageable</code> and column visibility props (<code>isShown</code>, <code>isShownByDefault</code>, <code>isUntoggleable</code>).
-      </Text>
+      </div>
     ),
     component: ManageableColumnsTable,
     code: ManageableColumnsTableRaw,
@@ -194,9 +194,9 @@ const EXAMPLES = [
   {
     name: 'Expandable Table',
     description: (
-      <Text>
+      <div>
         Adds expand toggles to each row. Ensure your row mapper adds a unique key to each row and provides <code>expandableContent</code>.
-      </Text>
+      </div>
     ),
     component: ExpandableTable,
     code: ExpandableTableRaw,
@@ -204,9 +204,9 @@ const EXAMPLES = [
   {
     name: 'Selectable Table With Actions',
     description: (
-      <Text>
+      <div>
         Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>. Bulk actions can be configured using <code>actions</code> prop, and row actions using <code>rowActions</code> prop. Row actions are displayed in a kebab menu on the right side of each row.
-      </Text>
+      </div>
     ),
     component: SelectableTable,
     code: SelectableTableRaw,
@@ -214,9 +214,9 @@ const EXAMPLES = [
   {
     name: 'Sorting Table',
     description: (
-      <Text>
+      <div>
         Adds sorting indicators to the table header. Sorting is defined using <code>sortParam</code> and <code>sortDefaultDirection</code> properties of each <code>columns</code> prop item.
-      </Text>
+      </div>
     ),
     component: SortingTable,
     code: SortingTableRaw,
@@ -224,9 +224,9 @@ const EXAMPLES = [
   {
     name: 'Filtering Table',
     description: (
-      <Text>
-        Adds filter controls to the toolbar. Use <code>filterConfig</code> and <code>activeFiltersConfig</code> with <code>setupFilters</code> hook. There are four types of filters available: text filter, checkbox filter, radio filter, and range filter.
-      </Text>
+      <div>
+        Adds filter controls to the toolbar. Use <code>filterConfig</code> and <code>activeFiltersConfig</code> with <code>setupFilters</code> hook. There are four types of filters available: div filter, checkbox filter, radio filter, and range filter.
+      </div>
     ),
     component: FilteringTable,
     code: FilteringTableRaw,
@@ -234,9 +234,9 @@ const EXAMPLES = [
   {
     name: 'Error Table',
     description: (
-      <Text>
+      <div>
         Error returned when fetching data can be passed using the <code>errorStatus</code> prop. Table will display an error state with the corresponding HTTP status code. If the value of <code>errorStatus</code> is nullish then the table is displayed as normal.
-      </Text>
+      </div>
     ),
     component: ErrorTable,
     code: ErrorTableRaw,
@@ -294,7 +294,7 @@ function App() {
                     <Text component="h2" id="available-props">
                       Available Props
                     </Text>
-                    <Text>
+                    <div>
                       <Table variant="compact">
                         <Thead>
                           <Tr>
@@ -331,7 +331,7 @@ function App() {
                           ))}
                         </Tbody>
                       </Table>
-                    </Text>
+                    </div>
                   </TextContent>
                 </StackItem>
                 <StackItem>
@@ -339,7 +339,7 @@ function App() {
                     <Text component="h2">
                       Table Usage Assumptions
                     </Text>
-                    <Text>
+                    <div>
                       The following points highlight the design decisions made to simplify the interface of the table:
                       <ol>
                         <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
@@ -349,7 +349,7 @@ function App() {
                         <li>TODO: Localstorage saving of column management</li>
                         <li>TODO: Sticky headers</li>
                       </ol>
-                    </Text>
+                    </div>
                   </TextContent>
                 </StackItem>
                 {EXAMPLES.map(example => (

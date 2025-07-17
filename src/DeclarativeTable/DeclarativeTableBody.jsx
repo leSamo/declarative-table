@@ -130,7 +130,6 @@ const DeclarativeTableBody = ({
                   areAllExpanded: !areAllRowsExpanded,
                 }
               }
-              ouiaId="expand-all"
               aria-label="Expand or collapse all button"
             />
           )}

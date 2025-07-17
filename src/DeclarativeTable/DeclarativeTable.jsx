@@ -70,10 +70,10 @@ const DeclarativeTable = ({
       />
       <DeclarativeTableBody
         isLoading={isLoading}
-        columns={columns.filter((column) => !areColumnsManageable || column.isShown)}
+        columns={columns.filter((column) => !areColumnsManageable || column.isShown === undefined || column.isShown)}
         rows={rows.map((row) => ({
           ...row,
-          cells: row.cells.filter((_, i) => !areColumnsManageable || columns[i].isShown),
+          cells: row.cells.filter((_, i) => !areColumnsManageable || columns[i].isShown === undefined || columns[i].isShown),
         }))}
         isExpandable={isExpandable}
         isSelectable={isSelectable}
@@ -102,8 +102,8 @@ DeclarativeTable.propTypes = {
     propTypes.shape({
       title: propTypes.node.isRequired,
       sortParam: propTypes.string,
-      isShown: propTypes.bool.isRequired,
-      isShownByDefault: propTypes.bool.isRequired,
+      isShown: propTypes.bool,
+      isShownByDefault: propTypes.bool,
       isUntoggleable: propTypes.bool,
     })
   ).isRequired,
@@ -135,7 +135,7 @@ DeclarativeTable.propTypes = {
     propTypes.shape({
       label: propTypes.string,
       onClick: propTypes.func,
-      props: propTypes.object,
+      props: propTypes.oneOfType([propTypes.object, propTypes.func]),
     })
   ),
   rowActions: propTypes.arrayOf(
