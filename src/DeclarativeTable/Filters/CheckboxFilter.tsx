@@ -38,7 +38,7 @@ const checkboxFilter =
       urlParam,
       key: urlParam,
       filterValues: {
-        onChange: (event: FormEvent<HTMLInputElement>, values: string[]) => {
+        onChange: (_event: FormEvent<HTMLInputElement>, values: string[]) => {
           onValuesChanged(values);
         },
         items: itemsWithFixedIcon,
