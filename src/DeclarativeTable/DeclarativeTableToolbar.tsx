@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
 import { Skeleton } from '@patternfly/react-core';
-import { uniq } from 'lodash';
+import uniq from 'lodash/uniq';
 import { ConditionalFilterProps } from '@redhat-cloud-services/frontend-components';
 
 export type DeclarativeTableRow = {

@@ -1,6 +1,6 @@
 import React, { MouseEvent, useState } from 'react';
 import { ColumnManagementModal, ColumnManagementModalColumn } from '@patternfly/react-component-groups';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { ConditionalFilterProps, FilterChipsFilter, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
 
 export const useLocalStorage = (key: string) => {

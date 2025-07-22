@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, MenuToggle, Select, SelectList, SelectOption, TextInputGroup, TextInputGroupMain, TextInputGroupUtilities } from "@patternfly/react-core";
 import { TimesIcon } from "@patternfly/react-icons";
-import { debounce } from "lodash";
+import debounce from 'lodash/debounce';
 
 const TypeaheadFilterComponent = ({ inputValue, setInputValue, items, setItems, fetchItems, onValuesChanged, value, placeholder, noItemsLabel }) => {
     const [isOpen, setOpen] = useState(false);
