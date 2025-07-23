@@ -1,13 +1,31 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import TypeaheadFilterComponent from './TypeaheadFilterComponent';
 
-const useTypeaheadFilter =
-  ({ urlParam, label, value, placeholder, chipLabel, noItemsLabel = "No items", apply, fetchItems }) => {
-    const [items, setItems] = useState([]);
-    const [inputValue, setInputValue] = useState('');
+export type TypeaheadFilterItem = {
+  value: string,
+  label: ReactNode,
+  isDisabled?: boolean,
+  className?: string
+};
 
-    const onValuesChanged = (values) => {
+interface TypeaheadFilterProps {
+  urlParam: string;
+  label: string;
+  value: string;
+  placeholder: string;
+  chipLabel: string;
+  noItemsLabel?: string;
+  apply: (params: object, replaceState?: boolean ) => void;
+  fetchItems: (query: string) => Promise<string[]>;
+};
+
+const useTypeaheadFilter =
+  ({ urlParam, label, value, placeholder, chipLabel, noItemsLabel = "No items", apply, fetchItems }: TypeaheadFilterProps) => {
+    const [items, setItems] = useState<TypeaheadFilterItem[]>([]);
+    const [inputValue, setInputValue] = useState<string>('');
+
+    const onValuesChanged = (values: string[]) => {
       apply({
         [urlParam]: values.length === 0 ? undefined : values.join(','),
         offset: 0,
@@ -37,7 +55,7 @@ const useTypeaheadFilter =
 
     const activeFiltersConfig = {
       isShown: !!value,
-      onDelete: (chips) => {
+      onDelete: (chips: { value: string }[]) => {
         const itemsToRemove = chips.map((chip) => chip.value);
 
         const newValue = value

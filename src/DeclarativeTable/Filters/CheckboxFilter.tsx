@@ -14,11 +14,11 @@ interface CheckboxFilterProps {
   placeholder: string;
   items: CheckboxFilterItem[];
   chipLabel: string;
-  apply: (params: object, replaceState?: boolean ) => void;
+  apply: (params: object, replaceState?: boolean) => void;
 }
 
 const checkboxFilter =
-  ({ urlParam, label, value, placeholder, items, chipLabel, apply } : CheckboxFilterProps) => {
+  ({ urlParam, label, value, placeholder, items, chipLabel, apply }: CheckboxFilterProps) => {
     const onValuesChanged = (values: string[]) => {
       apply({
         [urlParam]: values.length === 0 ? undefined : values.join(','),
@@ -49,7 +49,7 @@ const checkboxFilter =
 
     const activeFiltersConfig = {
       isShown: !!value,
-      onDelete: (chips : { value: string }[]) => {
+      onDelete: (chips: { value: string }[]) => {
         const itemsToRemove = chips.map((chip) => chip.value);
 
         const newValue = value!

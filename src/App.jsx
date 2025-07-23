@@ -345,7 +345,6 @@ function App() {
                         <li>Either none or all rows are selectable. You cannot selectively make only some rows selectable by hiding or disabling the row select checkbox.</li>
                         <li>Either none or all rows have actions. You cannot selectively make only some rows have visible actions by hiding or disabling the row action kebab.</li>
                         <li>Rows can only have actions within the kebab menu on the right side. There can be no buttons outside of the kebab menu.</li>
-                        <li>TODO: Hierarchical filter (OS filter)</li>
                         <li>TODO: Localstorage saving of column management</li>
                         <li>TODO: Sticky headers</li>
                       </ol>

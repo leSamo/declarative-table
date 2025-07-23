@@ -1,15 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Button, MenuToggle, Select, SelectList, SelectOption, TextInputGroup, TextInputGroupMain, TextInputGroupUtilities } from "@patternfly/react-core";
+import React, { ReactNode, useEffect, useState } from "react";
+import { Button, MenuToggle, MenuToggleElement, Select, SelectList, SelectOption, TextInputGroup, TextInputGroupMain, TextInputGroupUtilities } from "@patternfly/react-core";
 import { TimesIcon } from "@patternfly/react-icons";
 import debounce from 'lodash/debounce';
+import { TypeaheadFilterItem } from "./TypeaheadFilter";
 
-const TypeaheadFilterComponent = ({ inputValue, setInputValue, items, setItems, fetchItems, onValuesChanged, value, placeholder, noItemsLabel }) => {
-    const [isOpen, setOpen] = useState(false);
+interface TypeaheadFilterComponentProps {
+    inputValue: string,
+    setInputValue: React.Dispatch<React.SetStateAction<string>>
+    items: TypeaheadFilterItem[];
+    setItems: React.Dispatch<React.SetStateAction<TypeaheadFilterItem[]>>;
+    fetchItems: (query: string) => Promise<string[]>;
+    onValuesChanged: (newValues: string[]) => void;
+    value: string,
+    placeholder: string,
+    noItemsLabel: ReactNode;
+}
+
+const TypeaheadFilterComponent = ({
+    inputValue,
+    setInputValue,
+    items,
+    setItems,
+    fetchItems,
+    onValuesChanged,
+    value,
+    placeholder,
+    noItemsLabel,
+}: TypeaheadFilterComponentProps) => {
+    const [isOpen, setOpen] = useState<boolean>(false);
     const selected = value?.split(",") ?? [];
 
     const [debouncedFetchItems] = useState(() =>
         debounce((query) => {
-            fetchItems(query).then((items) => {
+            fetchItems(query).then((items: string[]) => {
                 if (!items.length) {
                     setItems([
                         {
@@ -45,15 +68,15 @@ const TypeaheadFilterComponent = ({ inputValue, setInputValue, items, setItems, 
         setInputValue('');
     };
 
-    const onSelect = (value) => {
+    const onSelect = (value?: string) => {
         if (value && value !== 'no results') {
             onValuesChanged(
-                selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
+                selected.includes(value) ? selected.filter((selection: string) => selection !== value) : [...selected, value]
             );
         }
     };
 
-    const toggle = (toggleRef) => (
+    const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
         <MenuToggle
             variant="typeahead"
             aria-label="Typeahead filter"
@@ -89,7 +112,7 @@ const TypeaheadFilterComponent = ({ inputValue, setInputValue, items, setItems, 
             id="typeahead-filter-select"
             isOpen={isOpen}
             selected={selected}
-            onSelect={(_event, selection) => onSelect(selection)}
+            onSelect={(_event, selection) => onSelect(selection?.toString())}
             onOpenChange={(isOpen) => {
                 !isOpen && setOpen(false);
             }}
