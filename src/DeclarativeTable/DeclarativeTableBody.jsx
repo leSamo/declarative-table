@@ -31,6 +31,13 @@ const DeclarativeTableBody = ({
 }) => {
   const [expandedRows, setExpandedRows] = useState([]);
   const [areAllRowsExpanded, setAreAllRowsExpanded] = useState(false);
+  const [inertiaRowCount, setInertiaRowCount] = useState(0);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setInertiaRowCount(rows.length);
+    }
+  }, [rows, isLoading]);
 
   useEffect(() => {
     setAreAllRowsExpanded(
@@ -57,9 +64,8 @@ const DeclarativeTableBody = ({
   const isRowExpanded = (row) => expandedRows.includes(row);
   const isRowSelected = (row) => selectedRows.includes(row);
 
-  // TODO: Fix SkeletonTable sort indicator
   const createSortBy = (columns, sortParam, columnIndex) => {
-    if (rows.length === 0 || !sortParam) {
+    if (inertiaRowCount === 0 || !sortParam) {
       return {};
     }
 

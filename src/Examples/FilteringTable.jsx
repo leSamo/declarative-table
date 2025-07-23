@@ -63,11 +63,11 @@ const FilteringTable = () => {
         },
         {
             title: 'Count',
-            key: 'count'
+            key: 'count',
         },
         {
             title: 'Average lifespan',
-            key: 'average_lifespan_years'
+            key: 'average_lifespan_years',
         }
     ];
 
@@ -186,6 +186,7 @@ const FilteringTable = () => {
                 offset: meta.offset,
                 limit: meta.limit,
                 total_items: meta.total_items,
+                sort: meta.sort,
             }}
             apply={apply}
             filterConfig={filterConfig}

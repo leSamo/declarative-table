@@ -74,7 +74,7 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     field = sort.slice(1);
                 }
 
-                const validFields = ["common_name", "scientific_name", "primary_type", "most_prevalent_county", "count", "average_lifespan_years"];
+                const validFields = ["common_name", "scientific_name", "primary_type", "most_prevalent_country", "count", "average_lifespan_years"];
 
                 if (validFields.includes(field)) {
                     filteredData.sort((a, b) => {
