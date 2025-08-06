@@ -102,7 +102,7 @@ const DeclarativeTableBody = ({
 
   const columnHeaders = columns.map((column, index) => (
     <Th
-      key={column.title}
+      key={column.key}
       sort={column.sortParam && getSortParams(index)}
       width={column.width}
     >
