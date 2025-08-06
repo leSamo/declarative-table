@@ -21,7 +21,7 @@ export const useLocalStorage = (key: string) => {
 export const useColumnManagement = (
   columns: ColumnManagementModalColumn[],
   onApply: (newColumns: ColumnManagementModalColumn[]) => void
-) => {
+): [React.ReactNode, (isOpen: boolean) => void] => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   return [

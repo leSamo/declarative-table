@@ -5,7 +5,7 @@ import { ErrorState } from '@redhat-cloud-services/frontend-components/ErrorStat
 import { NotAuthorized } from '@redhat-cloud-services/frontend-components/NotAuthorized';
 
 interface ErrorHandlerProps {
-  errorStatus: number | string,
+  errorStatus?: number | string,
   children: ReactNode
 }
 

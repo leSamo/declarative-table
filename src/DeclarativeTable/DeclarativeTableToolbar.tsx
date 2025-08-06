@@ -2,11 +2,11 @@ import React, { ReactNode } from 'react';
 import { PrimaryToolbar } from '@redhat-cloud-services/frontend-components/PrimaryToolbar';
 import { Skeleton } from '@patternfly/react-core';
 import uniq from 'lodash/uniq';
-import { ConditionalFilterProps } from '@redhat-cloud-services/frontend-components';
+import { ConditionalFilterProps, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
 
 export type DeclarativeTableRow = {
   key: string,
-  cells: ReactNode,
+  cells: ReactNode[],
   expandableContent?: ReactNode,
   selectData?: ReactNode,
 }
@@ -18,7 +18,7 @@ export type DeclarativeTableMeta = {
   sort?: string
 }
 
-export type DeclarativeTableAction = {
+export type DeclarativeTableBulkAction = {
   label: React.ReactNode,
   onClick: (event: MouseEvent | React.MouseEvent | React.KeyboardEvent, selectedRows: Record<string, any>) => void,
   props: object | ((selectedRows: Record<string, any>) => void),
@@ -34,14 +34,14 @@ interface DeclarativeTableToolbarProps {
   itemCount: number,
   apply?: (params: { limit?: number, offset?: number }) => void,
   filterConfig: ConditionalFilterProps,
-  activeFiltersConfig: { filters: [] },
+  activeFiltersConfig: FilterChipsProps,
   meta: DeclarativeTableMeta,
-  onExport: (format: string) => void,
+  onExport?: (format: string) => void,
   selectedRows: Record<string, any>,
   setSelectedRows: React.Dispatch<React.SetStateAction<Record<string, any>>>,
-  fetchBulk?: () => Promise<string[]>,
+  fetchBulk?: () => Promise<Record<string, any>>,
   dedicatedAction?: ReactNode,
-  actions?: DeclarativeTableAction[]
+  bulkActions?: DeclarativeTableBulkAction[]
 };
 
 const DeclarativeTableToolbar = ({
@@ -60,7 +60,7 @@ const DeclarativeTableToolbar = ({
   setSelectedRows,
   fetchBulk,
   dedicatedAction,
-  actions = [],
+  bulkActions = [],
 }: DeclarativeTableToolbarProps) => {
   const selectAll = () =>
     fetchBulk?.().then((bulkData: Record<string, any>) =>
@@ -142,7 +142,7 @@ const DeclarativeTableToolbar = ({
       actionsConfig={{
         actions: [
           '',
-          ...actions.map((action: DeclarativeTableAction) => ({
+          ...bulkActions.map((action: DeclarativeTableBulkAction) => ({
             ...action,
             props: typeof (action.props) === 'function' ? action.props(selectedRows) : action.props,
             onClick: (e: MouseEvent | React.MouseEvent | React.KeyboardEvent) => action.onClick(e, selectedRows),

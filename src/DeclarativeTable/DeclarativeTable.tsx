@@ -1,12 +1,45 @@
 import React, { useState } from 'react';
-import propTypes from 'prop-types';
+// @ts-ignore
 import DeclarativeTableBody from './DeclarativeTableBody';
-import DeclarativeTableToolbar from './DeclarativeTableToolbar';
+import DeclarativeTableToolbar, { DeclarativeTableBulkAction, DeclarativeTableMeta, DeclarativeTableRow } from './DeclarativeTableToolbar';
 import DeclarativeTableFooter from './DeclarativeTableFooter';
 import ErrorHandler from './ErrorHandler';
 import { useColumnManagement } from './helpers';
 import { Button, ButtonVariant } from '@patternfly/react-core';
 import { ColumnsIcon } from '@patternfly/react-icons';
+import { ColumnManagementModalColumn } from '@patternfly/react-component-groups';
+import { ConditionalFilterProps, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
+
+export type DeclarativeTableColumn = ColumnManagementModalColumn & {
+  sortParam?: string,
+  sortDefaultDirection?: 'asc' | 'desc',
+}
+
+export type DeclarativeTableRowAction = {
+  label: React.ReactNode,
+  onClick: (event: MouseEvent | React.MouseEvent | React.KeyboardEvent, selectedRows: Record<string, any>) => void,
+  props: object,
+}
+
+interface DeclarativeTableProps {
+  isLoading?: boolean,
+  isExpandable?: boolean,
+  isSelectable?: boolean,
+  areColumnsManageable?: boolean,
+  rows: DeclarativeTableRow[],
+  columns: DeclarativeTableColumn[],
+  filterConfig?: ConditionalFilterProps,
+  activeFiltersConfig?: FilterChipsProps,
+  meta: DeclarativeTableMeta,
+  errorStatus?: number | string,
+  emptyState?: React.ReactNode,
+  apply?: (params: { limit?: number, offset?: number }) => void,
+  onExport?: (format: string) => void,
+  applyColumns: (newColumns: DeclarativeTableColumn[]) => void,
+  fetchBulk?: () => Promise<Record<string, any>>,
+  bulkActions?: DeclarativeTableBulkAction[],
+  rowActions?: DeclarativeTableRowAction[],
+}
 
 const DeclarativeTable = ({
   isLoading,
@@ -15,7 +48,7 @@ const DeclarativeTable = ({
   areColumnsManageable,
   rows,
   columns,
-  filterConfig = {},
+  filterConfig = { items: []},
   activeFiltersConfig = {},
   meta,
   errorStatus,
@@ -24,9 +57,9 @@ const DeclarativeTable = ({
   onExport,
   applyColumns,
   fetchBulk,
-  actions,
+  bulkActions,
   rowActions,
-}) => {
+}: DeclarativeTableProps) => {
   const { offset, limit, total_items, sort } = meta;
 
   const [selectedRows, setSelectedRows] = useState({});
@@ -66,7 +99,7 @@ const DeclarativeTable = ({
         selectedRows={selectedRows}
         setSelectedRows={setSelectedRows}
         fetchBulk={fetchBulk}
-        actions={actions}
+        bulkActions={bulkActions}
       />
       <DeclarativeTableBody
         isLoading={isLoading}
@@ -94,57 +127,6 @@ const DeclarativeTable = ({
       />
     </ErrorHandler>
   );
-};
-
-DeclarativeTable.propTypes = {
-  isLoading: propTypes.bool,
-  columns: propTypes.arrayOf(
-    propTypes.shape({
-      title: propTypes.node.isRequired,
-      sortParam: propTypes.string,
-      isShown: propTypes.bool,
-      isShownByDefault: propTypes.bool,
-      isUntoggleable: propTypes.bool,
-    })
-  ).isRequired,
-  rows: propTypes.arrayOf(
-    propTypes.shape({
-      key: propTypes.string.isRequired,
-      cells: propTypes.arrayOf(propTypes.node).isRequired,
-      expandableContent: propTypes.node,
-    })
-  ).isRequired,
-  isExpandable: propTypes.bool,
-  isSelectable: propTypes.bool,
-  areColumnsManageable: propTypes.bool,
-  emptyState: propTypes.node,
-  filterConfig: propTypes.object,
-  activeFiltersConfig: propTypes.object,
-  meta: propTypes.shape({
-    offset: propTypes.number,
-    limit: propTypes.number,
-    total_items: propTypes.number,
-    sort: propTypes.string,
-  }),
-  errorStatus: propTypes.oneOfType([propTypes.number, propTypes.string]),
-  apply: propTypes.func,
-  onExport: propTypes.func,
-  applyColumns: propTypes.func,
-  fetchBulk: propTypes.func,
-  actions: propTypes.arrayOf(
-    propTypes.shape({
-      label: propTypes.string,
-      onClick: propTypes.func,
-      props: propTypes.oneOfType([propTypes.object, propTypes.func]),
-    })
-  ),
-  rowActions: propTypes.arrayOf(
-    propTypes.shape({
-      label: propTypes.string,
-      onClick: propTypes.func,
-      props: propTypes.object,
-    })
-  ),
 };
 
 export default DeclarativeTable;

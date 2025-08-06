@@ -78,7 +78,7 @@ const SelectableTable = () => {
                 total_items: meta.total_items,
             }}
             apply={apply}
-            actions={TABLE_BULK_ACTIONS}
+            bulkActions={TABLE_BULK_ACTIONS}
             rowActions={TABLE_ROW_ACTIONS}
         />
     )

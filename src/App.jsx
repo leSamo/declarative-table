@@ -78,7 +78,7 @@ const PROP_INFO = [
     description: <p>Element to be shown instead of table body when table has no rows.</p>
   },
   {
-    name: 'actions',
+    name: 'bulkActions',
     type: 'array',
     defaultValue: '[]',
     description: <p>Bulk actions to be shown within a kebab menu in the toolbar. Each array item should have <code>label</code> and <code>onClick</code> properties; and optionally <code>props</code> prop which can be used to disable the action under certain conditions.</p>
@@ -205,7 +205,7 @@ const EXAMPLES = [
     name: 'Selectable Table With Actions',
     description: (
       <div>
-        Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>. Bulk actions can be configured using <code>actions</code> prop, and row actions using <code>rowActions</code> prop. Row actions are displayed in a kebab menu on the right side of each row.
+        Adds checkboxes for row selection and bulk select actions. Enable with <code>isSelectable</code>. Bulk actions can be configured using <code>bulkActions</code> prop, and row actions using <code>rowActions</code> prop. Row actions are displayed in a kebab menu on the right side of each row.
       </div>
     ),
     component: SelectableTable,
