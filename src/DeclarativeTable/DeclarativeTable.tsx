@@ -11,7 +11,8 @@ import { ColumnManagementModalColumn } from '@patternfly/react-component-groups'
 import { ConditionalFilterProps, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
 import { IAction } from '@patternfly/react-table';
 
-export type DeclarativeTableColumn = ColumnManagementModalColumn & {
+export type DeclarativeTableColumn = Omit<ColumnManagementModalColumn, 'isShownByDefault'> & {
+  isShownByDefault?: boolean,
   dataLabel?: string,
   sortParam?: string,
   sortDefaultDirection?: 'asc' | 'desc',
@@ -32,7 +33,7 @@ interface DeclarativeTableProps {
   emptyState?: React.ReactNode,
   apply?: (params: { limit?: number, offset?: number }) => void,
   onExport?: (format: string) => void,
-  applyColumns: (newColumns: DeclarativeTableColumn[]) => void,
+  applyColumns?: (newColumns: DeclarativeTableColumn[]) => void,
   fetchBulk?: () => Promise<Record<string, any>>,
   bulkActions?: DeclarativeTableBulkAction[],
   rowActions?: IAction[],
@@ -63,7 +64,7 @@ const DeclarativeTable = ({
 
   const [ColumnManagementModal, setColumnModalOpen] = useColumnManagement(
     columns,
-    (columns) => applyColumns(columns)
+    (columns) => applyColumns?.(columns)
   );
 
   return (

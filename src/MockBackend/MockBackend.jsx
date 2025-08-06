@@ -1,5 +1,20 @@
 import data from './mockData.json';
 
+/*
+export type ResponseDataRow = {
+
+}
+
+export type ResponseMeta = {
+
+}
+
+export type Response = {
+    data: ResponseDataRow[],
+    meta: ResponseMeta
+};
+*/
+
 const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count, average_lifespan }) => {
     return new Promise((resolve) => {
         setTimeout(() => {

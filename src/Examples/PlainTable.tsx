@@ -1,21 +1,27 @@
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 
+type Tree = {
+    common_name: string,
+    scientific_name: string,
+    primary_type: string,
+}
+
 const PlainTable = () => {
     const TABLE_DATA = [
         {
-            "Common Name": "Oak",
-            "Scientific Name (Genus)": "Quercus",
-            "Primary Type": "Deciduous",
+            common_name: "Oak",
+            scientific_name: "Quercus",
+            primary_type: "Deciduous",
         },
         {
-            "Common Name": "Maple",
-            "Scientific Name (Genus)": "Acer",
-            "Primary Type": "Deciduous",
+            common_name: "Maple",
+            scientific_name: "Acer",
+            primary_type: "Deciduous",
         },
         {
-            "Common Name": "Pine",
-            "Scientific Name (Genus)": "Pinus",
-            "Primary Type": "Coniferous",
+            common_name: "Pine",
+            scientific_name: "Pinus",
+            primary_type: "Coniferous",
         },
     ];
 
@@ -34,13 +40,13 @@ const PlainTable = () => {
         }
     ];
 
-    const TABLE_DATA_MAPPER = (row) => ({
+    const TABLE_DATA_MAPPER = (row: Tree) => ({
         cells: [
-            row["Common Name"],
-            row["Scientific Name (Genus)"],
-            row["Primary Type"]
+            row.common_name,
+            row.scientific_name,
+            row.primary_type
         ],
-        key: row["Common Name"]
+        key: row.common_name
     });
 
     return (

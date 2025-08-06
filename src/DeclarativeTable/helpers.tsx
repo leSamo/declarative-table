@@ -2,6 +2,7 @@ import React, { MouseEvent, useState } from 'react';
 import { ColumnManagementModal, ColumnManagementModalColumn } from '@patternfly/react-component-groups';
 import isEqual from 'lodash/isEqual';
 import { ConditionalFilterProps, FilterChipsFilter, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
+import { DeclarativeTableColumn } from './DeclarativeTable';
 
 export const useLocalStorage = (key: string) => {
   const [sessionValue, setSessionValue] = useState(localStorage.getItem(key));
@@ -19,14 +20,14 @@ export const useLocalStorage = (key: string) => {
 };
 
 export const useColumnManagement = (
-  columns: ColumnManagementModalColumn[],
-  onApply: (newColumns: ColumnManagementModalColumn[]) => void
+  columns: DeclarativeTableColumn[],
+  onApply: (newColumns: DeclarativeTableColumn[]) => void
 ): [React.ReactNode, (isOpen: boolean) => void] => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   return [
     <ColumnManagementModal
-      appliedColumns={columns}
+      appliedColumns={columns.map(column => ({ ...column, isShownByDefault: column.isShownByDefault ?? false }))}
       applyColumns={(newColumns) => onApply(newColumns)}
       isOpen={isModalOpen}
       onClose={() => setModalOpen(false)}
@@ -63,7 +64,7 @@ export const setupFilters = (
   filters: { filterConfig: any, activeFiltersConfig: any }[],
   meta: { limit: number, [key: string]: any },
   defaultFilters: object,
-  apply: (params: object, replaceState?: boolean ) => void
+  apply: (params: object, replaceState?: boolean) => void
 ) => {
   if (filters.length === 0) {
     return [undefined, undefined];
