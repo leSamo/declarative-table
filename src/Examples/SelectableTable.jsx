@@ -44,21 +44,25 @@ const SelectableTable = () => {
             row.scientific_name,
             row.primary_type
         ],
-        key: row.common_name
+        key: row.common_name,
+        selectData: {
+            common_name: row.common_name,
+            count: row.count
+        }
     });
 
     const TABLE_BULK_ACTIONS = [{
         label: 'View details',
         onClick: (e, selectedItems) => {
-            console.log("View details of", selectedItems.join(', '));
+            console.log("View details of", selectedItems);
         },
-        props: (selectedItems) => ({ isDisabled: selectedItems.length === 0  })
+        props: (selectedItems) => ({ isDisabled: selectedItems.length === 0 })
     }];
 
     const TABLE_ROW_ACTIONS = [{
         title: 'View details',
-        onClick: (e, rowIndex, rowData) => {
-            console.log("View details of", rowData.cells[0]);
+        onClick: (e, rowIndex, selectedItem) => {
+            console.log("View details of", selectedItem);
         }
     }];
 

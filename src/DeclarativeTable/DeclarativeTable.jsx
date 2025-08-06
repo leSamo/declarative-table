@@ -29,7 +29,7 @@ const DeclarativeTable = ({
 }) => {
   const { offset, limit, total_items, sort } = meta;
 
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState({});
 
   const [ColumnManagementModal, setColumnModalOpen] = useColumnManagement(
     columns,

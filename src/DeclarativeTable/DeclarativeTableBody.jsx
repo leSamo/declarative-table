@@ -56,13 +56,20 @@ const DeclarativeTableBody = ({
     });
 
   const onToggleSelectRow = (row, isTogglingOn) =>
-    setSelectedRows((prevExpanded) => {
-      const otherSelectedRows = prevExpanded.filter((r) => r !== row);
-      return isTogglingOn ? [...otherSelectedRows, row] : otherSelectedRows;
+    setSelectedRows((prevSelected) => {
+      const newSelectedRows = { ...prevSelected };
+
+      if (isTogglingOn) {
+        newSelectedRows[row.key] = row.selectData ?? true;
+      } else {
+        delete newSelectedRows[row.key];
+      }
+
+      return newSelectedRows;
     });
 
   const isRowExpanded = (row) => expandedRows.includes(row);
-  const isRowSelected = (row) => selectedRows.includes(row);
+  const isRowSelected = (row) => !!selectedRows[row.key];
 
   const createSortBy = (columns, sortParam, columnIndex) => {
     if (inertiaRowCount === 0 || !sortParam) {
@@ -139,7 +146,7 @@ const DeclarativeTableBody = ({
               aria-label="Expand or collapse all button"
             />
           )}
-          {isSelectable && <Th style={{ width: 29, minWidth: 29 }} screenReaderText="Column with row select checkboxes"  />}
+          {isSelectable && <Th style={{ width: 29, minWidth: 29 }} screenReaderText="Column with row select checkboxes" />}
           {columnHeaders}
           {rowActions && <Th screenReaderText="Column with row actions" />}
         </Tr>
@@ -168,9 +175,9 @@ const DeclarativeTableBody = ({
                 <Td
                   select={{
                     rowIndex,
-                    isSelected: isRowSelected(row.key),
+                    isSelected: isRowSelected(row),
                     onSelect: (_event, isSelecting) =>
-                      onToggleSelectRow(row.key, isSelecting),
+                      onToggleSelectRow(row, isSelecting),
                     isDisabled: row.isUnselectable,
                   }}
                 />
@@ -182,7 +189,7 @@ const DeclarativeTableBody = ({
               ))}
               {rowActions && (
                 <Td isActionCell>
-                  <ActionsColumn rowData={row} items={rowActions} isDisabled={false} />
+                  <ActionsColumn rowData={row.selectData} items={rowActions} isDisabled={false} />
                 </Td>
               )}
             </Tr>
@@ -224,7 +231,7 @@ DeclarativeTableBody.propTypes = {
   sortParam: propTypes.string,
   perPage: propTypes.number,
   apply: propTypes.func,
-  selectedRows: propTypes.array,
+  selectedRows: propTypes.object,
   setSelectedRows: propTypes.func,
   rowActions: propTypes.arrayOf(
     propTypes.shape({

@@ -7,7 +7,8 @@ import { ConditionalFilterProps } from '@redhat-cloud-services/frontend-componen
 export type DeclarativeTableRow = {
   key: string,
   cells: ReactNode,
-  expandableContent?: ReactNode
+  expandableContent?: ReactNode,
+  selectData?: ReactNode,
 }
 
 export type DeclarativeTableMeta = {
@@ -19,8 +20,8 @@ export type DeclarativeTableMeta = {
 
 export type DeclarativeTableAction = {
   label: React.ReactNode,
-  onClick: (event: MouseEvent | React.MouseEvent | React.KeyboardEvent, selectedRows: string[]) => void,
-  props: object | ((selectedRows: string[]) => void),
+  onClick: (event: MouseEvent | React.MouseEvent | React.KeyboardEvent, selectedRows: Record<string, any>) => void,
+  props: object | ((selectedRows: Record<string, any>) => void),
 }
 
 // TODO: Unify page, perPage and itemCount with meta
@@ -36,8 +37,8 @@ interface DeclarativeTableToolbarProps {
   activeFiltersConfig: { filters: [] },
   meta: DeclarativeTableMeta,
   onExport: (format: string) => void,
-  selectedRows: string[],
-  setSelectedRows: React.Dispatch<React.SetStateAction<string[]>>,
+  selectedRows: Record<string, any>,
+  setSelectedRows: React.Dispatch<React.SetStateAction<Record<string, any>>>,
   fetchBulk?: () => Promise<string[]>,
   dedicatedAction?: ReactNode,
   actions?: DeclarativeTableAction[]
@@ -62,8 +63,16 @@ const DeclarativeTableToolbar = ({
   actions = [],
 }: DeclarativeTableToolbarProps) => {
   const selectAll = () =>
-    fetchBulk?.().then((keys: string[]) =>
-      setSelectedRows((selectedRows: string[]) => uniq<string>([...selectedRows, ...keys]))
+    fetchBulk?.().then((bulkData: Record<string, any>) =>
+      setSelectedRows((prevSelected: Record<string, any>) => {
+        const newSelected: Record<string, any> = { ...prevSelected };
+
+        Object.entries(bulkData).forEach(([key, value]) => {
+          newSelected[key] = value;
+        });
+
+        return newSelected;
+      })
     );
 
   return (
@@ -94,19 +103,25 @@ const DeclarativeTableToolbar = ({
       dedicatedAction={dedicatedAction}
       bulkSelect={
         isSelectable ? {
-          count: selectedRows.length,
+          count: Object.keys(selectedRows).length,
           items: [
             {
               title: 'Select none (0 items)',
-              onClick: () => setSelectedRows([]),
+              onClick: () => setSelectedRows({}),
             },
             {
               title: `Select page (${rows.length} ${rows.length === 1 ? 'item' : 'items'
                 })`,
               onClick: () =>
-                setSelectedRows((selectedRows: string[]) =>
-                  uniq([...selectedRows, ...rows.map((row: DeclarativeTableRow) => row.key)])
-                ),
+                setSelectedRows((prevSelected) => {
+                  const newSelected = { ...prevSelected };
+
+                  rows.forEach((row) => {
+                    newSelected[row.key] = row.selectData ?? true;
+                  });
+
+                  return newSelected;
+                })
             },
             ...(fetchBulk !== undefined
               ? [
@@ -118,10 +133,10 @@ const DeclarativeTableToolbar = ({
               ]
               : []),
           ],
-          isDisabled: meta.total_items === 0 && selectedRows.length === 0,
-          checked: selectedRows.length > 0,
+          isDisabled: meta.total_items === 0 && Object.keys(selectedRows).length === 0,
+          checked: Object.keys(selectedRows).length > 0,
           onSelect: () =>
-            selectedRows.length === 0 ? selectAll() : setSelectedRows([]),
+            Object.keys(selectedRows).length === 0 ? selectAll() : setSelectedRows({}),
         } : undefined
       }
       actionsConfig={{
@@ -130,7 +145,7 @@ const DeclarativeTableToolbar = ({
           ...actions.map((action: DeclarativeTableAction) => ({
             ...action,
             props: typeof (action.props) === 'function' ? action.props(selectedRows) : action.props,
-            onClick: (e: MouseEvent | React.MouseEvent | React.KeyboardEvent) => action.onClick(e, selectedRows),
+            onClick: (e: MouseEvent | React.MouseEvent | React.KeyboardEvent) => action.onClick(e, selectedRows),
           })),
         ],
       }}
