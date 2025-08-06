@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import propTypes from 'prop-types';
 import {
   Table,
   Thead,
@@ -10,10 +9,30 @@ import {
   ExpandableRowContent,
   SortByDirection,
   ActionsColumn,
+  IAction,
+  ISortBy,
 } from '@patternfly/react-table';
 import { TableVariant } from '@patternfly/react-table';
 import { DEFAULT_LIMIT } from './constants';
 import { SkeletonTable } from '@patternfly/react-component-groups';
+import { DeclarativeTableColumn } from './DeclarativeTable';
+import { DeclarativeTableRow } from './DeclarativeTableToolbar';
+import { ThSortType } from '@patternfly/react-table/dist/esm/components/Table/base/types';
+
+interface DeclarativeTableBodyProps {
+  isLoading?: boolean,
+  columns: DeclarativeTableColumn[],
+  rows: DeclarativeTableRow[],
+  isExpandable?: boolean,
+  isSelectable?: boolean,
+  emptyState?: React.ReactNode,
+  sortParam?: string,
+  perPage: number,
+  apply?: (params: { limit?: number, offset?: number, sort?: string }) => void,
+  selectedRows: Record<string, any>,
+  setSelectedRows: React.Dispatch<React.SetStateAction<Record<string, any>>>,
+  rowActions?: IAction[],
+}
 
 const DeclarativeTableBody = ({
   isLoading,
@@ -22,16 +41,16 @@ const DeclarativeTableBody = ({
   isExpandable = false,
   isSelectable = false,
   emptyState,
-  sortParam,
+  sortParam = '',
   perPage,
   apply,
   selectedRows,
   setSelectedRows,
   rowActions,
-}) => {
-  const [expandedRows, setExpandedRows] = useState([]);
-  const [areAllRowsExpanded, setAreAllRowsExpanded] = useState(false);
-  const [inertiaRowCount, setInertiaRowCount] = useState(0);
+}: DeclarativeTableBodyProps) => {
+  const [expandedRows, setExpandedRows] = useState<string[]>([]);
+  const [areAllRowsExpanded, setAreAllRowsExpanded] = useState<boolean>(false);
+  const [inertiaRowCount, setInertiaRowCount] = useState<number>(0);
 
   useEffect(() => {
     if (!isLoading) {
@@ -49,13 +68,13 @@ const DeclarativeTableBody = ({
     areAllRowsExpanded && setExpandedRows(rows.filter(row => row.expandableContent).map((row) => row.key));
   }, [rows]);
 
-  const onExpandRow = (row, isExpanding) =>
+  const onExpandRow = (rowKey: string, isExpanding: boolean) =>
     setExpandedRows((prevExpanded) => {
-      const otherExpandedRows = prevExpanded.filter((r) => r !== row);
-      return isExpanding ? [...otherExpandedRows, row] : otherExpandedRows;
+      const otherExpandedRows = prevExpanded.filter((r) => r !== rowKey);
+      return isExpanding ? [...otherExpandedRows, rowKey] : otherExpandedRows;
     });
 
-  const onToggleSelectRow = (row, isTogglingOn) =>
+  const onToggleSelectRow = (row: DeclarativeTableRow, isTogglingOn: boolean) =>
     setSelectedRows((prevSelected) => {
       const newSelectedRows = { ...prevSelected };
 
@@ -68,10 +87,10 @@ const DeclarativeTableBody = ({
       return newSelectedRows;
     });
 
-  const isRowExpanded = (row) => expandedRows.includes(row);
-  const isRowSelected = (row) => !!selectedRows[row.key];
+  const isRowExpanded = (rowKey: string) => expandedRows.includes(rowKey);
+  const isRowSelected = (row: DeclarativeTableRow) => !!selectedRows[row.key];
 
-  const createSortBy = (columns, sortParam, columnIndex) => {
+  const createSortBy = (columns: DeclarativeTableColumn[], sortParam: string, columnIndex: number): ISortBy => {
     if (inertiaRowCount === 0 || !sortParam) {
       return {};
     }
@@ -82,7 +101,7 @@ const DeclarativeTableBody = ({
     sortParam = sortParam.replace(/^(-|\+)/, '').split(',')[0];
 
     const selectedColumnIndex = columns.findIndex(
-      (item) => item.sortParam === sortParam
+      (column: DeclarativeTableColumn) => column.sortParam === sortParam
     );
 
     return {
@@ -93,7 +112,7 @@ const DeclarativeTableBody = ({
     };
   };
 
-  const getSortParams = (columnIndex) => ({
+  const getSortParams = (columnIndex: number): ThSortType => ({
     sortBy: createSortBy(columns, sortParam, columnIndex),
     onSort: (event, index, direction) => {
       let columnName = columns[columnIndex].sortParam;
@@ -102,7 +121,7 @@ const DeclarativeTableBody = ({
         columnName = '-' + columnName;
       }
 
-      rows.length > 0 && apply({ sort: columnName });
+      rows.length > 0 && apply?.({ sort: columnName });
     },
     columnIndex,
   });
@@ -110,8 +129,8 @@ const DeclarativeTableBody = ({
   const columnHeaders = columns.map((column, index) => (
     <Th
       key={column.key}
-      sort={column.sortParam && getSortParams(index)}
-      width={column.width}
+      sort={column.sortParam ? getSortParams(index) : undefined}
+      width={column.width as (10 | 15 | 20 | 25 | 30 | 35 | 40 | 45 | 50 | 60 | 70 | 80 | 90 | 100 | undefined)}
     >
       {column.title}
     </Th>
@@ -134,14 +153,15 @@ const DeclarativeTableBody = ({
               // makes sure the headers do not move on empty state
               style={{ width: 72, minWidth: 72 }}
               expand={
-                rows.length > 0 && {
+                rows.length > 0 ? {
                   onToggle: () =>
                     setExpandedRows(
                       areAllRowsExpanded ? [] : rows.filter(row => row.expandableContent).map((row) => row.key)
                     ),
                   // looks like Patternfly has this condition reversed
                   areAllExpanded: !areAllRowsExpanded,
-                }
+                  collapseAllAriaLabel: 'Collapse all'
+                } : undefined
               }
               aria-label="Expand or collapse all button"
             />
@@ -183,7 +203,12 @@ const DeclarativeTableBody = ({
                 />
               )}
               {row.cells.map((cell, cellIndex) => (
-                <Td key={cellIndex} dataLabel={columns[cellIndex].dataLabel ?? columns[cellIndex].title}>
+                <Td
+                  key={cellIndex}
+                  dataLabel={typeof (columns[cellIndex].title) === 'string'
+                    ? columns[cellIndex].title
+                    : columns[cellIndex].dataLabel}
+                >
                   {cell}
                 </Td>
               ))}
@@ -207,39 +232,6 @@ const DeclarativeTableBody = ({
       )}
     </Table>
   );
-};
-
-DeclarativeTableBody.propTypes = {
-  isLoading: propTypes.bool,
-  columns: propTypes.arrayOf(
-    propTypes.shape({
-      title: propTypes.node.isRequired,
-      sortParam: propTypes.string,
-      sortDefaultDirection: propTypes.oneOf([undefined, 'asc', 'desc']),
-    })
-  ).isRequired,
-  rows: propTypes.arrayOf(
-    propTypes.shape({
-      key: propTypes.string.isRequired,
-      cells: propTypes.arrayOf(propTypes.node).isRequired,
-      expandableContent: propTypes.node,
-    })
-  ).isRequired,
-  isExpandable: propTypes.bool,
-  isSelectable: propTypes.bool,
-  emptyState: propTypes.node,
-  sortParam: propTypes.string,
-  perPage: propTypes.number,
-  apply: propTypes.func,
-  selectedRows: propTypes.object,
-  setSelectedRows: propTypes.func,
-  rowActions: propTypes.arrayOf(
-    propTypes.shape({
-      label: propTypes.string,
-      onClick: propTypes.func,
-      props: propTypes.object,
-    })
-  ),
 };
 
 export default DeclarativeTableBody;

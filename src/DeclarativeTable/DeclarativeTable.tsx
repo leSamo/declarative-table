@@ -9,16 +9,13 @@ import { Button, ButtonVariant } from '@patternfly/react-core';
 import { ColumnsIcon } from '@patternfly/react-icons';
 import { ColumnManagementModalColumn } from '@patternfly/react-component-groups';
 import { ConditionalFilterProps, FilterChipsProps } from '@redhat-cloud-services/frontend-components';
+import { IAction } from '@patternfly/react-table';
 
 export type DeclarativeTableColumn = ColumnManagementModalColumn & {
+  dataLabel?: string,
   sortParam?: string,
   sortDefaultDirection?: 'asc' | 'desc',
-}
-
-export type DeclarativeTableRowAction = {
-  label: React.ReactNode,
-  onClick: (event: MouseEvent | React.MouseEvent | React.KeyboardEvent, selectedRows: Record<string, any>) => void,
-  props: object,
+  width?: number,
 }
 
 interface DeclarativeTableProps {
@@ -38,7 +35,7 @@ interface DeclarativeTableProps {
   applyColumns: (newColumns: DeclarativeTableColumn[]) => void,
   fetchBulk?: () => Promise<Record<string, any>>,
   bulkActions?: DeclarativeTableBulkAction[],
-  rowActions?: DeclarativeTableRowAction[],
+  rowActions?: IAction[],
 }
 
 const DeclarativeTable = ({

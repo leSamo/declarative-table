@@ -8,7 +8,8 @@ export type DeclarativeTableRow = {
   key: string,
   cells: ReactNode[],
   expandableContent?: ReactNode,
-  selectData?: ReactNode,
+  selectData?: object,
+  isUnselectable?: boolean,
 }
 
 export type DeclarativeTableMeta = {
