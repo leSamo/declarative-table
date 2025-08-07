@@ -1,21 +1,48 @@
-import data from './mockData.json';
+import importedData from './mockData.json';
 
-/*
 export type ResponseDataRow = {
+    common_name: string,
+    scientific_name: string,
+    primary_type: string,
+    count: number,
+    most_prevalent_country: string,
+    most_prevalent_continent: string,
+    average_lifespan_years: number
+};
 
-}
+export type ResponseMeta = Request & {
+    total_items: number
+};
 
-export type ResponseMeta = {
-
-}
+export type ResponseError = {
+    status: number,
+    message: string
+};
 
 export type Response = {
     data: ResponseDataRow[],
-    meta: ResponseMeta
+    meta: ResponseMeta,
+    error?: ResponseError,
 };
-*/
 
-const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count, average_lifespan }) => {
+interface Request {
+    limit: number,
+    offset: number,
+    sort?: string,
+    common_name?: string,
+    scientific_name?: string,
+    primary_type?: string,
+    most_prevalent_country?: string,
+    count?: string,
+    average_lifespan?: string,
+};
+
+const validSortFields = ["common_name", "scientific_name", "primary_type", "count", "most_prevalent_country", "most_prevalent_continent", "average_lifespan_years"] as const;
+type ValidSortField = typeof validSortFields[number];
+
+const data: ResponseDataRow[] = importedData;
+
+const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_type, most_prevalent_country, count, average_lifespan }: Request): Promise<Response> => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const start = offset || 0;
@@ -68,7 +95,11 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                         resolve({
                             error: { status: 400, message: `Invalid count filter: ${count}` },
                             data: [],
-                            meta: {}
+                            meta: {
+                                limit,
+                                offset,
+                                total_items: 0
+                            }
                         });
                     }
                 });
@@ -89,12 +120,10 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     field = sort.slice(1);
                 }
 
-                const validFields = ["common_name", "scientific_name", "primary_type", "most_prevalent_country", "count", "average_lifespan_years"];
-
-                if (validFields.includes(field)) {
+                if (validSortFields.includes(field as ValidSortField)) {
                     filteredData.sort((a, b) => {
-                        if (a[field] < b[field]) return -1 * direction;
-                        if (a[field] > b[field]) return 1 * direction;
+                        if (a[field as ValidSortField] < b[field as ValidSortField]) return -1 * direction;
+                        if (a[field as ValidSortField] > b[field as ValidSortField]) return 1 * direction;
                         return 0;
                     });
                 }
@@ -102,7 +131,11 @@ const fetchData = ({ limit, offset, sort, common_name, scientific_name, primary_
                     resolve({
                         error: { status: 400, message: `Invalid sort field: ${field}` },
                         data: [],
-                        meta: {}
+                        meta: {
+                            limit,
+                            offset,
+                            total_items: 0
+                        }
                     });
                 }
             }
@@ -138,8 +171,17 @@ export const fetchScientificNames = (filter = "") => {
     });
 };
 
+export type TreeNode = {
+  id: string;
+  value: string;
+  name: string;
+  type: 'treeView';
+  groupSelectable?: boolean;
+  children?: TreeNode[];
+};
+
 export const fetchMostPrevalent = () => {
-    const grouped = {};
+    const grouped: Record<string, TreeNode> = {};
 
     data.forEach(item => {
         const continent = item.most_prevalent_continent;
@@ -161,8 +203,8 @@ export const fetchMostPrevalent = () => {
 
         const continentGroup = grouped[continentId];
 
-        if (!continentGroup.children.some(child => child.id === countryId)) {
-            continentGroup.children.push({
+        if (!continentGroup.children?.some(child => child.id === countryId)) {
+            continentGroup.children?.push({
                 id: countryId,
                 value: countryId,
                 name: country,
