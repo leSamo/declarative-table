@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import DeclarativeTable from "../DeclarativeTable/DeclarativeTable";
 import { useQuery } from "@tanstack/react-query";
 import fetchData from "../MockBackend/MockBackend";
 
 const SelectableTable = () => {
+    const declarativeTableRef = useRef();
+
     const [params, setParams] = useState({
         limit: 10,
         offset: 0,
@@ -55,6 +57,7 @@ const SelectableTable = () => {
         label: 'View details',
         onClick: (e, selectedItems) => {
             console.log("View details of", selectedItems);
+            declarativeTableRef.current.clearSelectedRows();
         },
         props: (selectedItems) => ({ isDisabled: selectedItems.length === 0 })
     }];
@@ -68,6 +71,7 @@ const SelectableTable = () => {
 
     return (
         <DeclarativeTable
+            ref={declarativeTableRef}
             isSelectable
             isLoading={isFetching}
             rows={data.map(row => TABLE_DATA_MAPPER(row))}

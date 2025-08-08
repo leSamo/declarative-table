@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// @ts-ignore
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import DeclarativeTableBody from './DeclarativeTableBody';
 import DeclarativeTableToolbar, { DeclarativeTableBulkAction, DeclarativeTableMeta, DeclarativeTableRow } from './DeclarativeTableToolbar';
 import DeclarativeTableFooter from './DeclarativeTableFooter';
@@ -15,7 +14,7 @@ export type DeclarativeTableColumn = Omit<ColumnManagementModalColumn, 'isShownB
   isShownByDefault?: boolean,
   dataLabel?: string,
   sortParam?: string,
-  sortDefaultDirection?: 'asc' | 'desc',
+  sortDefaultDirection?: 'asc' | 'desc',
   width?: number,
 }
 
@@ -40,14 +39,14 @@ interface DeclarativeTableProps {
   ouiaId?: string,
 }
 
-const DeclarativeTable = ({
+const DeclarativeTable = forwardRef(({
   isLoading,
   isExpandable,
   isSelectable,
   areColumnsManageable,
   rows,
   columns,
-  filterConfig = { items: []},
+  filterConfig = { items: [] },
   activeFiltersConfig = {},
   meta,
   errorStatus,
@@ -59,7 +58,7 @@ const DeclarativeTable = ({
   bulkActions,
   rowActions,
   ouiaId
-}: DeclarativeTableProps) => {
+}: DeclarativeTableProps, ref) => {
   const { offset, limit, total_items, sort } = meta;
 
   const [selectedRows, setSelectedRows] = useState({});
@@ -68,6 +67,10 @@ const DeclarativeTable = ({
     columns,
     (columns) => applyColumns?.(columns)
   );
+
+  useImperativeHandle(ref, () => ({
+    clearSelectedRows: () => setSelectedRows({})
+  }));
 
   return (
     <ErrorHandler errorStatus={errorStatus}>
@@ -127,7 +130,7 @@ const DeclarativeTable = ({
         apply={apply}
       />
     </ErrorHandler>
-  );
-};
+  )
+});
 
 export default DeclarativeTable;
