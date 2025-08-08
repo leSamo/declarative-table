@@ -170,7 +170,7 @@ const DeclarativeTableBody = ({
           )}
           {isSelectable && <Th style={{ width: 29, minWidth: 29 }} screenReaderText="Column with row select checkboxes" />}
           {columnHeaders}
-          {rowActions && <Th screenReaderText="Column with row actions" />}
+          {Array.isArray(rowActions) && rowActions.length > 0 && <Th screenReaderText="Column with row actions" />}
         </Tr>
       </Thead>
       {rows.length === 0 ? (
@@ -214,7 +214,7 @@ const DeclarativeTableBody = ({
                   {cell}
                 </Td>
               ))}
-              {rowActions && (
+              {Array.isArray(rowActions) && rowActions.length > 0 && (
                 <Td isActionCell>
                   <ActionsColumn rowData={row.selectData} items={rowActions} isDisabled={false} />
                 </Td>
