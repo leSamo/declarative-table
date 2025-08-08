@@ -1,6 +1,6 @@
 {
   "name": "declarative-table",
-  "version": "5.0.17",
+  "version": "5.0.19",
   "type": "module",
   "files": [
     "dist"
