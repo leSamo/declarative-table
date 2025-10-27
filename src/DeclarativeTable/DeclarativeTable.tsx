@@ -37,6 +37,7 @@ interface DeclarativeTableProps {
   fetchBulk?: () => Promise<Record<string, any>>,
   bulkActions?: DeclarativeTableBulkAction[],
   rowActions?: IAction[],
+  ouiaId?: string,
 }
 
 const DeclarativeTable = ({
@@ -57,6 +58,7 @@ const DeclarativeTable = ({
   fetchBulk,
   bulkActions,
   rowActions,
+  ouiaId
 }: DeclarativeTableProps) => {
   const { offset, limit, total_items, sort } = meta;
 
@@ -115,6 +117,7 @@ const DeclarativeTable = ({
         selectedRows={selectedRows}
         setSelectedRows={setSelectedRows}
         rowActions={rowActions}
+        ouiaId={ouiaId}
       />
       <DeclarativeTableFooter
         isLoading={isLoading}
