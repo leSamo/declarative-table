@@ -32,6 +32,7 @@ interface DeclarativeTableBodyProps {
   selectedRows: Record<string, any>,
   setSelectedRows: React.Dispatch<React.SetStateAction<Record<string, any>>>,
   rowActions?: IAction[],
+  ouiaId?: string,
 }
 
 const DeclarativeTableBody = ({
@@ -47,6 +48,7 @@ const DeclarativeTableBody = ({
   selectedRows,
   setSelectedRows,
   rowActions,
+  ouiaId
 }: DeclarativeTableBodyProps) => {
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [areAllRowsExpanded, setAreAllRowsExpanded] = useState<boolean>(false);
@@ -145,7 +147,7 @@ const DeclarativeTableBody = ({
       isSelectable={isSelectable}
     />
   ) : (
-    <Table variant={TableVariant.compact}>
+    <Table variant={TableVariant.compact} ouiaId={ouiaId}>
       <Thead>
         <Tr>
           {isExpandable && (
